@@ -64,12 +64,15 @@
                                     <td>{{ item.adress }}</td>
                                     <td>
                                         <div class="btn-group pull-right">
-                                            <a class="btn btn-default btn-sm" href="/admin/house/update/417" title="Редактировать" data-toggle="tooltip">
+                                            <a class="btn btn-default btn-sm" href="{% url 'update_house' item.id %}" title="Редактировать" data-toggle="tooltip">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm" href="/admin/house/delete/417" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            <form method="post">
+                                                  {% csrf_token %}
+                                                <a class="btn btn-default btn-sm" href="{% url 'delete_house' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

@@ -1,6 +1,8 @@
 from django.db import models
 from src.common.models import Image
 from src.users.models import User
+
+
 # Create your models here.
 
 class House(models.Model):
@@ -24,10 +26,11 @@ class Storey(models.Model):
     name = models.CharField(max_length=220)
     section_number = models.CharField(max_length=10)
 
+
 class Worker(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, related_name='worker')
+    name = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, related_name='worker')
     house = models.ForeignKey(House, on_delete=models.CASCADE)
-    name = models.CharField(max_length=220)
+    role = models.CharField(max_length=220)
 
 
 class Apartment(models.Model):

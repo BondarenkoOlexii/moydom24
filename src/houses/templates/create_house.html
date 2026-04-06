@@ -38,32 +38,32 @@
 
                         <div class="form-group field-houseform-image1">
                             <label class="control-label" for="houseform-image1">Изображение #1. Размер: (522x350)</label>
-                            {{ form.image_1 }}
+                            {{ imageform.image_1 }}
                             <div class="help-block"></div>
                         </div>
 
                         <div class="form-group field-houseform-image2">
                             <label class="control-label" for="houseform-image2">Изображение #2. Размер: (248x160)</label>
-                            {{ form.image_2 }}
+                            {{ imageform.image_2 }}
                             <div class="help-block"></div>
                         </div>
 
                         <div class="form-group field-houseform-image3">
                             <label class="control-label" for="houseform-image3">Изображение #3. Размер: (248x160)</label>
-                            {{ form.image_3 }}
+                            {{ imageform.image_3 }}
                             <div class="help-block"></div>
                         </div>
 
                         <div class="form-group field-houseform-image4">
                             <label class="control-label" for="houseform-image4">Изображение #4. Размер: (248x160)</label>
-                            {{ form.image_4 }}
+                            {{ imageform.image_4 }}
 
                             <div class="help-block"></div>
                         </div>
 
                         <div class="form-group field-houseform-image5">
                             <label class="control-label" for="houseform-image5">Изображение #5. Размер: (248x160)</label>
-                            {{ form.image_5 }}
+                            {{ imageform.image_5 }}
 
                             <div class="help-block"></div>
                         </div>
@@ -99,37 +99,145 @@
                 <div class="col-xs-12 col-lg-8">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab-sections" data-toggle="tab" aria-expanded="true">Секции</a></li>
-                            <li><a href="#tab-floors" data-toggle="tab" aria-expanded="false">Этажи</a></li>
-                            <li><a href="#tab-houseuseradmins" data-toggle="tab" aria-expanded="false">Пользователи</a></li>
+                            <li class="active"><a href="#tab-sections" data-toggle="tab" aria-expanded="true" class="btn-tab-switch">Секции</a></li>
+                            <li><a href="#tab-storey" data-toggle="tab" aria-expanded="false" class="btn-tab-switch">Этажи</a></li>
+                            <li><a href="#tab-houseuseradmins" data-toggle="tab" aria-expanded="false" class="btn-tab-switch">Пользователи</a></li>
                         </ul>
 
                         <div class="tab-content">
                             <div class="tab-pane active clearfix" id="tab-sections">
-                                <div id="form-section-rows">
+                                <div id="container-sections">
                                     {{ inlines.management_form }}
+                                    {% for form in inlines %}
+                                        <div class="row form-section mb-3 section-row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Название</label>
+                                                    <div class="input-group">
+                                                        {{ form }}
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div id="empty-template-sections" style="display:none">
                                     <div class="row form-section mb-3 section-row">
                                         <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    {% for hidden in inlines.empty_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
 
+                                                    {{ inlines.empty_form.name }}
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    {% for formset in inlines %}
-                                        {{ formset }}
-                                    {% endfor %}
-
-
                                 </div>
-                                <button class="btn btn-success pull-right form-row-add-section-btn" type="button">Добавить</button>
+                                <button class="btn btn-success pull-right form-row-add-section-btn" type="button" data-prefix="sections">Добавить</button>
                             </div>
 
-                            <div class="tab-pane clearfix" id="tab-floors">
-                                <div id="form-floor-rows"></div>
-                                <button class="btn btn-success pull-right form-row-add-floor-btn" type="button">Добавить</button>
+
+                        <div class="tab-content">
+                            <div class="tab-pane clearfix" id="tab-storey">
+                                <div id="container-storey">
+                                    {{ inlines_2.management_form }}
+                                    {% for form in inlines_2 %}
+                                        <div class="row form-section mb-3 section-row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Название</label>
+                                                    <div class="input-group">
+                                                        {{ form }}
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+                                                        </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div id="empty-template-storey" style="display:none">
+                                    <div class="row form-section mb-3 section-row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    {% for hidden in inlines_2.empty_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
+
+                                                    {{ inlines_2.empty_form.name }}
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success pull-right form-row-add-storey-btn" type="button" data-prefix="storey">Добавить</button>
                             </div>
 
-                            <div class="tab-pane clearfix" id="tab-houseuseradmins">
-                                <div id="form-houseuseradmin-rows"></div>
-                                <button class="btn btn-success pull-right form-row-add-houseuseradmin-btn" type="button">Добавить</button>
+			                <div class="tab-content">
+                                <div class="tab-pane clearfix" id="tab-houseuseradmins">
+                                    <div id="container-houseuseradmins">
+                                        {{ inlines_3.management_form }}
+                                        {% for form in inlines %}
+                                            <div class="row form-section mb-3 section-row">
+                                                <div class="col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Название</label>
+                                                        <div class="input-group">
+                                                            {{ form }}
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+                                                            </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div id="empty-template-houseuseradmins" style="display:none">
+                                        <div class="row form-houseuseradmins mb-3 section-row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <div class="input-group" style="display: flex">
+                                                        {% for hidden in inlines_3.empty_form.hidden_fields %}
+                                                            {{ hidden }}
+                                                        {% endfor %}
+
+                                                         <div style="padding-right: 5px;" class="col-sm-5">
+                                                             <label>ФИО</label>
+                                                            {{ inlines_3.empty_form.name }}
+                                                         </div>
+                                                         <div class="col-sm-6" style="padding-right: 5px;">
+                                                             <label>Роль</label>
+                                                             {{ inlines_3.empty_form.role }}
+                                                         </div>
+
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-danger form-row-remove-btn" style="margin-top: 25px;"><i class="fa fa-trash"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success pull-right form-row-add-houseuseradmins-btn" type="button" data-prefix="houseuseradmins">Добавить</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -149,4 +257,11 @@
     </section>
 </div>
 
+// Source - https://stackoverflow.com/a/21331862
+// Posted by Jnanaranjan, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-04-02, License - CC BY-SA 3.0
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static  'dist/js/formset.js' %}"></script>
+<script src="{% static  'dist/js/hidden_fields.js' %}"></script>
 {% endblock %}
