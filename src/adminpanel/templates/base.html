@@ -1,0 +1,589 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="ru-RU" style="height: auto; min-height: 100%;"><head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" href="https://myhouse24.demodev.cc/favicon.png">
+        <meta name="csrf-param" content="_csrf-backend">
+        <meta name="csrf-token" content="xjdga_DNpb5rzFhBl1igo4JT9LEq9qEg9kFPWzhDi3ahYzAkwvTG0warKyX4Hsn5zhec7k3b8XO8Ew4zTSDkMg==">
+        <title>Статистика</title>
+        <link href="{% static 'dist/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/font-awesome.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/ionicons.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/jquery-jvectormap.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/AdminLTE.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/blue.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/bootstrap3-wysihtml5.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/_all-skins.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/datepicker-kv.min.css' %}" rel="stylesheet">
+<link href="{% static 'dist/css/kv-widgets.min.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet">
+<link href="{% static 'dist/css/custom.css' %}" rel="stylesheet">    <style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
+    <body class="skin-black-light sidebar-mini fixed sidebar-mini-expand-feature" style="height: auto; min-height: 100%;">
+        <div class="wrapper" style="height: auto; min-height: 100%;">
+
+
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="#" class="logo">
+        <span class="logo-mini">
+            <img src="{% static 'dist/logo/logo-mini.svg' %}" class="img-responsive" alt="">
+        </span>
+        <span class="logo-lg">
+            <img src="{% static 'dist/logo/logo.svg' %}" class="img-responsive" alt="">
+        </span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Header title -->
+        <div class="header-title">Панель администратора</div>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                                    <!-- Notifications -->
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-child fa-lg"></i>
+                                                            <span class="label label-warning">84</span>
+                                                    </a>
+                        <ul class="dropdown-menu">
+
+                                                            <li class="header">Новых пользователей: 84</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                                                                    <li>
+                                                <a href="/admin/user/369">
+                                                    xuyebojuga-4877@yopmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/368">
+                                                    bouyitebraque-1709@yopmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/367">
+                                                    pemocexeussu-2402@yopmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/365">
+                                                    qwerty qwerty qwerty <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/364">
+                                                    qa.verbytska111@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/361">
+                                                    Верб Дана <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/357">
+                                                    owner.m.k@owner.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/356">
+                                                    dfsdf@dfj.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/354">
+                                                    Степанова Алена <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/340">
+                                                    Таранюк  Максим <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/331">
+                                                    Таранюк  Катерина Миколаївна <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/292">
+                                                    тестсчетчика тест тест <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/291">
+                                                    талпа катя <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/289">
+                                                    2112121 !qRYv%KT0cGQmD <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/284">
+                                                    &nbsp;Світоана <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/281">
+                                                    Вольова Наталія Ігорівна <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/279">
+                                                    Безпроблемний Руслан <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/276">
+                                                    66 66 666 <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/274">
+                                                    Стартовий Олег Олегович <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/271">
+                                                    maru@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/270">
+                                                    asdf@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/268">
+                                                    vero@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/254">
+                                                           <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/244">
+                                                    Віка Вік Вікторівна <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/239">
+                                                    Букатов Никита Александрович <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/238">
+                                                    testtest123@test.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/236">
+                                                    test123@test.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/235">
+                                                    veronikasviezhentsea@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/223">
+                                                    Вичук <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/222">
+                                                    Сердюк <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/221">
+                                                    Ткаченко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/220">
+                                                    Степаненко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/219">
+                                                    Плющенко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/218">
+                                                    Лещенко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/215">
+                                                    Гончаренко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/213">
+                                                    Винниченко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/212">
+                                                    Тимошенко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/209">
+                                                    Гузенко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/200">
+                                                    Ковальчук <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/196">
+                                                    Величко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/195">
+                                                    Гудзь <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/192">
+                                                    Журба <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/191">
+                                                    Завирюха  <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/190">
+                                                    John Doe Man <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/188">
+                                                    Артем Артем Артем <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/183">
+                                                    Кошевой <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/182">
+                                                    Кравец Иван <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/181">
+                                                    Еревин Кирилл Потапыч <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/179">
+                                                    Леша Леша <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/172">
+                                                    rty@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/171">
+                                                    Палагута <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/147">
+                                                    bogdan24ro@gmail.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/141">
+                                                    29@29.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/140">
+                                                    28@28.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/139">
+                                                    йцуке фіва нрт <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/138">
+                                                    26@26.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/137">
+                                                    25@25.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/136">
+                                                    24@24.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/135">
+                                                    23@23.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/134">
+                                                    22@22.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/133">
+                                                    21@21.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/132">
+                                                    20@20.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/131">
+                                                    19@19.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/130">
+                                                    18@18.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/129">
+                                                    17@17.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/128">
+                                                    16@16.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/127">
+                                                    15@15.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/126">
+                                                    14@14.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/125">
+                                                    13@13.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/124">
+                                                    12@12.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/123">
+                                                    11@11.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/122">
+                                                    10@10.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/121">
+                                                    9@9.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/120">
+                                                    8@8.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/119">
+                                                    7@7.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/118">
+                                                    6@6.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/117">
+                                                    5@5.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/116">
+                                                    4@4.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/113">
+                                                    1@1.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/109">
+                                                    Вася <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/108">
+                                                    1petro@petrenko.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/107">
+                                                    123@123.com <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/106">
+                                                    Петро Петрович Петренко <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                                    <li>
+                                                <a href="/admin/user/1">
+                                                    Лисенко Павел Михайлович <!--<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>-->
+                                                </a>
+                                            </li>
+                                                                            </ul>
+                                </li>
+                                                        <li class="footer"><a href="/admin/user/index">Перейти в раздел пользователей</a></li>
+
+                        </ul>
+                    </li>
+                                                <!-- User Account -->
+                                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <!--<img src="/admin/dist/img/user2-160x160.jpg" class="user-image" alt="Nana Nanovna">-->
+                                                                                    <i class="fa fa-user-circle text-purple"></i>
+                            <span class="hidden-xs">Nana Nanovna</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <!--<img src="/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="Nana Nanovna">-->
+                                <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"></i></span>
+                                <p>Nana Nanovna (Директор)</p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a class="btn btn-default btn-flat" href="/admin/user-admin/update-my">Профиль</a>                                </div>
+                                <div class="pull-right">
+                                    <a class="btn btn-default btn-flat" href="/admin/site/logout" data-method="post">Выход</a>                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                            </ul>
+        </div>
+
+    </nav>
+</header>
+
+
+
+        <!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar -->
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 1028px;"><section class="sidebar" style="overflow: hidden; width: auto; height: 1028px;">
+
+        <ul class="sidebar-menu tree" data-widget="tree"><li class="active"><a href="/admin/"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
+<li><a href="/admin/account-transaction/index"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
+<li><a href="/admin/invoice/index"><i class="fa fa-files-o"></i>  <span>Квитанции на оплату</span></a></li>
+<li><a href="/admin/account/index"><i class="fa fa-credit-card"></i>  <span>Лицевые счета</span></a></li>
+<li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
+<li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
+<li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
+<li><a href="/admin/message/index"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
+<li><a href="/admin/master-request/index"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
+<li><a href="/admin/counter-data/counters"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
+<li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+<ul class="treeview-menu">
+<li><a href="/admin/website/home"><i class="fa fa-circle-o"></i>  <span>Главная страница</span></a></li>
+<li><a href="/admin/website/about"><i class="fa fa-circle-o"></i>  <span>О нас</span></a></li>
+<li><a href="/admin/website/services"><i class="fa fa-circle-o"></i>  <span>Услуги</span></a></li>
+<li><a href="/admin/website/tariffs"><i class="fa fa-circle-o"></i>  <span>Тарифы</span></a></li>
+<li><a href="/admin/website/contact"><i class="fa fa-circle-o"></i>  <span>Контакты</span></a></li>
+</ul>
+</li>
+<li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Настройки системы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+<ul class="treeview-menu">
+<li><a href="/admin/service/index"><i class="fa fa-briefcase"></i>  <span>Услуги</span></a></li>
+<li><a href="/admin/tariff/index"><i class="fa fa-money"></i>  <span>Тарифы</span></a></li>
+<li><a href="/admin/user-admin/role"><i class="fa fa-user"></i>  <span>Роли</span></a></li>
+<li><a href="/admin/user-admin/index"><i class="fa fa-user-plus"></i>  <span>Пользователи</span></a></li>
+<li><a href="/admin/pay-company/index"><i class="fa fa-credit-card"></i>  <span>Платежные реквизиты</span></a></li>
+<li><a href="/admin/transaction-purpose/index"><i class="fa fa-list-ol"></i>  <span>Статьи платежей</span></a></li>
+</ul>
+</li></ul>
+    </section><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 1028px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
+    <!-- /.sidebar -->
+</aside>
+          {% block content %}
+          {% endblock content %}
+
+
+<footer class="main-footer">
+    Разработано <a href="https://avada-media.ua/">AVADA-MEDIA</a>. На базе системы управления <a href="https://avada-media.ua/moydom24/">"МойДом24"</a>.
+    Документация API доступна <a href="/doc">по ссылке</a>.
+</footer>
+
+    </div>
+
+<script src="{% static 'dist/js/jquery.js' %}"></script>
+<script src="{% static 'dist/js/yii.js' %}"></script>
+<script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dist/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'dist/js/fastclick.js' %}"></script>
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script src="{% static 'dist/js/icheck.min.js' %}"></script>
+<script src="{% static 'dist/js/bootstrap3-wysihtml5.all.js' %}"></script>
+<script src="{% static 'dist/js/bootstrap-wysihtml5.ru-RU.js' %}"></script>
+<script src="{% static 'dist/js/jquery.sparkline.min.js' %}"></script>
+<script src="{% static 'dist/js/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'dist/js/jquery-jvectormap-world-mill-en.js' %}"></script>
+<script src="{% static 'dist/js/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'dist/js/Chart.js' %}"></script>
+<script src="{% static 'dist/js/main.js' %}"></script>
+<script src="{% static 'dist/js/custom.js' %}"></script>
+<script src="{% static 'dist/js/datepicker-kv-min.js' %}" ></script>
+<script src="{% static 'dist/js/kv-widgets.min.js' %}" ></script>
+    </body></html>

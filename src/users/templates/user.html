@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Владельцы квартир</h1>
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Владельцы квартир</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <!--<div class="col-xs-12 col-sm-6">-->
+            <!--<h2 class="page-header">Владельцы квартир</h2>-->
+            <!--</div>-->
+            <div class="col-xs-12">
+                <div class="btn-group pull-right margin-bottom">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Выберите действие <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'create_user' %}">Добавить владельца квартиры</a></li>
+                        <li><a href="/admin/message/create?MessageAddress%5Buser_has_debt%5D=1">Отправить сообщение должникам</a></li>
+                        <li><a href="/admin/user/invite">Отправить приглашение</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools">
+                            <a href="/admin/user/index" class="btn btn-default btn-sm">
+                                <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="w0" class="grid-view">
+                        <form method="GET" id="search-form">
+                            <button type="submit" style="display: none;"></button>
+                        </form>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover table-striped linkedRow">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 110px; min-width: 110px">ID</th>
+                                        <th><a href="/admin/user/index?sort=searchFullname" data-sort="searchFullname">ФИО</a></th>
+                                        <th style="width: 140px; min-width: 140px">Телефон</th><th style="width: 140px; min-width: 140px">Email</th>
+                                        <th style="min-width: 250px">Дом</th><th style="min-width: 300px">Квартира</th>
+                                        <th style="width: 110px; min-width: 110px"><a href="/admin/user/index?sort=searchCreatedDate" data-sort="searchCreatedDate">Добавлен</a></th>
+                                        <th>Статус</th><th style="width: 80px; min-width: 80px">Есть долг</th><th style="width: 114px; min-width: 114px">&nbsp;</th>
+                                    </tr>
+
+                                    <tr id="w0-filters" class="filters">
+                                        <td><input type="text" class="form-control" name="UserSearch[uid]" value="{{ search_query }}" placeholder="ID" form="search-form"></td>
+                                        <td><input type="text" class="form-control" name="UserSearch[searchFullname]" form="search-form"></td>
+                                        <td><input type="text" class="form-control" name="UserSearch[searchPhone]" form="search-form"></td>
+                                        <td><input type="text" class="form-control" name="UserSearch[email]" form="search-form"></td>
+                                        <td>
+                                            <select id="usersearch-searchhouse" class="form-control select2-hidden-accessible" name="UserSearch[searchHouse]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">
+                                                <option value=""></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for item in users %}
+                                        <tr>
+                                            <td>{{ item.user_id }}</td>
+                                            <td>{{ item.first_name }} {{item.middle_name}} {{ item.last_name }}</td>
+                                            <td>{{ item.phone_number }}</td>
+                                            <td>{{ item.email }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{ item.date_joined }}</td>
+                                            <td>{{ item.user_status }}</td>
+                                            <td></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-sm" href="{% url 'update_user' item.id %}" title="Редактировать" data-toggle="tooltip">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <form method="post">
+                                                          {% csrf_token %}
+                                                        <a class="btn btn-default btn-sm" href="{% url 'delete_user' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix"><ul class="pagination pagination-sm no-margin pull-right"><li class="prev disabled"><span>«</span></li>
+        <li class="active"><a href="/admin/user/index?page=1&amp;per-page=50" data-page="0">1</a></li>
+        <li><a href="/admin/user/index?page=2&amp;per-page=50" data-page="1">2</a></li>
+        <li><a href="/admin/user/index?page=3&amp;per-page=50" data-page="2">3</a></li>
+        <li><a href="/admin/user/index?page=4&amp;per-page=50" data-page="3">4</a></li>
+        <li><a href="/admin/user/index?page=5&amp;per-page=50" data-page="4">5</a></li>
+        <li><a href="/admin/user/index?page=6&amp;per-page=50" data-page="5">6</a></li>
+        <li class="next"><a href="/admin/user/index?page=2&amp;per-page=50" data-page="1">»</a></li></ul></div></div>
+                    <div class="box-footer">
+                        <div>Количество владельцев: <span class="text-bold">261</span></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+            </section>
+        </div>
+
+{% endblock %}

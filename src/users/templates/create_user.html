@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Новый владелец</h1>
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/user/index">Владельцы квартир</a></li>
+            <li class="active">Новый владелец</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                <form id="w0" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" id="is_new_record" value="1">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="userAvatar">
+                            <img class="img-circle pull-left img-responsive" src="{% if object.main_image %}{{ object.main_image.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=160&amp;h=160&amp;fit=crop{% endif %}">
+                            <div class="form-group field-userform-image">
+                            <label class="control-label" for="userform-image">Сменить изображение</label>
+                            <input type="hidden" name="UserForm[image]" value="">
+                                {{ form.main_image }}
+
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group field-userform-status">
+                        <label class="control-label" for="userform-status">Статус</label>
+                        {{form.user_status}}
+
+                        {% if form.user_status.errors %}
+                            <div class="help-block">
+                                {{ form.user_status.errors.0 }}
+                            </div>
+                        {% else %}
+                            <div class="help-block"></div>
+                        {% endif %}
+                        <div class="help-block"></div>
+
+                    </div>
+
+                    <div class="form-group field-userform-uid">
+                        <label class="control-label" for="userform-uid">ID</label>
+                        {{ form.user_id }}
+
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group field-userform-lastname">
+                        <label class="control-label" for="userform-lastname">Фамилия</label>
+                        {{ form.last_name }}
+
+                        <div class="help-block"></div>
+                    </div>
+
+                    <div class="form-group field-userform-firstname">
+                        <label class="control-label" for="userform-firstname">Имя</label>
+                        {{ form.first_name }}
+
+                        <div class="help-block"></div>
+                    </div>
+
+                    <div class="form-group field-userform-middlename">
+                        <label class="control-label" for="userform-middlename">Отчество</label>
+                        {{ form.middle_name }}
+
+                        <div class="help-block"></div>
+                    </div>
+
+                    <div class="form-group field-userform-birthdate">
+                        <label class="control-label" for="userform-birthdate">Дата рождения</label>
+                        <div id="userform-birthdate-kvdate" class="input-group  date">
+                            {{ form.date_of_birth }}
+                            <span class="input-group-addon kv-date-calendar" title="Выбрать дату">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </span>
+                        </div>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group field-userform-note">
+                        <label class="control-label" for="userform-note">О владельце (заметки)</label>
+                        {{ form.notes }}
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <h2 class="page-header">Контактные данные</h2>
+                    <div class="form-group field-userform-phone">
+                        <label class="control-label" for="userform-phone">Телефон</label>
+                        {{ form.phone_number }}
+
+                        <div class="help-block"></div>
+                    </div>
+
+                    <div class="form-group field-userform-viber">
+                        <label class="control-label" for="userform-viber">Viber</label>
+                        {{ form.viber }}
+
+                        <div class="help-block"></div>
+                    </div>
+
+                    <div class="form-group field-userform-telegram">
+                        <label class="control-label" for="userform-telegram">Telegram</label>
+                        {{ form.telegram }}
+
+                        <div class="help-block"></div>
+                    </div>
+
+                    <div class="form-group field-userform-email required">
+                        <label class="control-label" for="userform-email">Email (логин)</label>
+                        {{ form.email }}
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <h2 class="page-header">Изменить пароль</h2>
+
+                    <div class="form-group field-userform-password {% if form.password.errors %}has-error{% endif %}">
+                        <label class="control-label" for="userform-password">Пароль</label>
+
+                        <div class="input-group">
+                            {{ form.password }}
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="generatePassword('.pass-value')">
+                                    Сгенерировать
+                                </button>
+                                <button type="button" class="btn btn-primary" id="showPass">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                        <div class="help-block">
+                            {% if form.password.errors %}{{ form.password.errors.0 }}{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-group field-userform-password2 {% if form.password_confirm.errors %}has-error{% endif %}">
+                        <label class="control-label" for="userform-password2">Повторить пароль</label>
+
+                        {{ form.password_confirm }}
+
+                        <div class="help-block">
+                            {% if form.password_confirm.errors %}{{ form.password_confirm.errors.0 }}{% endif %}
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <a href="{% url 'create_user' %}" class="btn btn-default">Отменить</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>    </div>
+            </div>
+
+    </form>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    function generatePassword(targetSelector) {
+        var pass = Math.random().toString(36).substring(4);
+        $('input'+targetSelector).val(pass);
+        $('span'+targetSelector).text(pass);
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        // 1. Ініціалізація календаря для твого поля
+        $('#userform-birthdate').datepicker({
+            format: 'yyyy-mm-dd', // Формат для Django (Year-Month-Day)
+            autoclose: true,
+            language: 'ru',
+            todayHighlight: true,
+            orientation: "bottom auto"
+        });
+
+        // 2. Зробимо так, щоб при натисканні на іконку календаря він теж відкривався
+        $('#userform-birthdate-kvdate .kv-date-calendar').on('click', function() {
+            $('#userform-birthdate').datepicker('show');
+        });
+    });
+</script>
+    </div>
+</div>
+    </section>
+</div>
+
+
+{% endblock %}

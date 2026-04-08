@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper" style="min-height: 320px;">
+    <section class="content-header">
+        <h1>Новая квартира</h1>
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/flat/index">Квартиры</a></li>
+            <li class="active">Новая квартира</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+
+                <form id="w0" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="_csrf-backend" value="EvcLfcsjOWJHml-CVL0u-WryYzm-MW-B_JSEaV3E30VnhW8UgRNAK3P8BvEDzUuyPrcpS_hfHLSt2eEAGvGoBw==">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-md-push-6">
+                            <div class="form-group field-flatform-account_uid ">
+                                <label class="control-label" for="flatform-account_uid">Лицевой счет</label>
+                                <input type="text" id="flatform-account_uid" class="form-control" name="FlatForm[account_uid]"><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-account_uid-container"><span class="select2-selection__rendered" id="select2-account_uid-container"><span class="select2-selection__placeholder">или выберите из списка...</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>            <div class="help-block"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 ">
+                        <input type="hidden" id="flatform-id" name="FlatForm[id]">
+                        <div class="form-group field-flatform-flat required">
+                            <label class="control-label" for="flatform-flat">Номер квартиры</label>
+                            {{ form.apartment_number }}
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-flatform-square">
+                            <label class="control-label" for="flatform-square">Площадь (кв.м.)</label>
+                            {{ form.area }}
+
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-flatform-house_id required">
+                            <label class="control-label" for="flatform-house_id">Дом</label>
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-flatform-section_id">
+                            <label class="control-label" for="flatform-section_id">Секция</label>
+                            <select id="flatform-section_id" class="form-control" name="FlatForm[section_id]">
+                            <option value="">Выберите...</option>
+                            </select>
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-flatform-floor_id">
+                            <label class="control-label" for="flatform-floor_id">Этаж</label>
+                            <select id="flatform-floor_id" class="form-control" name="FlatForm[floor_id]">
+                            <option value="">Выберите...</option>
+                            </select>
+
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-flatform-user_id">
+                            <label class="control-label" for="flatform-user_id">Владелец</label>
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-flatform-tariff_id">
+                            <label class="control-label" for="flatform-tariff_id">Тариф</label>
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            <div class="form-group">
+                                <a href="/admin/flat/index" class="btn btn-default margin-bottom-15">Отменить</a>
+                                <input type="submit" class="btn btn-success margin-bottom-15" name="action_save" value="Сохранить">
+                                <input type="submit" class="btn btn-success margin-bottom-15 bg-green-active" name="action_save_add" value="Сохранить и добавить новую">                    </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
