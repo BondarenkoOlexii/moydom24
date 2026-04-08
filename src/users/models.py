@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from src.adminpanel.models.UserChoise import Language, Role, Status
+from src.adminpanel.models.UserChoise import Language, Role, Status, UserStatus
 from django.core.validators import RegexValidator
 from src.common.models import Image
 # Create your models here.
@@ -13,12 +13,15 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=20, null=True, blank=True)
     middle_name = models.CharField(max_length=20, null=True, blank=True)
     last_name = models.CharField(max_length=20, null=True, blank=True)
-    language = models.CharField(max_length=4, choices=Language.choices, default=Language.choices[1][1])
+    language = models.CharField(max_length=4, choices=Language.choices, default=Language.choices[1][1], null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True, validators=[phone_validator], unique=True)
+    viber = models.CharField(max_length=20, null=True, blank=True, validators=[phone_validator])
     telegram = models.CharField(max_length=225, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
+    user_status = models.CharField(choices=UserStatus.choices, default=UserStatus.choices[1][1])
     main_image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='user_main_image', null=True, blank=True)
+    user_id = models.BigIntegerField(unique=True, null=True, blank=True)
 
 class Role(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, related_name='roles')

@@ -15,3 +15,8 @@ class Status(models.TextChoices):
     new = 'new', 'Нове'
     in_progress = 'in_progress', 'В роботі'
     completed = 'completed', 'Виконано'
+
+class UserStatus(models.TextChoices):
+    active = 'active', 'Активен'
+    new = 'new', 'Новий'
+    inactive = 'inactive', 'Отключен'

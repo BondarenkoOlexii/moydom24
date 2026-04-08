@@ -5,18 +5,6 @@ from src.houses.models import House, Storey, Section, Worker
 
 
 class HouseForm(forms.ModelForm):
-    class Meta:
-        model = House
-
-        fields = ['name', 'adress']
-
-        widgets = {
-            'name': forms.TextInput(attrs={'id': "houseform-name", 'class': 'form-control'}),
-            'adress': forms.TextInput(attrs={'id': "houseform-adress", 'class': 'form-control'}),
-        }
-
-
-class ImageForm(forms.Form):
     image_1 = forms.ImageField(
         required=False,
         widget=forms.FileInput(attrs={'id': 'houseform-image1'}),
@@ -42,6 +30,17 @@ class ImageForm(forms.Form):
         widget=forms.FileInput(attrs={'id': 'houseform-image5'}),
         label="Фотографія 5"
     )
+
+
+    class Meta:
+        model = House
+
+        fields = ['name', 'adress']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'id': "houseform-name", 'class': 'form-control'}),
+            'adress': forms.TextInput(attrs={'id': "houseform-adress", 'class': 'form-control'}),
+        }
 
 
 class SectionForm(forms.ModelForm):
