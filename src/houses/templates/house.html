@@ -58,7 +58,7 @@
                             </thead>
                             <tbody>
                                 {% for item in houses  %}
-                                <tr>
+                                <tr data-href="{% url 'detail_house' item.id %}">
                                     <td>{{item.id}}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.adress }}</td>

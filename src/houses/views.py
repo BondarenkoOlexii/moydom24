@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from .models import House, Section, Image, Apartment
 from src.users.models import Call_Master
@@ -13,6 +13,10 @@ class ListHouse(ListView):
     template_name = 'house.html'
     context_object_name = 'houses'  #кастомна назва до якої ми звертаємось в шаблоні
 
+class DetailHouse(DetailView):
+    model = House
+    template_name = 'show_house.html'
+    context_object_name = 'house'
 
 class CreateHouse(CreateView):
     template_name = 'create_user.html'
@@ -168,6 +172,10 @@ class ApartmentList(ListView):
     template_name = 'apartment.html'
     context_object_name = 'apartments'
 
+class DetailApartment(DetailView):
+    model = Apartment
+    template_name = 'show_apart.html'
+    context_object_name = 'apartment'
 
 class CreateApartment(CreateView):
     model = Apartment

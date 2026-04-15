@@ -5,7 +5,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, F
 from django.db.models import Q # Фільтр щоб легше шукати, | - OR
 
 from .models import User, Image, Message, Call_Master
-from .forms import UserForm, MessageForm, InviteMessage
+from .forms import UserForm, MessageForm, InviteMessage, CreateMaster
 from src.houses.models import Apartment
 from config_celery.celery_email_worker import send_invite_email, app
 
@@ -155,8 +155,6 @@ class CreateMessage(CreateView):
 
     def form_invalid(self, form):
         print(form.errors)
-        print(f"Дозволені ID: {form.fields['apartment'].queryset.values_list('id', flat=True)}")
-
         return super().form_invalid(form)
 
 
@@ -203,6 +201,9 @@ class DeleteMessage(DeleteView):
     model = Message
     success_url = reverse_lazy('messages')
 
+
+
+
 class ListMasterRequest(ListView):
     model = Call_Master
     template_name = 'master-request.html'
@@ -218,20 +219,17 @@ class NewMasterRequest(CreateView):
 class MasterList(ListView):
     model = User
     template_name = 'masters.html'
+    context_object_name = 'form'
 
 class CreateMaster(CreateView):
     model = User
     template_name = 'new_master.html'
+    form_class = CreateMaster
 
-    # def form_valid(self, form):
-    #
 
-        # apartment = form.cleaned_data['apartment']
-        #
-        # apart_owner = Apartment.objects.get(owner_id=apartment.owner)
-        #
-        # Message.objects.create(
-        #     theme=form.cleaned_data['theme'],
-        #     text=form.cleaned_data['text'],
-        #     user=form.cleaned_data['user']
-        # )
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('master-list')

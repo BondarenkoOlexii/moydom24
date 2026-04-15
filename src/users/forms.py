@@ -114,14 +114,14 @@ class CreateMaster(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'phone_number', 'status', 'email', 'password', 'password_confirm']
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password', 'password_confirm']
 
         widgets = {
             'first_name': forms.TextInput(attrs={'id': 'userform-firstname', 'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'id': 'userform-lastname', 'class': 'form-control'}),
             'phone_number': forms.TextInput(attrs={'id': 'userform-phone', 'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'id': 'userform-email', 'class': 'form-control', 'aria-required': 'true'}),
-            'status': forms.Select(attrs={'id': 'useradminform-status', 'class': 'form-control'})
+            # 'status': forms.Select(attrs={'id': 'useradminform-status', 'class': 'form-control'})
         }
 
 

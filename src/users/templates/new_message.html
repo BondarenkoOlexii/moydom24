@@ -33,52 +33,7 @@
                 </div>
 
                 <div class="form-group field-message-description required has-error">
-                    <ul class="wysihtml5-toolbar" style="">
-                        <li class="dropdown">
-                            <a class="btn btn-default dropdown-toggle btn-none" data-toggle="dropdown">
-                                <span class="fa fa-font"></span>
-                                <span class="current-font">Обычный текст</span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" tabindex="-1" href="javascript:;" unselectable="on" class="wysihtml5-command-active">Обычный текст</a></li>
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 1</a></li>
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 2</a></li>
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 3</a></li>
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 4</a></li>
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 5</a></li>
-                                <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h6" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 6</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <div class="btn-group">
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="bold" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Полужирный</a>
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="italic" title="CTRL+I" tabindex="-1" href="javascript:;" unselectable="on">Курсив</a>
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="underline" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Подчёркнутый</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="btn-group">
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="insertUnorderedList" title="Маркированный список" tabindex="-1" href="javascript:;" unselectable="on">
-                                  <span class="fa fa-list-ul"></span>
-                                </a>
-
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="insertOrderedList" title="Нумерованный список" tabindex="-1" href="javascript:;" unselectable="on">
-                                  <span class="fa fa-list-ol"></span>
-                                </a>
-
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="Outdent" title="Уменьшить отступ" tabindex="-1" href="javascript:;" unselectable="on">
-                                  <span class="fa fa-outdent"></span>
-                                </a>
-
-                                <a class="btn btn-none btn-default" data-wysihtml5-command="Indent" title="Увеличить отступ" tabindex="-1" href="javascript:;" unselectable="on">
-                                  <span class="fa fa-indent"></span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
                     {{ form.text }}
-                    <input type="hidden" name="_wysihtml5_mode" value="1"><iframe class="wysihtml5-sandbox" security="restricted" allowtransparency="true" frameborder="0" width="0" height="0" marginwidth="0" marginheight="0" style="display: block; background-color: rgb(255, 255, 255); border-collapse: separate; border-color: rgb(210, 214, 222); border-style: solid; border-width: 1.11667px; clear: none; float: none; margin: 0px; outline: rgb(85, 85, 85) 3px; outline-offset: 0px; padding: 6px 12px; position: static; inset: auto; z-index: auto; vertical-align: text-bottom; text-align: start; box-sizing: border-box; box-shadow: none; border-radius: 0px; width: 1864px; height: 134.233px;"></iframe>
                 </div>
                 <div class="row">
 
@@ -132,6 +87,27 @@
 {% endblock %}
 
 {% block scripts %}
-    {{ form.media.js }}
+<!--    {{ form.media.js }}-->
     <script src="{% static 'dist/js/selects2.js' %}"> </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#message-description').wysihtml5({
+                toolbar: {
+                    "custom": "#custom-toolbar",
+                },
+                "stylesheets": ["{% static 'dist/css/bootstrap3-wysihtml5.min.css' %}"],
+                "events": {
+                    "load": function() {
+                        console.log("Редактор завантажений!");
+                    }
+                }
+            });
+            $('.wysihtml5-sandbox').css({
+                'width': '100%',
+                'height': '250px',
+                'display': 'block'
+            });
+        });
+    </script>
 {% endblock %}

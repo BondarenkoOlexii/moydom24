@@ -114,8 +114,8 @@ DATABASES = {
         'NAME': 'moydom24',
         'USER': 'postgres',
         'PASSWORD': '1',
-        'HOST': 'localhost',
-        'PORT': ''
+        'HOST': '127.0.0.1',
+        'PORT': '5433'
 
     }
 }
@@ -199,7 +199,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-
 
 #####################################################################
 # CACHE

@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="pull-right margin-bottom">
-                    <a class="btn btn-success" href="/admin/user-admin/create">Создать пользователя</a>
+                    <a class="btn btn-success" href="{% url 'master-list-create' %}">Создать пользователя</a>
                 </div>
             </div>
         </div>
@@ -67,6 +67,13 @@
 
                                 <tbody>
                                 {% for item in form %}
+                                    <tr>
+                                        <td>{{ item.name }}</td>
+                                        <td></td>
+                                        <td>{{ item.phone_number }}</td>
+                                        <td>{{ item.email }}</td>
+                                        <td></td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
