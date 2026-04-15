@@ -37,6 +37,6 @@ class Apartment(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     storey = models.ForeignKey(Storey, on_delete=models.CASCADE)
-    # owner = models.ForeignKey(User) і payment_account
+    owner = models.ForeignKey(User, on_delete=models.CASCADE) #і payment_account
     apartment_number = models.CharField(max_length=10)
     area = models.FloatField()

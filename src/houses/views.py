@@ -2,8 +2,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from .models import House, Section, Image
-from .forms import HouseForm, SectionInlineFormSet, StoreyInlineFormSet, HousesAdminInlineFormSet
+from .models import House, Section, Image, Apartment
+from src.users.models import Call_Master
+from .forms import HouseForm, SectionInlineFormSet, StoreyInlineFormSet, HousesAdminInlineFormSet, ApartmentForm
 # Create your views here.
 
 
@@ -160,3 +161,54 @@ class UpdateHouse(UpdateView):
 class DeleteHouse(DeleteView):
     model = House
     success_url = reverse_lazy('house')
+
+
+class ApartmentList(ListView):
+    model = Apartment
+    template_name = 'apartment.html'
+    context_object_name = 'apartments'
+
+
+class CreateApartment(CreateView):
+    model = Apartment
+    template_name = 'create_apartment.html'
+    form_class = ApartmentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['all_data'] = House.objects.all()
+        return context
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_success_url(self):
+        return reverse_lazy('apartment')
+
+
+class UpdateApartment(UpdateView):
+    model = Apartment
+    template_name = 'create_apartment.html'
+    form_class = ApartmentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object = self.get_object()
+
+        context['all_data'] = House.objects.all()
+        return context
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_success_url(self):
+        return reverse_lazy('apartment')
+
+
+class DeleteApartmnent(DeleteView):
+    model = Apartment
+    success_url = reverse_lazy('apartment')
+

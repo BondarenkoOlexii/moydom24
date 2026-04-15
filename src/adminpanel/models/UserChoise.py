@@ -5,7 +5,7 @@ class Language(models.TextChoices):
     uk = 'uk', 'uk'
     eng = 'eng', 'eng'
 
-class Role(models.TextChoices):
+class Roles(models.TextChoices):
     director = 'director', 'Директор'
     manager = 'manager', 'Менеджер'
     electrician = 'electrician', 'Електрик'

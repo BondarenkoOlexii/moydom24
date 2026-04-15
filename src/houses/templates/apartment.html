@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 248px;">
+    <section class="content-header">
+        <h1>Квартиры</h1>
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Квартиры</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right margin-bottom">
+                <a class="btn btn-success" href="{% url 'create_apartment' %}">Добавить квартиру</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <div class="box-tools">
+                        <a href="/admin/flat/index" class="btn btn-default btn-sm">
+                            <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="w0" class="grid-view">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-bordered table-hover table-striped linkedRow">
+                            <thead>
+                                <tr>
+                                    <th style="width: 120px; min-width: 120px"><a href="/admin/flat/index?sort=flat" data-sort="flat">№ квартиры</a></th>
+                                    <th style="min-width: 200px"><a href="/admin/flat/index?sort=house_id" data-sort="house_id">Дом</a></th>
+                                    <th style="width: 160px; min-width: 65px"><a href="/admin/flat/index?sort=section_id" data-sort="section_id">Секция</a></th>
+                                    <th style="width: 160px; min-width: 65px"><a href="/admin/flat/index?sort=floor_id" data-sort="floor_id">Этаж</a></th>
+                                    <th style="min-width: 200px"><a href="/admin/flat/index?sort=user_id" data-sort="user_id">Владелец</a></th>
+                                    <th style="width: 120px; min-width: 120px">Остаток (грн)</th><th style="width: 80px; min-width: 80px">&nbsp;</th>
+                                    <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                                </tr>
+                                <tr id="w0-filters" class="filters">
+                                    <td><input type="text" class="form-control" name="FlatSearch[flat]"></td>
+                                    <td><td id="flatsearch-house_id" class="form-control select2-hidden-accessible" name="FlatSearch[house_id]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></td>
+                                    <td>
+                                        <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;">
+                                            <span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-flatsearch-user_id-container">
+                                                <span class="select2-selection__rendered" id="select2-flatsearch-user_id-container">
+                                                    <span class="select2-selection__placeholder"></span>
+                                                </span>
+                                                <span class="select2-selection__arrow" role="presentation">
+                                                    <b role="presentation"></b>
+                                                </span>
+                                            </span>
+                                        </span>
+                                            <span class="dropdown-wrapper" aria-hidden="true"></span>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <select id="flatsearch-searchhasdebt" class="form-control select2-hidden-accessible" name="FlatSearch[searchHasDebt]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    </select>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in apartments %}
+                                <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.house.name }}</td>
+                                    <td>{{ item.section.name }}</td>
+                                    <td>{{ item.storey.name }}</td>
+                                    <td>{{ item.owner }}</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-default btn-sm" href="{% url 'update_apartment' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-default btn-sm" href="{% url 'delete_apartment' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li class="prev disabled"><span>«</span></li>
+                            <li class="active"><a href="/admin/flat/index?page=1&amp;per-page=50" data-page="0">1</a></li>
+                            <li><a href="/admin/flat/index?page=2&amp;per-page=50" data-page="1">2</a></li>
+                            <li><a href="/admin/flat/index?page=3&amp;per-page=50" data-page="2">3</a></li>
+                            <li><a href="/admin/flat/index?page=4&amp;per-page=50" data-page="3">4</a></li>
+                            <li class="next"><a href="/admin/flat/index?page=2&amp;per-page=50" data-page="1">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div>Количество квартир: <span class="text-bold">158</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+</div>
+{% endblock %}

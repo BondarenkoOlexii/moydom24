@@ -24,8 +24,8 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'create_user' %}">Добавить владельца квартиры</a></li>
-                        <li><a href="/admin/message/create?MessageAddress%5Buser_has_debt%5D=1">Отправить сообщение должникам</a></li>
-                        <li><a href="/admin/user/invite">Отправить приглашение</a></li>
+                        <li><a href="{% url 'new_message' %}">Отправить сообщение должникам</a></li>
+                        <li><a href="{% url 'invite_message' %}">Отправить приглашение</a></li>
                     </ul>
                 </div>
             </div>

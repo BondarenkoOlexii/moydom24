@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from src.houses.models import House, Storey, Section, Worker
+from src.houses.models import House, Storey, Section, Worker, Apartment
+from src.users.models import User
 
 
 class HouseForm(forms.ModelForm):
@@ -103,6 +104,27 @@ HousesAdminInlineFormSet = inlineformset_factory(
     extra=0,
     can_delete=False
 )
+
+
+class ApartmentForm(forms.ModelForm):
+   owner = forms.ModelChoiceField(queryset=User.objects.all(), label="", widget=forms.Select(
+        attrs={'class': 'form-control', 'id': 'select2-flatform-user_id-container'}))
+
+
+
+   class Meta:
+        model = Apartment
+        fields = ['area', 'apartment_number', 'owner', 'house', 'section', 'storey']
+
+        widgets = {
+            'area': forms.TextInput(attrs={'id': 'flatform-square', 'class': 'form-control'}),
+            'apartment_number': forms.TextInput(attrs={'id': 'flatform-flat', 'class': 'form-control', 'aria-required': 'true'}),
+            'house': forms.Select(attrs={'id': 'flatform-house_id', 'class': 'form-control'}),
+            'section': forms.Select(attrs={'id': 'flatform-section_id', 'class': 'form-control'}),
+            'storey': forms.Select(attrs={'id': 'flatform-floor_id', 'class': 'form-control'}),
+        }
+
+
 
 
 # class SectionFormSet(InlineFormSetFactory):

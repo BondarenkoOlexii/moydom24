@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from src.adminpanel.models.UserChoise import Language, Role, Status, UserStatus
+from src.adminpanel.models.UserChoise import Language, Roles, Status, UserStatus
 from django.core.validators import RegexValidator
 from src.common.models import Image
 # Create your models here.
@@ -25,7 +25,7 @@ class User(AbstractUser):
 
 class Role(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, related_name='roles')
-    role = models.CharField(max_length=40, choices=Role.choices, default=Language.choices[1][1])
+    role = models.CharField(max_length=40, choices=Roles.choices, default=Language.choices[1][1])
     statistics = models.BooleanField(default=False)
     transaction = models.BooleanField(default=False)
     receipts = models.BooleanField(default=False)
@@ -43,14 +43,17 @@ class Role(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='taker')
     theme = models.CharField(max_length=225)
     text = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
 
 
 class Call_Master(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    data_create = models.DateField()
+    сonvenient_time = models.TimeField(null=True, blank=True)
     description = models.TextField()
     comment = models.TextField()
+    role = models.CharField(choices=Roles.choices)
     status = models.CharField(choices=Status.choices, default=Status.choices[0][0])

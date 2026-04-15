@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Заявки вызова мастера</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/">
+            <i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Заявки вызова мастера</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="pull-right margin-bottom">
+                    <a class="btn btn-success" href="/admin/master-request/create">Добавить заявку</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools">
+                            <a href="/admin/master-request/index" class="btn btn-default btn-sm">
+                                <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="w0" class="grid-view">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover table-striped linkedRow">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 100px; min-width: 100px"><a class="desc" href="/admin/master-request/index?sort=id" data-sort="id">№ заявки</a></th>
+                                        <th style="width: 135px; min-width: 135px"><a href="/admin/master-request/index?sort=searchDateRequest" data-sort="searchDateRequest">Удобное время</a></th>
+                                        <th style="min-width: 125px"><a href="/admin/master-request/index?sort=type" data-sort="type">Тип мастера</a></th><th style="min-width: 350px">Описание</th>
+                                        <th>Квартира</th><th style="min-width: 200px">Владелец</th><th>Телефон</th><th style="min-width: 125px">Мастер</th><th style="width: 135px; min-width: 135px">Статус</th>
+                                        <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                                    </tr>
+                                    <tr id="w0-filters" class="filters">
+                                        <td><input type="text" class="form-control" name="MasterRequestSearch[id]"></td>
+                                        <td><input type="text" id="masterrequestsearch-searchdaterequestrange" class="form-control" name="MasterRequestSearch[searchDateRequestRange]" data-krajee-daterangepicker="daterangepicker_c8dff207"></td>
+                                        <td><select id="masterrequestsearch-type" class="form-control select2-hidden-accessible" name="MasterRequestSearch[type]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in masters %}
+                                        <tr>
+                                           <td>{{ item.id }}</td>
+                                            <td>{{ item.сonvenient_time }}</td>
+                                            <td>{{ item.role }}</td>
+                                            <td>{{ item.description }}</td>
+                                            <td></td>
+                                            <td>{{ item.user }}</td>
+                                            <td></td>
+                                            <td>{{  }}</td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="box-footer clearfix"></div></div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</div>
+
+{% endblock %}

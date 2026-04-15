@@ -1,0 +1,113 @@
+$(document).ready(function() {
+    // 1. Ініціалізуємо звичайний Select2 для країни
+    $('#flatform-house_id').select2();
+//
+//    // 2. Ініціалізуємо Select2 для міста з підтримкою AJAX
+    $('#flatform-section_id').select2({
+        placeholder: "Выберите дом",
+        ajax: {
+            url: '/api/section/', // URL нашого Django Ninja ендпоінту
+            dataType: 'json',
+            delay: 250, // Затримка, щоб не спамити запитами при швидкому друку
+            data: function (params) {
+                return {
+                    // Динамічно беремо ID вибраного дому
+                    house_id: $('#flatform-house_id').val(),
+                    // Відправляємо те, що юзер друкує в полі пошуку Select2
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#flatform-floor_id').select2({
+        placeholder: "Выберите дом",
+        ajax: {
+            url: '/api/storey/', // URL нашого Django Ninja ендпоінту
+            dataType: 'json',
+            delay: 250, // Затримка, щоб не спамити запитами при швидкому друку
+            data: function (params) {
+                return {
+                    // Динамічно беремо ID вибраної країни
+                    house_id: $('#flatform-house_id').val(),
+                    // Відправляємо те, що юзер друкує в полі пошуку Select2
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#flatform-flat_id').select2({
+        placeholder: 'Выберите квартиру',
+        ajax: {
+            url: '/api/apartment/',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    house_id: $('#flatform-house_id').val(),
+                    section_id: $('#flatform-section_id').val(),
+                    storey_id: $('#flatform-floor_id').val(),
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+
+
+    // 3. Логіка блокування/розблокування та очищення
+    $('#flatform-house_id').on('change', function() {
+        var house_id = $(this).val();
+        var $sectionSelect = $('#flatform-section_id');
+        var $storeySelect = $('#flatform-floor_id');
+        var $apartmentSelect = $('#flatform-flat_id');
+
+        // Очищаємо попередньо вибране місто
+        $sectionSelect.empty().trigger("change");
+        $storeySelect.empty().trigger("change");
+        $apartmentSelect.empty().trigger("change");
+
+
+        if (house_id) {
+            $sectionSelect.prop('disabled', false);
+            $storeySelect.prop('disabled', false);
+            $apartmentSelect.prop('disabled', false);
+
+        } else {
+            // Якщо країну скинуто - блокуємо поле міста
+            $sectionSelect.prop('disabled', true);
+            $storeySelect.prop('disabled', true);
+            $apartmentSelect.prop('disabled', true);
+
+            // Додаємо дефолтний option назад
+            $sectionSelect.append(new Option("Сначала выберите дом", "", true, true));
+            $storeySelect.append(new Option("Сначала выберите дом", "", true, true));
+            $apartmentSelect.append(new Option("Сначала выберите...", "", true, true));
+        }
+
+        if (!$('#flatform-house_id').val()) {
+            $('#flatform-section_id').prop('disabled', true);
+            $('#flatform-floor_id').prop('disabled', true);
+            $('#flatform-flat_id').prop('disabled', true);
+        }
+
+    });
+});

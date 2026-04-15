@@ -23,6 +23,7 @@
 <link href="{% static 'dist/css/datepicker-kv.min.css' %}" rel="stylesheet">
 <link href="{% static 'dist/css/kv-widgets.min.css' %}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{% static 'dist/css/custom.css' %}" rel="stylesheet">    <style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
     <body class="skin-black-light sidebar-mini fixed sidebar-mini-expand-feature" style="height: auto; min-height: 100%;">
         <div class="wrapper" style="height: auto; min-height: 100%;">
@@ -529,11 +530,11 @@
 <li><a href="/admin/account-transaction/index"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
 <li><a href="/admin/invoice/index"><i class="fa fa-files-o"></i>  <span>Квитанции на оплату</span></a></li>
 <li><a href="/admin/account/index"><i class="fa fa-credit-card"></i>  <span>Лицевые счета</span></a></li>
-<li><a href="/admin/flat/index"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
+<li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
 <li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
 <li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
-<li><a href="/admin/message/index"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
-<li><a href="/admin/master-request/index"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
+<li><a href="{% url 'messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
+<li><a href="{% url 'master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
 <li><a href="/admin/counter-data/counters"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
 <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
 <ul class="treeview-menu">
@@ -586,4 +587,16 @@
 <script src="{% static 'dist/js/custom.js' %}"></script>
 <script src="{% static 'dist/js/datepicker-kv-min.js' %}" ></script>
 <script src="{% static 'dist/js/kv-widgets.min.js' %}" ></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Знаходимо всі теги <select> на сторінці і перетворюємо їх
+        $('select2-default').select2({
+            width: '100%', // Щоб вони не були сплюснутими
+            placeholder: "Оберіть варіант..." // Можеш змінити текст
+        });
+    });
+</script>
+{% block scripts %}
+{% endblock %}
     </body></html>
