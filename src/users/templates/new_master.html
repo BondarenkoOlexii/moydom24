@@ -42,14 +42,14 @@
 
                 <div class="form-group field-useradminform-role has-success">
                     <label class="control-label" for="useradminform-role">Роль</label>
-                    <select id="useradminform-role" class="form-control" name="UserAdminForm[role]" aria-invalid="false"></select>
+                    {{ form.role_select }}
 
                 <div class="help-block"></div>
             </div>
 
             <div class="form-group field-useradminform-status has-success">
                 <label class="control-label" for="useradminform-status">Статус</label>
-                <select id="useradminform-status" class="form-control" name="UserAdminForm[status]" aria-invalid="false"></select>
+                {{ form.user_status }}
                 <div class="help-block"></div>
             </div>
         </div>

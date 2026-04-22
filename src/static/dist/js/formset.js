@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // Додавання нової форми
-    $('.form-row-add-section-btn, .form-row-add-storey-btn, .form-row-add-houseuseradmins-btn').click(function(e) {
+    $('.form-row-add-section-btn, .form-row-add-storey-btn, .form-row-add-houseuseradmins-btn, .form-row-add-service-btn, .form-row-add-measurement-btn, .form-row-add-tariffservice-btn').click(function(e) {
         e.preventDefault();
 
         console.log("Я працюю");
@@ -35,21 +35,24 @@ $(document).ready(function() {
     // Видалення форми (спрацьовує і для існуючих, і для щойно доданих)
     $('.tab-content').on('click', '.form-row-remove-btn', function(e) {
         e.preventDefault();
+        console.log("Я видалення працюю");
 
-        let row = $(this).closest('.section-row').remove();
+        // УНІВЕРСАЛЬНИЙ ПОШУК: шукаємо будь-який батьківський рядок, що закінчується на "-row"
+        let row = $(this).closest('[class$="-row"]');
 
+        // Знаходимо чекбокс DELETE
         let deleteInput = row.find('input[name$="-DELETE"]');
 
-        if (deleteInput.length) {
-            deleteInput.val('on');
+        if (deleteInput.length > 0) {
+            // Для існуючих записів у базі: ставимо галочку і ховаємо рядок
+            deleteInput.prop('checked', true); // .prop('checked', true) замість .val('on')
             row.hide();
+            console.log("Сховали існуючий рядок");
         } else {
-         row.remove();
+            // Для нових записів (ще не збережених): просто видаляємо з HTML
+            row.remove();
+            console.log("Видалили новий рядок");
         }
-
-        // Примітка: для повноцінного видалення в Django, якщо форма вже є в базі,
-        // потрібно також ставити галочку в прихованому чекбоксі DELETE.
-        // Але якщо це просто щойно додана форма на клієнті — цього `.remove()` достатньо.
     });
 
 });

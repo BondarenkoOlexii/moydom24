@@ -2,9 +2,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
-from .models import House, Section, Image, Apartment
-from src.users.models import Call_Master
-from .forms import HouseForm, SectionInlineFormSet, StoreyInlineFormSet, HousesAdminInlineFormSet, ApartmentForm
+from .models import House, Section, Image, Apartment, Call_Master
+from .forms import HouseForm, SectionInlineFormSet, StoreyInlineFormSet, HousesAdminInlineFormSet, ApartmentForm,\
+    MasterRequestForm
+
+
 # Create your views here.
 
 
@@ -220,3 +222,28 @@ class DeleteApartmnent(DeleteView):
     model = Apartment
     success_url = reverse_lazy('apartment')
 
+
+
+class ListMasterRequest(ListView):
+    model = Call_Master
+    template_name = 'master-request.html'
+    context_object_name = 'masters'
+
+
+class NewMasterRequest(CreateView):
+    model = Call_Master
+    template_name = 'new-master-request.html'
+    form_class = MasterRequestForm
+    success_url = reverse_lazy('request-master-list')
+
+
+class UpdateMasterRequest(UpdateView):
+    model = Call_Master
+    template_name = 'new-master-request.html'
+    form_class = MasterRequestForm
+    success_url = reverse_lazy('request-master-list')
+
+
+class DeleteMasterRequest(DeleteView):
+    model = Call_Master
+    success_url = reverse_lazy('request-master-list')

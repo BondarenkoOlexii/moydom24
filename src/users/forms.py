@@ -1,6 +1,7 @@
 from django import forms
-from .models import User, Message
+from .models import User, Message, Role
 from src.houses.models import House, Section, Storey, Apartment
+from src.adminpanel.models import UserChoise
 from django_select2.forms import ModelSelect2Widget
 
 class UserForm(forms.ModelForm):
@@ -100,11 +101,11 @@ class InviteMessage(forms.Form):
         widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'info@example.com'})
     )
 
-class CreateMaster(forms.ModelForm):
+class CreateMasterForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control pass-value', 'id': 'userform-password'}),
         label="Пароль",
-        required=False  # Якщо це UpdateView, пароль не обов'язковий
+        required=False
     )
     password_confirm = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control pass-value', 'id': 'userform-password2'}),
@@ -112,17 +113,35 @@ class CreateMaster(forms.ModelForm):
         required=False
     )
 
+    role_select = forms.ChoiceField(
+        choices=UserChoise.Roles.choices,
+        label='Виберіть роль',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password', 'password_confirm']
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'password', 'password_confirm', 'user_status', 'role_select']
 
         widgets = {
             'first_name': forms.TextInput(attrs={'id': 'userform-firstname', 'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'id': 'userform-lastname', 'class': 'form-control'}),
             'phone_number': forms.TextInput(attrs={'id': 'userform-phone', 'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'id': 'userform-email', 'class': 'form-control', 'aria-required': 'true'}),
-            # 'status': forms.Select(attrs={'id': 'useradminform-status', 'class': 'form-control'})
+            'user_status': forms.Select(attrs={'id': 'useradminform-status', 'class': 'form-control'})
         }
+
+
+# 'id': 'userform-birthdate', 'class': 'form-control krajee-datepicker', 'name': 'UserForm[birthdate]', 'data-datepicker-source': 'userform-birthdate-kvdate', 'data-datepicker-type': '3', 'data-krajee-kvdatepicker': 'kvDatepicker_1643d6f1'
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #
+    #     self.fields['role_select'].label_from_instance = lambda obj: f"{obj.role}"
+
+
+
+
+
 
 
 # password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control pass-value'}))

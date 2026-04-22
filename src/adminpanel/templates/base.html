@@ -21,8 +21,10 @@
 <link href="{% static 'dist/css/_all-skins.min.css' %}" rel="stylesheet">
 <link href="{% static 'dist/css/style.css' %}" rel="stylesheet">
 <link href="{% static 'dist/css/datepicker-kv.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'dist/css/bootstrap-timepicker.min.css' %}">
 <link href="{% static 'dist/css/kv-widgets.min.css' %}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet">
+
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{% static 'dist/css/custom.css' %}" rel="stylesheet">    <style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
     <body class="skin-black-light sidebar-mini fixed sidebar-mini-expand-feature" style="height: auto; min-height: 100%;">
@@ -534,7 +536,7 @@
 <li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
 <li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
 <li><a href="{% url 'messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
-<li><a href="{% url 'master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
+<li><a href="{% url 'request-master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
 <li><a href="/admin/counter-data/counters"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
 <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
 <ul class="treeview-menu">
@@ -547,12 +549,12 @@
 </li>
 <li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Настройки системы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
 <ul class="treeview-menu">
-<li><a href="/admin/service/index"><i class="fa fa-briefcase"></i>  <span>Услуги</span></a></li>
-<li><a href="/admin/tariff/index"><i class="fa fa-money"></i>  <span>Тарифы</span></a></li>
-<li><a href="/admin/user-admin/role"><i class="fa fa-user"></i>  <span>Роли</span></a></li>
+<li><a href="{% url 'service' %}"><i class="fa fa-briefcase"></i>  <span>Услуги</span></a></li>
+<li><a href="{% url 'tariff' %}"><i class="fa fa-money"></i>  <span>Тарифы</span></a></li>
+<li><a href="{% url 'role' %}"><i class="fa fa-user"></i>  <span>Роли</span></a></li>
 <li><a href="{% url 'master-list' %}"><i class="fa fa-user-plus"></i>  <span>Пользователи</span></a></li>
-<li><a href="/admin/pay-company/index"><i class="fa fa-credit-card"></i>  <span>Платежные реквизиты</span></a></li>
-<li><a href="/admin/transaction-purpose/index"><i class="fa fa-list-ol"></i>  <span>Статьи платежей</span></a></li>
+<li><a href="{% url 'pay-company' %}"><i class="fa fa-credit-card"></i>  <span>Платежные реквизиты</span></a></li>
+<li><a href="{% url 'transaction-purpose' %}"><i class="fa fa-list-ol"></i>  <span>Статьи платежей</span></a></li>
 </ul>
 </li></ul>
     </section><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 1028px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
@@ -586,6 +588,7 @@
 <script src="{% static 'dist/js/main.js' %}"></script>
 <script src="{% static 'dist/js/custom.js' %}"></script>
 <script src="{% static 'dist/js/datepicker-kv-min.js' %}" ></script>
+<script src="{% static 'dist/js/bootstrap-timepicker.min.js' %}"></script>
 <script src="{% static 'dist/js/kv-widgets.min.js' %}" ></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>

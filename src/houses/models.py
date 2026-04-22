@@ -1,4 +1,6 @@
 from django.db import models
+
+from src.adminpanel.models.UserChoise import Roles, Status
 from src.common.models import Image
 from src.users.models import User
 
@@ -40,3 +42,18 @@ class Apartment(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE) #і payment_account
     apartment_number = models.CharField(max_length=10)
     area = models.FloatField()
+
+    def __str__(self):
+        return f"{self.apartment_number}"
+
+
+class Call_Master(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='apartment_owner')
+    master = models.ForeignKey(User, limit_choices_to={'is_admin': True}, on_delete=models.CASCADE, related_name='master')
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
+    data_create = models.DateField()
+    сonvenient_time = models.TimeField(null=True, blank=True)
+    description = models.TextField()
+    comment = models.TextField()
+    role = models.CharField(choices=Roles.choices)
+    status = models.CharField(choices=Status.choices, default=Status.choices[0][0])

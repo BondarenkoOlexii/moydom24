@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Новая заявка</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/master-request/index">Вызов мастера</a></li>
+            <li class="active">Новая заявка</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <form id="w0" method="post">
+            {% csrf_token %}<div class="row">
+                <div class="col-xs-12 col-md-7 col-lg-6">
+                    <div class="page-header-spec">
+                        <div class="form-group field-masterrequest-date_request">
+                            <div id="masterrequest-date_request-kvdate" class="input-group  date">
+                                {{form.data_create}}
+                                    <span class="input-group-addon kv-date-calendar" title="Выбрать дату"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                            </div>
+                            <span class="label-mid">от</span>
+                            <div class="form-group field-masterrequest-time_request has-success">
+                                <div class="input-group bootstrap-timepicker">
+                                    <div class="bootstrap-timepicker-widget dropdown-menu">
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td>
+                                                <td class="separator">&nbsp;</td><td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><span class="bootstrap-timepicker-hour">20</span></td>
+                                                <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">15</span></td>
+                                            </tr><tr><td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td>
+                                                <td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {{ form.сonvenient_time }}
+                                    <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group">
+                                <label for="user_id">Владелец квартиры</label>
+                                {{ form.user }}
+                            </div>
+                        </div>
+                            <div class="col-xs-12 col-md-6"></div>
+                                <div class="clearfix"></div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group field-masterrequest-description required">
+                                            <label class="control-label" for="masterrequest-description">Описание</label>
+                                            {{ form.description }}
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group field-masterrequest-flat_id required">
+                                            <label class="control-label" for="masterrequest-flat_id">Квартира</label>
+                                            {{ form.apartment }}
+<!--                                            <span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-masterrequest-flat_id-container"><span class="select2-selection__rendered" id="select2-masterrequest-flat_id-container"><span class="select2-selection__placeholder">Выберите...</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>-->
+                                            <div class="help-block"></div>
+                                        </div>
+
+                                        <div class="form-group field-masterrequest-type">
+                                            <label class="control-label" for="masterrequest-type">Тип мастера</label>
+                                            {{ form.role }}
+                                            <div class="help-block"></div>
+                                        </div>
+
+                                        <div class="form-group field-masterrequest-status required">
+                                            <label class="control-label" for="masterrequest-status">Статус</label>
+                                            {{ form.status }}
+                                            <div class="help-block"></div>
+                                        </div>
+
+                                        <div class="form-group field-masterrequest-user_admin_id">
+                                            <label class="control-label" for="masterrequest-user_admin_id">Мастер</label>
+                                            {{ form.master }}
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group field-masterrequest-comment">
+                                            <label class="control-label" for="masterrequest-comment">Комментарий</label>
+                                            {{ form.comment }}
+                                            <div class="help-block"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 text-right">
+                                        <div class="form-group">
+                                            <a href="/admin/master-request/index" class="btn btn-default">Отменить</a>
+                                            <button type="submit" class="btn btn-success">Сохранить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </form>
+    </section>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{% static 'dist/js/selects2.js' %}"> </script>
+    <script>
+        $(document).ready(function() {
+            $('#message-description').wysihtml5({
+                toolbar: {
+                    "custom": "#custom-toolbar",
+                },
+                "stylesheets": ["{% static 'dist/css/bootstrap3-wysihtml5.min.css' %}"],
+                "events": {
+                    "load": function() {
+                        console.log("Редактор завантажений!");
+                    }
+                }
+            });
+            $('.wysihtml5-sandbox').css({
+                'width': '100%',
+                'height': '250px',
+                'display': 'block'
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#masterrequest-time_request').timepicker({
+                showInputs: false, // щоб не друкувати руками, а тільки стрілками
+                showMeridian: false, // 24-годинний формат (якщо true — буде AM/PM)
+                minuteStep: 5, // крок хвилин
+                defaultTime: 'current' // встановити поточний час при завантаженні
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // 1. Ініціалізація календаря для твого поля
+            $('#masterrequest-date_request').datepicker({
+                format: 'yyyy-mm-dd', // Формат для Django (Year-Month-Day)
+                autoclose: true,
+                language: 'ru',
+                todayHighlight: true,
+                orientation: "bottom auto"
+            });
+
+            // 2. Зробимо так, щоб при натисканні на іконку календаря він теж відкривався
+            $('#masterrequest-date_request-kvdate .kv-date-calendar').on('click', function() {
+                $('#userform-birthdate').datepicker('show');
+            });
+        });
+    </script>
+
+
+    <script>
+        $('.user-container').select2({
+            placeholder: 'Выберите услугу',
+            minimumInputLength: 0, // Починати пошук одразу (або постав 1-2, щоб шукало тільки після вводу тексту)
+            ajax: {
+                url: '/api/user-lazy-out/', // Твій новий Ninja ендпоінт
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term || '', // Те, що ввів юзер
+                        page: params.page || 1 // Номер сторінки для підвантаження (скролу)
+                    };
+                },
+                processResults: function (data, params) {
+                    // Ця функція просто передає дані від Ninja до Select2
+                    return {
+                        results: data.results,
+                        pagination: data.pagination
+                    };
+                },
+                cache: true
+            }
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            const $apartmentSelect = $('#select2-masterrequest-flat_id-container');
+
+
+            if ($apartmentSelect.length > 0) {
+                $apartmentSelect.select2({
+                    placeholder: 'Выберите квартиру',
+                    minimumInputLength: 0,
+                    ajax: {
+                        url: '/api/apartment-lazy-out/', // Твій ендпоінт
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            // Беремо ID власника з правильного селекта
+                            const selectedUserId = $('#user-container').val();
+
+                            console.log("3. Select2 робить запит! Власник ID:", selectedUserId);
+
+                            return {
+                                user_id: selectedUserId
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.results,
+                                pagination: data.pagination
+                            };
+                        },
+                        cache: true
+                    }
+                });
+            }
+        });
+    </script>
+
+
+<!--    <script>-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        const firstSelect = document.querySelector('#masterrequest-type');-->
+<!--        // Зберігаємо посилання на jQuery об'єкт другого селекта, бо Select2 працює через jQuery-->
+<!--        const $secondSelect = $('#masterrequest-user_admin_id');-->
+
+<!--        if (firstSelect) {-->
+<!--            firstSelect.addEventListener('change', function() {-->
+<!--                const selectedId = this.value;-->
+
+<!--                if (!selectedId) {-->
+<!--                    // Очищуємо і оновлюємо Select2-->
+<!--                    $secondSelect.empty().append('<option value="">-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>').trigger('change');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                fetch(`/api/master-lazy-out?role_type=${selectedId}`)-->
+<!--                    .then(response => response.json())-->
+<!--                    .then(data => {-->
+<!--                        $secondSelect.empty(); // Очищуємо старі дані-->
+
+<!--                        // Додаємо дефолтну опцію-->
+<!--                        $secondSelect.append(new Option('Оберіть майстра', '', true, true));-->
+
+<!--                        data.forEach(item => {-->
+<!--                            // Створюємо нові опції через jQuery-->
+<!--                            let newOption = new Option(item.full_name, item.id, false, false);-->
+<!--                            $secondSelect.append(newOption);-->
+<!--                        });-->
+
+<!--                        // НАЙГОЛОВНІШЕ: кажемо Select2 оновити інтерфейс-->
+<!--                        $secondSelect.trigger('change');-->
+<!--                    })-->
+<!--                    .catch(err => console.error('Помилка:', err));-->
+<!--            });-->
+<!--        }-->
+<!--    });-->
+<!--    </script>-->
+{% endblock %}

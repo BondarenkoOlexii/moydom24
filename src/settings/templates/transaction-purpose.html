@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1024.88px;">
+    <section class="content-header">
+        <h1>Статьи приходов/расходов</h1>
+
+        <ul class="breadcrumb">
+          <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+          <li class="active">Статьи приходов/расходов</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="pull-right margin-bottom">
+                    <a class="btn btn-success" href="{% url 'transaction-purpose_create' %}">Добавить статью</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div id="w0" class="grid-view">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover table-striped linkedRow">
+                                <thead>
+                                    <tr>
+                                      <th>Название</th>
+                                      <th><a href="/admin/transaction-purpose/index?sort=type" data-sort="type">Приход/расход</a></th>
+                                      <th style="width: 80px; min-width: 80px">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in form %}
+                                    <tr data-href="{% url 'transaction-purpose_update' item.id %}">
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.get_type_display }}</td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-sm" href="{% url 'transaction-purpose_update' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-default btn-sm" href="{% url 'transaction-purpose_delete' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box-footer clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

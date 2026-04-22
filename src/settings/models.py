@@ -3,22 +3,30 @@ from django.db import models
 from src.adminpanel.models.FinanceChoise import TransactionChoise, InvoiceChoise
 from src.finance.models import Payment_Account, Cash_Register
 from src.adminpanel.models.SettingChoise import CountersChoise
+from src.adminpanel.models.FinanceChoise import CashRegisterChoise
+
+
 # Create your models here.
 
 class Tariff(models.Model):
     name = models.CharField(max_length=220)
     description = models.TextField()
-    create_time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+class Measurement(models.Model):
+    unit_of_measurement = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.unit_of_measurement
 
 class Service(models.Model):
     service = models.CharField(max_length=220)
-    currency = models.CharField(max_length=10)
+    show = models.BooleanField(default=True)
+    measurement = models.ForeignKey(Measurement, on_delete=models.SET_NULL, blank=True, null=True)
     tariff = models.ManyToManyField(Tariff)
 
-class Measurement(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    unit_of_measurement = models.CharField(max_length=10)
-
+    def __str__(self):
+        return self.service
 
 class Tarrif_Service_Price(models.Model):
     tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE)
@@ -50,3 +58,14 @@ class Invoice(models.Model):
     type = models.CharField(choices=InvoiceChoise.choices, default=InvoiceChoise.choices[0][0])
     comment = models.TextField()
     create_time = models.DateTimeField()
+
+
+class PaymentInfo(models.Model):
+    name = models.CharField()
+    information = models.TextField()
+
+
+class TransactionPurpose(models.Model):
+    name = models.CharField(max_length=225)
+    type = models.CharField(choices=CashRegisterChoise, default=CashRegisterChoise.choices[0][0])
+

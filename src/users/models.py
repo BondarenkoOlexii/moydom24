@@ -23,6 +23,9 @@ class User(AbstractUser):
     main_image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='user_main_image', null=True, blank=True)
     user_id = models.BigIntegerField(unique=True, null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 class Role(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, related_name='roles')
     role = models.CharField(max_length=40, choices=Roles.choices, default=Language.choices[1][1])
@@ -38,7 +41,7 @@ class Role(models.Model):
     site_control = models.BooleanField(default=False)
     services = models.BooleanField(default=False)
     tariff = models.BooleanField(default=False)
-    role = models.BooleanField(default=False)
+    role_list = models.BooleanField(default=False)
     users = models.BooleanField(default=False)
 
 
@@ -47,13 +50,3 @@ class Message(models.Model):
     theme = models.CharField(max_length=225)
     text = models.TextField()
     date = models.DateTimeField(auto_now=True)
-
-
-class Call_Master(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    data_create = models.DateField()
-    сonvenient_time = models.TimeField(null=True, blank=True)
-    description = models.TextField()
-    comment = models.TextField()
-    role = models.CharField(choices=Roles.choices)
-    status = models.CharField(choices=Status.choices, default=Status.choices[0][0])

@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from src.houses.models import House, Storey, Section, Worker, Apartment
-from src.users.models import User
+from src.houses.models import House, Storey, Section, Worker, Apartment, Call_Master
+from src.users.models import User, Role
 
 
 class HouseForm(forms.ModelForm):
@@ -126,6 +126,31 @@ class ApartmentForm(forms.ModelForm):
 
 
 
+
+class MasterRequestForm(forms.ModelForm):
+
+    class Meta:
+        model = Call_Master
+        fields = ['user', 'data_create', 'сonvenient_time', 'description', 'comment', 'status', 'role', 'apartment', 'master']
+
+        widgets = {
+            'user': forms.Select(attrs={'id': 'user-container', 'class': 'form-control'}),
+            'master': forms.Select(attrs={'id': 'masterrequest-user_admin_id', 'class': 'form-control'}),
+            'apartment': forms.Select(attrs={'id': 'select2-masterrequest-flat_id-container', 'class': 'form-control'}),
+            'data_create': forms.DateInput(attrs={'id': 'masterrequest-date_request', 'class': 'form-control krajee-datepicker', 'name': 'MasterRequest[date_request]',
+                                                  'data-datepicker-source':'masterrequest-date_request-kvdate', 'data-datepicker-type': '3', 'data-krajee-kvdatepicker': 'kvDatepicker_1643d6f1'}),
+
+            'сonvenient_time': forms.TimeInput(attrs={'id': 'masterrequest-time_request', 'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'id': 'masterrequest-description', 'class': 'compose-textarea form-control', 'rows': '6', 'placeholder': 'Текст сообщения'}),
+            'comment': forms.Textarea(attrs={'id': 'message-description', 'class': 'compose-textarea form-control'}),
+            'status': forms.Select(attrs={'id': 'masterrequest-status', 'class': 'form-control'}),
+            'role': forms.Select(attrs={'id': 'masterrequest-type', 'class': 'form-control', 'value': ''}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['role'].initial = 'director'
 
 # class SectionFormSet(InlineFormSetFactory):
 #     model = Section

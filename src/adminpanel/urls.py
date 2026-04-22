@@ -1,9 +1,18 @@
 from django.urls import path
-from .views import dashboard
-from src.houses.views import ListHouse, DetailHouse, CreateHouse, DeleteHouse, UpdateHouse, ApartmentList, CreateApartment, UpdateApartment, DeleteApartmnent, DetailApartment
-from src.users.views import ListUser, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage, SpecificMessage, DeleteMessage, ListMasterRequest, MasterList, CreateMaster
 from django.views.generic import TemplateView
 from src.adminpanel.api import api
+
+from .views import dashboard
+
+from src.houses.views import ListHouse, DetailHouse, CreateHouse, DeleteHouse, UpdateHouse, ApartmentList, CreateApartment,\
+    UpdateApartment, DeleteApartmnent, DetailApartment, ListMasterRequest, NewMasterRequest, DeleteMasterRequest, UpdateMasterRequest
+
+from src.users.views import ListUser, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage,\
+    SpecificMessage, DeleteMessage, MasterList, CreateMaster, UpdateMaster, DeleteMaster
+
+from src.settings.views import PaymentInfoCreate, TransactionProposeList, TransactionProposeCreate, TransactionProposeUpdate,\
+    TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView
+
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
@@ -31,7 +40,28 @@ urlpatterns = [
     path('message/delete/<int:pk>', DeleteMessage.as_view(), name='delete_message'),
 
     path('master-request', ListMasterRequest.as_view(), name='request-master-list'),
+    path('master-request/create', NewMasterRequest.as_view(), name='request-master-create'),
+    path('master-request/update/<int:pk>', UpdateMasterRequest.as_view(), name='request-master-update'),
+    path('master-request/delete/<int:pk>', DeleteMasterRequest.as_view(), name='request-master-delete'),
+
+
     path('master-list', MasterList.as_view(), name='master-list'),
     path('master-list/create', CreateMaster.as_view(), name='master-list-create'),
+    path('master-list/update/<int:pk>', UpdateMaster.as_view(), name='master-list-update'),
+    path('master-list/delete/<int:pk>', DeleteMaster.as_view(), name='master-list-delete'),
+
+    path('pay-company', PaymentInfoCreate.as_view(), name='pay-company'),
+    path('transaction-purpose', TransactionProposeList.as_view(), name='transaction-purpose'),
+    path('transaction-purpose/create', TransactionProposeCreate.as_view(), name='transaction-purpose_create'),
+    path('transaction-purpose/update/<int:pk>', TransactionProposeUpdate.as_view(), name='transaction-purpose_update'),
+    path('transaction-purpose/delete/<int:pk>', TransactionProposeDelete.as_view(), name='transaction-purpose_delete'),
+
+    path('service', ServiceView.as_view(), name='service'),
+    path('tariff', TariffList.as_view(), name='tariff'),
+    path('tariff/create', CreateTariff.as_view(), name='create_tariff'),
+    path('tariff/update/<int:pk>', UpdateTariff.as_view(), name='update_tariff'),
+    path('tariff/delete/<int:pk>', DeleteTariff.as_view(), name='delete_tariff'),
+
+    path('role', RoleView.as_view(), name='role'),
 
 ]

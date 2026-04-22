@@ -63,16 +63,32 @@
                                                 </span>
                                             </span>
                                         </td>
+                                        <td> </td>
                                 </thead>
 
                                 <tbody>
                                 {% for item in form %}
                                     <tr>
-                                        <td>{{ item.name }}</td>
-                                        <td></td>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.first_name }} {{ item.last_name }}</td>
+                                        <td>
+                                            {% for role_obj in item.roles.all %}
+                                                {{ role_obj.get_role_display }}
+                                            {% endfor %}
+                                        </td>
                                         <td>{{ item.phone_number }}</td>
                                         <td>{{ item.email }}</td>
-                                        <td></td>
+                                        <td>{{ item.user_status }}</td>
+                                        <td>
+                                            <form action="" method="post">
+                                                {% csrf_token %}
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-sm" href="/admin/user-admin/invite/1" title="Отправить приглашение" data-toggle="tooltip"><i class="fa fa-repeat"></i></a>
+                                                    <a class="btn btn-default btn-sm" href="{% url 'master-list-update' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                                    <a class="btn btn-default btn-sm" href="{% url 'master-list-delete' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>
+                                                </div>
+                                            </form>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

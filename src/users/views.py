@@ -4,8 +4,8 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView
 from django.db.models import Q # Фільтр щоб легше шукати, | - OR
 
-from .models import User, Image, Message, Call_Master
-from .forms import UserForm, MessageForm, InviteMessage, CreateMaster
+from .models import User, Image, Message, Role
+from .forms import UserForm, MessageForm, InviteMessage, CreateMasterForm
 from src.houses.models import Apartment
 from config_celery.celery_email_worker import send_invite_email, app
 
@@ -202,29 +202,43 @@ class DeleteMessage(DeleteView):
     success_url = reverse_lazy('messages')
 
 
-
-
-class ListMasterRequest(ListView):
-    model = Call_Master
-    template_name = 'master-request.html'
-    context_object_name = 'masters'
-
-
-class NewMasterRequest(CreateView):
-    model = Call_Master
-    template_name = 'new-master-request.html'
-
-
-
 class MasterList(ListView):
     model = User
     template_name = 'masters.html'
     context_object_name = 'form'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        role_list = User.objects.prefetch_related('roles')
+
+        # for obj in role_list:
+        #     user_role = obj.roles.first()
+
+        context['roles'] = role_list
+
+        return context
+
 class CreateMaster(CreateView):
     model = User
     template_name = 'new_master.html'
-    form_class = CreateMaster
+    form_class = CreateMasterForm
+
+
+    def form_valid(self, form):
+
+        role_data = form.cleaned_data['role_select']
+
+        form.cleaned_data.pop('role_select', None) # Зберігаємо і видаляємо поле якого нема в User
+        form.cleaned_data.pop('password_confirm', None)
+        form['username'] = form.cleaned_data['first_name']
+        form.cleaned_data['is_admin'] = True
+
+        user_obj = User.objects.create(**form.cleaned_data) # Дуже удобно, зберігаємо все і сразу а не прописуємо кожне поле окремо
+
+        role_data = Role.objects.create(user=user_obj, role=role_data)
+
+        return super().form_valid(form)
 
 
     def form_invalid(self, form):
@@ -233,3 +247,65 @@ class CreateMaster(CreateView):
 
     def get_success_url(self):
         return reverse('master-list')
+
+
+class UpdateMaster(UpdateView):
+    model = User
+    template_name = 'new_master.html'
+    form_class = CreateMasterForm
+    success_url = 'master-list'
+
+    def get(self, request, *args, **kwargs):
+        # 1. Дістаємо об'єкт з бази (наприклад, юзера з ID=5)
+        self.object = self.get_object()
+
+        print("\n=== ДЕБАГ GET-ЗАПИТУ ===")
+        print(f"1. Кого ми дістали з бази: {self.object.username} (ID: {self.object.id})")
+        print(f"2. Що в нього записано в полі first_name у БАЗІ: '{self.object.first_name}'")
+        print(f"3. Що в нього записано в полі email у БАЗІ: '{self.object.email}'")
+
+        # 2. Просимо Django створити форму і передати їй цього юзера
+        form = self.get_form()
+
+        #print(f"4. Що форма отримала в поле first_name: '{form['first_name'].value()}'")
+        print("========================\n")
+
+        # 3. Відмальовуємо сторінку
+        context = self.get_context_data(object=self.object, form=form)
+        return self.render_to_response(context)
+
+
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        user = self.get_object()
+
+        current_role = user.roles.first()
+
+        if current_role:
+            initial['role_select'] = current_role
+
+        return initial
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+
+        user.cleaned_data['username'] = form.cleaned_data['first_name']
+        user.cleaned_data['is_admin'] = True
+
+        user.save()
+
+        role_data = form.cleaned_data['role_select']
+
+        Role.objects.update_or_create(
+            user=user,
+            role=role_data
+        )
+
+        return super().form_valid(form)
+
+
+class DeleteMaster(DeleteView):
+    model = User
+    success_url = reverse_lazy('master-list')
