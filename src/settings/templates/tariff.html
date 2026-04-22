@@ -42,7 +42,7 @@
                                         <td>{{ item.create_time }}</td>
                                         <td>
                                             <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-sm" href="/admin/tariff/create?tariff_id=263" title="Копировать" data-toggle="tooltip"><i class="fa fa-clone"></i></a>
+                                                <a class="btn btn-default btn-sm" href="{% url 'create_tariff' %}?tariff_id={{ item.id }}" title="Копировать" data-toggle="tooltip"><i class="fa fa-clone"></i></a>
                                                 <a class="btn btn-default btn-sm" href="{% url 'update_tariff' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                                                 <a class="btn btn-default btn-sm" href="{% url 'delete_tariff' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>
                                             </div>

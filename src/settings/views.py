@@ -1,3 +1,4 @@
+from django.db.models import Model
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -6,7 +7,7 @@ from django.contrib.auth.mixins import AccessMixin, PermissionRequiredMixin
 from django.http import JsonResponse
 
 
-from .models import PaymentInfo, TransactionPurpose, Service, Measurement, Tariff
+from .models import PaymentInfo, TransactionPurpose, Service, Measurement, Tariff, Tarrif_Service_Price
 from src.users.models import Role
 from .forms import PaymentInfoForm, TransactionPurposeForm, ServiceFormSet, ServiceForm, MeasurementFormSet,\
     MeasurementForm, TariffForm, TariffFormSet, RoleForm
@@ -14,14 +15,14 @@ from .forms import PaymentInfoForm, TransactionPurposeForm, ServiceFormSet, Serv
 
 
 
-
-class AdminpanelRestrictionMixin(PermissionRequiredMixin):
-    app_list = ['src.adminpanel', 'src.authorization', 'src.finance', 'src.houses', 'src.settings', 'src.site_control',
-                'src.users']
-
-    user = request.user.id
-
-    user_access = Role.objects.filter(user=user)
+#
+# class AdminpanelRestrictionMixin(PermissionRequiredMixin):
+#     app_list = ['src.adminpanel', 'src.authorization', 'src.finance', 'src.houses', 'src.settings', 'src.site_control',
+#                 'src.users']
+#
+#     user = request.user.id
+#
+#     user_access = Role.objects.filter(user=user)
 
 
 
@@ -48,8 +49,10 @@ class RoleView(ListView):
     def post(self, request, *args, **kwargs):
         print(request.POST)
 
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
-        return reverse('role')
+        return reverse_lazy('role')
 
 class PaymentInfoCreate(CreateView):
     model = PaymentInfo
@@ -127,6 +130,19 @@ class CreateTariff(CreateView):
     model = Tariff
     template_name = 'create_tariff.html'
     form_class = TariffForm
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        tariff_id = self.request.GET.get('tariff_id')
+
+        if tariff_id:
+            source_tariff = Tariff.objects.filter(id=tariff_id).first()
+            if source_tariff:
+                initial['name'] = source_tariff.name
+                initial['description'] = source_tariff.description
+        return initial
+
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

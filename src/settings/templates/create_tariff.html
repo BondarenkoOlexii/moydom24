@@ -149,31 +149,54 @@
 
 <script>
     $(document).ready(function() {
-        console.log("Функція працює");
-
-        // 1. Ініціалізація select2 (якщо селекти мають клас .service-select)
-        // Зверни увагу: я змінив #service-select на .service-select,
-        // бо у формсеті багато селектів і ID у них різні (напр. id_tariff-0-service)
-        $('.service-select').select2({
-            placeholder: 'Выберите услугу'
+        // 1. Ініціалізуємо Select2 ТІЛЬКИ для існуючих рядків (ігноруємо прихований шаблон)
+        // Звертаємося тільки до тих селектів, які зараз видимі на екрані
+        $('#container-tariff .row-form-tariff-row:visible .service-select').select2({
+            placeholder: 'Выберите услугу',
+            width: '100%' // Допомагає уникнути багів з шириною у формсетах
         });
 
-        // 2. Обробник зміни послуги
+        // 2. ОБРОБКА ДОДАВАННЯ НОВОГО РЯДКА
+        // Оскільки у вас кнопка має клас .form-row-add-tariffservice-btn
+        $('.form-row-add-tariffservice-btn').on('click', function() {
+
+            // Даємо браузеру мілісекунду, щоб formset.js встиг створити новий HTML у DOM
+            setTimeout(function() {
+                // Знаходимо ОСТАННІЙ доданий рядок
+                const $newRow = $('#container-tariff .row-form-tariff-row').last();
+
+                // Знаходимо select у цьому новому рядку
+                const $newSelect = $newRow.find('.service-select');
+
+                // МАГІЯ ОЧИЩЕННЯ:
+                // Видаляємо скопійований "мертвий" span від Select2
+                $newRow.find('.select2-container').remove();
+
+                // Очищаємо оригінальний select від класів і атрибутів, які повісив старий Select2
+                $newSelect.removeClass('select2-hidden-accessible')
+                          .removeAttr('data-select2-id aria-hidden tabindex')
+                          .show(); // Робимо його знову видимим
+
+                // Тепер ініціалізуємо Select2 для цього новенького, чистого селекта
+                $newSelect.select2({
+                    placeholder: 'Выберите услугу',
+                    width: '100%'
+                });
+
+            }, 50); // 50 мілісекунд зазвичай достатньо
+        });
+
+        // 3. Обробник AJAX (твій код залишається без змін)
         $(document).on('change', '.service-select', function() {
             const serviceId = $(this).val();
-
-            // КРОК 1: Знаходимо батьківський блок рядка (той, що обгортає поточний select)
             const $currentRow = $(this).closest('.row-form-tariff-row');
-
-            // КРОК 2: Шукаємо поле для виводу ТІЛЬКИ в межах цього рядка
             const $display = $currentRow.find('.measurement-display');
 
             if (serviceId) {
                 $.ajax({
-                    url: '/api/get-measurement/', // Твій Ninja API
+                    url: '/api/get-measurement/',
                     data: { 'service_id': serviceId },
                     success: function(response) {
-                        // Використовуємо .text(), оскільки у тебе це <span>
                         $display.text(response.unit);
                     },
                     error: function(err) {
@@ -186,14 +209,11 @@
             }
         });
 
-        // 3. МАГІЯ ДЛЯ UPDATEVIEW:
-        // Після завантаження сторінки проходимося по всіх вже заповнених послугах
-        // і штучно викликаємо подію "change", щоб API підтягнуло дані для існуючих рядків
-        $('.row-form-tariff-row').each(function() {
-            const $select = $(this).find('select[name$="-service"]'); // Шукаємо select послуги
+        // 4. Підтягування існуючих даних для UpdateView (твій код без змін)
+        $('#container-tariff .row-form-tariff-row').each(function() {
+            const $select = $(this).find('.service-select');
             if ($select.val()) {
-                $select.addClass('service-select'); // Додаємо клас про всяк випадок
-                $select.trigger('change'); // Запускаємо AJAX для цього рядка
+                $select.trigger('change');
             }
         });
     });
