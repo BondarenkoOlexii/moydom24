@@ -54,7 +54,7 @@ class AboutPageForm(forms.ModelForm):
 
     manager_photo = forms.ImageField(
         required=False,
-        widget=forms.FileInput(attrs={'id': 'websiteaboutform-imagefile'}),
+        widget=forms.FileInput(attrs={'id': 'websiteaboutform-imagefile', 'name': 'WebsiteAboutForm[imageFile]'}),
         label="Фотографія менеджера"
     )
 

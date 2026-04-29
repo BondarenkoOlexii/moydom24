@@ -128,6 +128,8 @@ class CreateAboutPageView(UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
+        print(self.request.FILES)
+        print("*" * 40)
         seo_instance = getattr(self.object, 'seoblock', None) if self.object else None
         additional_instance = getattr(self.object, 'additional_block', None) if self.object else None
 
@@ -137,24 +139,41 @@ class CreateAboutPageView(UpdateView):
         additional_form = AdditionalForm(request.POST, request.FILES, prefix='additional_form', instance=additional_instance)
         formset = AdditionalMainFormSet(request.POST, request.FILES, prefix='file_formset', instance=self.object)
 
-
         if form.is_valid() and seoform.is_valid() and formset.is_valid() and additional_form.is_valid():
             return self.form_valid(form, seoform, formset, additional_form)
         else:
             return self.form_invalid(form, seoform, formset, additional_form)
 
     def form_valid(self, form, seoform, formset, additional_form):
+        print(f"CLEANED DATA: {form.cleaned_data.get('manager_photo')}")
+        print(form.cleaned_data)
+
         seo_instance = seoform.save()
 
         self.object = form.save(commit=False)
 
         self.object.seoblock = seo_instance
 
+        manager_photo = form.cleaned_data.get('manager_photo')
+
+        if manager_photo:
+            manager_obj = Image.objects.create(photo=manager_photo)
+
+            self.object.manager_photo = manager_obj
+
+        form.save()
+
+        to_delete = self.request.POST.getlist('delete_gallery_images')
+        if to_delete:
+            Image.objects.filter(id__in=to_delete).delete()
+
         images = self.request.FILES.getlist('gallery_images')
 
         for image in images:
             upload_img = Image.objects.create(photo=image)
             self.object.image.add(upload_img)
+
+
 
         # img_list = ['image_1', 'image_2', 'image_3']
         #
@@ -166,8 +185,6 @@ class CreateAboutPageView(UpdateView):
         #         upload_img = Image.objects.create(photo=img_obj)
         #         print(upload_img)
         #         setattr(self.object, field_name, upload_img)
-
-        form.save()
 
         formset.instance = self.object
         formset.save()

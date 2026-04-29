@@ -109,8 +109,8 @@ TariffFormSet = inlineformset_factory(Tariff, Tarrif_Service_Price, form=Thourgh
 class RoleForm(forms.ModelForm):
     class Meta:
         model = Role
-        fields = ['statistics', 'transaction', 'receipts', 'payment_account', 'apartments', 'house', 'messages',
-                  'call_master', 'counters', 'site_control', 'services', 'tariff', 'role_list', 'users']
+        fields = ['statistics', 'transaction', 'receipts', 'payment_account', 'apartments', 'apartments_owner', 'house', 'messages',
+                  'call_master', 'counters', 'site_control', 'services', 'tariff', 'role_list', 'users', 'payment_data']
 
 
         widgets = {

@@ -11,34 +11,39 @@ class Command(BaseCommand):
         create_staff = []
 
         users = [
-            {'id': 1, 'user': 'Директор', 'first_name': 'Директор', 'last_name': 'Директорович', 'email': 'abs@gmail.com', 'phone_number': '3809900000011', 'password': '1234',
-             'user_status': 'Активен', 'is_admin': True, 'role': 'director'},
+            {'id': 1, 'user': 'Director', 'first_name': 'Директор', 'last_name': 'Директорович', 'email': 'abs@gmail.com', 'phone_number': '3809900000011', 'password': '1234',
+             'user_status': 'Активен', 'is_admin': True, 'role': 'director', 'is_superuser': True},
 
-            {'id': 2, 'user': 'Управляющий', 'first_name': 'Управляющий', 'last_name': 'Управленец', 'email': 'abss@gmail.com', 'phone_number': '3809900000022', 'password': '1234',
+            {'id': 2, 'user': 'Manager', 'first_name': 'Управляющий', 'last_name': 'Управленец', 'email': 'abss@gmail.com', 'phone_number': '3809900000022', 'password': '1234',
              'user_status': 'Активен', 'is_admin': True, 'role': 'manager'},
 
-            {'id': 3, 'user': 'Бухгалтер', 'first_name': 'Бухгалтер', 'last_name': 'Бухгалтеревна', 'email': 'absss@gmail.com', 'phone_number': '3809900000033', 'password': '1234',
+            {'id': 3, 'user': 'Accountant', 'first_name': 'Бухгалтер', 'last_name': 'Бухгалтеревна', 'email': 'absss@gmail.com', 'phone_number': '3809900000033', 'password': '1234',
              'user_status': 'Активен', 'is_admin': True, 'role': 'accountant'},
 
-            {'id': 4, 'user': 'Сантехник', 'first_name': 'Сантехник', 'last_name': 'Сантехникович', 'email': 'abssss@gmail.com', 'phone_number': '3809900000044', 'password': '1234',
+            {'id': 4, 'user': 'Plumbing', 'first_name': 'Сантехник', 'last_name': 'Сантехникович', 'email': 'abssss@gmail.com', 'phone_number': '3809900000044', 'password': '1234',
              'user_status': 'Активен', 'is_admin': True, 'role': 'plumber'},
 
-            {'id': 5, 'user': 'Электрик', 'first_name': 'Электрик', 'last_name': 'Электриктрикович', 'email': 'absssss@gmail.com', 'phone_number': '3809900000055', 'password': '1234',
+            {'id': 5, 'user': 'Electrician', 'first_name': 'Электрик', 'last_name': 'Электриктрикович', 'email': 'absssss@gmail.com', 'phone_number': '3809900000055', 'password': '1234',
              'user_status': 'Активен', 'is_admin': True, 'role': 'electrician'},
         ]
 
         for user_obj in users:
+            is_super = user_obj.get('is_superuser', False)
+
             user = User.objects.create_user(
                 username=user_obj['user'],
                 email=user_obj['email'],
                 password=user_obj['password'],
+                is_staff=True,
                 first_name=user_obj['first_name'],
                 last_name=user_obj['last_name'],
                 phone_number=user_obj['phone_number'],
                 user_status=user_obj['user_status'],
                 is_admin=user_obj['is_admin'],
-                is_staff=True,
             )
+            if is_super:
+                user.is_superuser = True
+
             create_staff.append(user)
 
             role = Role.objects.create(role=user_obj['role'])

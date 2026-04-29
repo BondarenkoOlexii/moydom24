@@ -12,7 +12,6 @@ class AdminpanelRestrictionMixin(AccessMixin):
 
         role = Role.objects.get(user=user)
         if user.is_superuser:
-            print('User is Admin')
             return super().dispatch(request, *args, **kwargs)
 
 
@@ -21,7 +20,7 @@ class AdminpanelRestrictionMixin(AccessMixin):
                 return self.handle_no_permission()
 
         elif self.required_section == 'role':
-            if not role.role:
+            if not role.role_list:
                 return self.handle_no_permission()
 
         elif self.required_section == 'payment_info':
