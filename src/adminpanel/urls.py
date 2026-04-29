@@ -13,6 +13,7 @@ from src.users.views import ListUser, CreateUser, DeleteUser, UpdateUser, Create
 from src.settings.views import PaymentInfoCreate, TransactionProposeList, TransactionProposeCreate, TransactionProposeUpdate,\
     TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView
 
+from src.site_control.views import CreateMainPageView, CreateAboutPageView, CreateContactPageView, CreateServicePageView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
@@ -64,4 +65,8 @@ urlpatterns = [
 
     path('role', RoleView.as_view(), name='role'),
 
+    path('website/main', CreateMainPageView.as_view(), name='website-main'),
+    path('website/about', CreateAboutPageView.as_view(), name='website-about'),
+    path('website/contact', CreateContactPageView.as_view(), name='website-contact'),
+    path('website/service', CreateServicePageView.as_view(), name='website-service'),
 ]

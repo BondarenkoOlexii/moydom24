@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+            <h1>Редактирование страницы</h1>
+            <ul class="breadcrumb">
+                <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+                <li class="active">Редактирование страницы</li>
+            </ul>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Редактирование страницы "Услуги"</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <form id="w0" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row near-img">
+                               <div class="col-xs-12">
+                                     <h3 class="page-header">Услуги</h3>
+                                </div>
+
+                                <div class="tab-content">
+                                    <div id="form-websiteservice-rows">
+                                        <div id="container-backservice_formset" class="row">
+                                            {{ formset.management_form }}
+
+                                            {% for form in formset %}
+                                            <div class="col-md-4 form-websiteservice-row">
+                                                {% for hidden in form.hidden_fields %}
+                                                    {{ hidden }}
+                                                {% endfor %}
+
+                                                {% if formset.can_delete %}
+                                                    <div style="display: none;">{{ form.DELETE }}</div>
+                                                {% endif %}
+
+                                                <h4>Услуга
+                                                    <button type="button" class="pull-right text-red form-row-remove-btn" style="background: none; border: none; padding: 0;" title="Удалить">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </h4>
+
+                                                <img src="{% if form.instance.additional_image %}{{ form.instance.additional_image.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="" class="img-responsive margin-bottom-15">
+
+                                                <div class="form-group">
+                                                    <label for="{{ form.additional_image.id_for_label }}">Рекомендуемый размер: (650x300)</label>
+                                                    {{ form.additional_image }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ form.additional_name.id_for_label }}">Название услуги</label>
+                                                    {{ form.additional_name }}
+                                                </div>
+                                                <div class="form-group margin-bottom-30">
+                                                    <label for="{{ form.additional_description.id_for_label }}">Описание услуги</label>
+                                                    {{ form.additional_description }}
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+
+                                        <div id="empty-template-backservice_formset" style="display: none">
+                                            <div class="col-md-4 form-websiteservice-row">
+                                                {% for hidden in formset.empty_form.hidden_fields %}
+                                                    {{ hidden }}
+                                                {% endfor %}
+
+                                                {% if formset.can_delete %}
+                                                    <div style="display: none;">{{ formset.empty_form.DELETE }}</div>
+                                                {% endif %}
+
+                                                <h4>Новая услуга
+                                                    <button type="button" class="pull-right text-red form-row-remove-btn" style="background: none; border: none; padding: 0;" title="Удалить">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </h4>
+
+                                                <img src="https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&w=248&h=160&fit=crop" alt="" class="img-responsive margin-bottom-15">
+
+                                                <div class="form-group">
+                                                    <label>Рекомендуемый размер: (650x300)</label>
+                                                    {{ formset.empty_form.additional_image }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Название услуги</label>
+                                                    {{ formset.empty_form.additional_name }}
+                                                </div>
+                                                <div class="form-group margin-bottom-30">
+                                                    <label>Описание услуги</label>
+                                                    {{ formset.empty_form.additional_description }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="form-group">
+                                        <a href="{% url 'website-service' %}" class="btn btn-default">Отменить</a>
+                                        <button type="button" class="btn btn-success bg-green-active form-row-add-webservice-btn" data-prefix="backservice_formset">Добавить услугу</button>
+                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{% static  'dist/js/formset.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#message-description').wysihtml5({
+            toolbar: {
+                "custom": "#custom-toolbar",
+            },
+            "stylesheets": ["{% static 'dist/css/bootstrap3-wysihtml5.min.css' %}"],
+            "events": {
+                "load": function() {
+                    console.log("Редактор завантажений!");
+                }
+            }
+        });
+        $('.wysihtml5-sandbox').css({
+            'width': '100%',
+            'height': '250px',
+            'display': 'block'
+        });
+    });
+</script>
+
+{% endblock %}

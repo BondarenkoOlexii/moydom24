@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Редактирование страницы</h1>
+
+        <ul class="breadcrumb">
+            <li>
+                <a href="/admin/"><i class="fa fa-home"></i> Главная</a>
+            </li>
+            <li class="active">Редактирование страницы</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Редактирование страницы "Главная"</h3>
+                        <div class="box-tools">
+                            <a href="/admin/website/update-seo-files" class="btn btn-default btn-sm updateSeoFiles">
+                                <span class="hidden-xs">Обновить robots и sitemap</span>
+                                <i class="fa fa-refresh visible-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="box-body">
+                        <form id="w0" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h3 class="page-header">Слайдер</h3>
+                            <div class="row site-main-slider">
+                                <div class="col-md-4">
+                                    <h4>Слайд 1</h4>
+                                    <img src="{% if object.image_1 %}{{ object.image_1.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="" class="img-responsive margin-bottom-15">
+
+                                    <div class="form-group field-websitehomeslide-0-id">
+                                        <input type="hidden" id="websitehomeslide-0-id" class="form-control" name="WebsiteHomeSlide[0][id]" value="1">
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group margin-bottom-30 field-websitehomeslide-0-imagefile">
+                                        <label class="control-label" for="websitehomeslide-0-imagefile">Рекомендуемый размер: (1920x800)</label>
+                                        <input type="hidden" name="WebsiteHomeSlide[0][imageFile]" value="">
+                                        {{ form.image_1 }}
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h4>Слайд 2</h4>
+                                    <img src="{% if object.image_2 %}{{ object.image_2.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="" class="img-responsive margin-bottom-15">
+
+                                    <div class="form-group field-websitehomeslide-1-id">
+                                        <input type="hidden" id="websitehomeslide-1-id" class="form-control" name="WebsiteHomeSlide[1][id]" value="2">
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group margin-bottom-30 field-websitehomeslide-1-imagefile">
+                                        <label class="control-label" for="websitehomeslide-1-imagefile">Рекомендуемый размер: (1920x800)</label>
+                                        <input type="hidden" name="WebsiteHomeSlide[1][imageFile]" value="">
+                                        {{ form.image_2 }}
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h4>Слайд 3</h4>
+                                    <img src="{% if object.image_3 %}{{ object.image_3.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="" class="img-responsive margin-bottom-15">
+
+                                    <div class="form-group field-websitehomeslide-2-id">
+                                        <input type="hidden" id="websitehomeslide-2-id" class="form-control" name="WebsiteHomeSlide[2][id]" value="3">
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group margin-bottom-30 field-websitehomeslide-2-imagefile">
+                                        <label class="control-label" for="websitehomeslide-2-imagefile">Рекомендуемый размер: (1920x800)</label>
+                                        {{ form.image_3 }}
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="page-header">Краткая информация</h3>
+
+                                    <div class="form-group field-websitehomeform-hometitle">
+                                        <label class="control-label" for="websitehomeform-hometitle">Заголовок</label>
+                                        {{ form.name }}
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group field-websitehomeform-homedescription">
+                                        <label class="control-label" for="websitemainform-maindescription">Краткий текст</label>
+                                        {{ form.description }}
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group field-websitehomeform-homeisshowapps">
+                                        <input type="hidden" name="WebsiteHomeForm[homeIsShowApps]" value="0">
+                                        <label>
+                                            <input type="checkbox" id="websitehomeform-homeisshowapps" name="WebsiteHomeForm[homeIsShowApps]" value="1" checked=""> Показать ссылки на приложения
+                                        </label>
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row near-img">
+                                <div class="col-xs-12">
+                                    <h3 class="page-header">Рядом с нами</h3>
+                                </div>
+
+                                {{ formset.management_form }}
+                                {% for item in formset %}
+                                    <div class="col-md-4">
+                                    <h4>Блок</h4>
+                                    <img src="{% if item.additional_image %}{{ item.additional_image.url.photo }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="" class="img-responsive margin-bottom-15">
+
+                                    <div class="form-group field-websitehomefeature-0-id">
+                                        <input type="hidden" id="websitehomefeature-0-id" class="form-control" name="WebsiteHomeFeature[0][id]" value="1">
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group field-websitehomefeature-0-imagefile">
+                                        <label class="control-label" for="websitehomefeature-0-imagefile">Рекомендуемый размер: (1000x600)</label>
+                                        <input type="hidden" name="WebsiteHomeFeature[0][imageFile]" value="">
+                                        {{ item.additional_image }}
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group field-websitehomefeature-0-title">
+                                        <label class="control-label" for="websitehomefeature-0-title">Заголовок блока</label>
+                                        {{ item.additional_name }}
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group margin-bottom-30 field-websitehomefeature-0-description">
+                                        <label class="control-label" for="websitehomefeature-0-description">Описание</label>
+                                        {{ item.additional_description }}
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="page-header">Настройки SEO</h3>
+
+                                    <div class="form-group field-websitehomeform-homemetatitle">
+                                        <label class="control-label" for="websitehomeform-homemetatitle">Title</label>
+                                        {{ seoform.title }}
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group field-websitehomeform-homemetadescription">
+                                        <label class="control-label" for="websitehomeform-homemetadescription">Description</label>
+                                        {{ seoform.description }}
+                                        <div class="help-block"></div>
+                                    </div>
+
+                                    <div class="form-group field-websitehomeform-homemetakeywords">
+                                        <label class="control-label" for="websitehomeform-homemetakeywords">Keywords</label>
+                                        {{ seoform.keyword }}
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="form-group">
+                                        <a href="/admin/website/home" class="btn btn-default">Отменить</a>
+                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#message-description').wysihtml5({
+            toolbar: {
+                "custom": "#custom-toolbar",
+            },
+            "stylesheets": ["{% static 'dist/css/bootstrap3-wysihtml5.min.css' %}"],
+            "events": {
+                "load": function() {
+                    console.log("Редактор завантажений!");
+                }
+            }
+        });
+        $('.wysihtml5-sandbox').css({
+            'width': '100%',
+            'height': '250px',
+            'display': 'block'
+        });
+    });
+</script>
+
+{% endblock %}

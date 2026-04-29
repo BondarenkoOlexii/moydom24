@@ -1,8 +1,11 @@
 from django.db import models
 from src.common.models import SeoBlock, Image
 from src.adminpanel.models.SiteChoise import PageChoise
+from django.core.validators import RegexValidator
 # Create your models here.
 
+
+phone_validator = RegexValidator(r'\+380\d{9}$')
 class Main_Page(models.Model):
     seoblock = models.OneToOneField(SeoBlock, on_delete=models.SET_NULL, null=True)
     name = models.CharField(20)
@@ -21,11 +24,8 @@ class About_Page(models.Model):
     seoblock = models.OneToOneField(SeoBlock, on_delete=models.SET_NULL, null=True)
     name = models.CharField(20)
     description = models.TextField()
-    document = models.FileField()
     manager_photo = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='image_manager')
-    image_1 = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='about_image_1')
-    image_2 = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='about_image_2')
-    image_3 = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='about_image_3')
+    image = models.ManyToManyField(Image, related_name='about_image')
 
 
 class Contact_Page(models.Model):
@@ -38,6 +38,7 @@ class Contact_Page(models.Model):
     location = models.TextField()
     adress = models.TextField()
     email_adress = models.EmailField()
+    phone_number = models.TextField(max_length=20, null=True, blank=True, validators=[phone_validator])
 
 
 
@@ -46,6 +47,16 @@ class Additional_Block(models.Model):
     main_page = models.ForeignKey(Main_Page, on_delete=models.CASCADE, null=True, blank=True)
     about_page = models.ForeignKey(About_Page, on_delete=models.CASCADE, null=True, blank=True)
 
-    additional_name = models.CharField(max_length=20)
-    additional_description = models.TextField()
-    additional_image = models.OneToOneField(Image, on_delete=models.CASCADE)
+    additional_name = models.CharField(max_length=20, null=True, blank=True)
+    additional_description = models.TextField(null=True, blank=True)
+    additional_image = models.OneToOneField(Image, on_delete=models.CASCADE, null=True, blank=True)
+
+    @property
+    def is_both_empty(self):
+
+        return self.main_page_id is None and self.about_page_id is None
+
+class Additional_File(models.Model):
+    about_page = models.ForeignKey(About_Page, on_delete=models.CASCADE, null=True, blank=True)
+    additional_file = models.FileField(null=True, blank=True)
+    file_name = models.CharField(max_length=220)

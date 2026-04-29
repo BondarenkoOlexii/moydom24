@@ -3,10 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
-from django.contrib.auth.mixins import AccessMixin, PermissionRequiredMixin
-from django.http import JsonResponse
 
-
+from src.adminpanel.mixin import AdminpanelRestrictionMixin
 from .models import PaymentInfo, TransactionPurpose, Service, Measurement, Tariff, Tarrif_Service_Price
 from src.users.models import Role
 from .forms import PaymentInfoForm, TransactionPurposeForm, ServiceFormSet, ServiceForm, MeasurementFormSet,\
@@ -15,20 +13,11 @@ from .forms import PaymentInfoForm, TransactionPurposeForm, ServiceFormSet, Serv
 
 
 
-#
-# class AdminpanelRestrictionMixin(PermissionRequiredMixin):
-#     app_list = ['src.adminpanel', 'src.authorization', 'src.finance', 'src.houses', 'src.settings', 'src.site_control',
-#                 'src.users']
-#
-#     user = request.user.id
-#
-#     user_access = Role.objects.filter(user=user)
 
 
+class RoleView(AdminpanelRestrictionMixin, ListView):
+    required_section = 'role'
 
-
-
-class RoleView(ListView):
     model = Role
     template_name = 'role.html'
     # form_class = RoleForm
@@ -41,12 +30,26 @@ class RoleView(ListView):
             ctx['form'] = RoleForm()
 
             ctx['roles_for_forms'] = [
-                RoleForm(instance=role) for role in ctx['roles']
+                RoleForm(instance=role, prefix=f'role_{role.id}') for role in ctx['roles']
             ]
 
         return ctx
 
     def post(self, request, *args, **kwargs):
+        all_role = Role.objects.all()
+
+        for role in all_role:
+            form = RoleForm(request.POST, instance=role, prefix=f'role_{role.id}')
+
+            if form.is_valid():
+                role_display = role.get_role_display()
+                changes = form.cleaned_data
+
+                print(f"Зміни для: {role_display} (ID: {role.id})")
+                print(f"Змінені поля: {changes}")
+
+                form.save()
+
         print(request.POST)
 
         return HttpResponseRedirect(self.get_success_url())
@@ -54,11 +57,20 @@ class RoleView(ListView):
     def get_success_url(self):
         return reverse_lazy('role')
 
-class PaymentInfoCreate(CreateView):
+class PaymentInfoCreate(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'payment_info'
+
     model = PaymentInfo
     template_name = 'pay-company.html'
     form_class = PaymentInfoForm
     success_url = 'pay-company'
+
+    def get_object(self, queryset=None):
+        try:
+            paymentinfo = PaymentInfo.objects.first()
+            return paymentinfo
+        except(AttributeError, PaymentInfo.DoesNotExist):
+            return None
 
 
 class TransactionProposeList(ListView):

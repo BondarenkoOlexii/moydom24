@@ -8,41 +8,43 @@ from .models import User, Image, Message, Role
 from .forms import UserForm, MessageForm, InviteMessage, CreateMasterForm
 from src.houses.models import Apartment
 from config_celery.celery_email_worker import send_invite_email, app
-
+from src.adminpanel.mixin import AdminpanelRestrictionMixin
 # Create your views here.
 
 
 
-class ListUser(ListView):
+class ListUser(AdminpanelRestrictionMixin, ListView):
+    required_section = 'users'
+
     model = User
     template_name = 'user.html'
     context_object_name = 'users'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        search_id_query = self.request.GET.get('UserSearch[uid]', '')
-        search_name_query = self.request.GET.get('UserSearch[searchFullname]', '')
-        search_phone_query = self.request.GET.get('UserSearch[searchPhone]', '')
-        search_email_query = self.request.GET.get('UserSearch[email]', '')
-
-        if search_name_query:
-            queryset = queryset.filter(user_id__icontains=search_id_query)
-
-        if search_name_query:
-            queryset = queryset.filter(
-                Q(first_name__icontains=search_name_query) |
-                Q(middle_name__icontains=search_name_query) |
-                Q(last_name__icontains=search_name_query)
-            )
-
-        if search_phone_query:
-            queryset = queryset.filter(phone_number__icontains=search_phone_query)
-
-        if search_email_query:
-            queryset = queryset.filter(email__icontains=search_email_query)
-
-        return queryset
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #
+    #     search_id_query = self.request.GET.get('UserSearch[uid]', '')
+    #     search_name_query = self.request.GET.get('UserSearch[searchFullname]', '')
+    #     search_phone_query = self.request.GET.get('UserSearch[searchPhone]', '')
+    #     search_email_query = self.request.GET.get('UserSearch[email]', '')
+    #
+    #     if search_name_query:
+    #         queryset = queryset.filter(user_id__icontains=search_id_query)
+    #
+    #     if search_name_query:
+    #         queryset = queryset.filter(
+    #             Q(first_name__icontains=search_name_query) |
+    #             Q(middle_name__icontains=search_name_query) |
+    #             Q(last_name__icontains=search_name_query)
+    #         )
+    #
+    #     if search_phone_query:
+    #         queryset = queryset.filter(phone_number__icontains=search_phone_query)
+    #
+    #     if search_email_query:
+    #         queryset = queryset.filter(email__icontains=search_email_query)
+    #
+    #     return queryset
 
     def get_context_data(self, **kwargs): # Щоб все не зникло після перезавантаження
         contex = super().get_context_data(**kwargs)
@@ -50,7 +52,9 @@ class ListUser(ListView):
         return contex
 
 
-class CreateUser(CreateView):
+class CreateUser(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'users'
+
     model = User
     template_name = 'create_user.html'
     form_class = UserForm
@@ -76,7 +80,9 @@ class CreateUser(CreateView):
 
     def get_success_url(self):
         return reverse('user')
-class UpdateUser(UpdateView):
+class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'users'
+
     model = User
     template_name = 'create_user.html'
     form_class = UserForm
@@ -101,7 +107,9 @@ class UpdateUser(UpdateView):
 
     def get_success_url(self):
         return reverse('user')
-class DeleteUser(DeleteView):
+class DeleteUser(AdminpanelRestrictionMixin, DeleteView):
+    required_section = 'users'
+
     model = User
     success_url = reverse_lazy('user')
 

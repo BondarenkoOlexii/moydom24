@@ -30,8 +30,8 @@ class Command(BaseCommand):
         for user_obj in users:
             user = User.objects.create_user(
                 username=user_obj['user'],
-                password=user_obj['password'],
                 email=user_obj['email'],
+                password=user_obj['password'],
                 first_name=user_obj['first_name'],
                 last_name=user_obj['last_name'],
                 phone_number=user_obj['phone_number'],
@@ -41,8 +41,7 @@ class Command(BaseCommand):
             )
             create_staff.append(user)
 
-            role = Role.objects.create(
-                user=user,
-                role=user_obj['role']
-            )
+            role = Role.objects.create(role=user_obj['role'])
+
+            role.user.add(user)
 

@@ -540,11 +540,10 @@
 <li><a href="/admin/counter-data/counters"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
 <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
 <ul class="treeview-menu">
-<li><a href="/admin/website/home"><i class="fa fa-circle-o"></i>  <span>Главная страница</span></a></li>
-<li><a href="/admin/website/about"><i class="fa fa-circle-o"></i>  <span>О нас</span></a></li>
-<li><a href="/admin/website/services"><i class="fa fa-circle-o"></i>  <span>Услуги</span></a></li>
-<li><a href="/admin/website/tariffs"><i class="fa fa-circle-o"></i>  <span>Тарифы</span></a></li>
-<li><a href="/admin/website/contact"><i class="fa fa-circle-o"></i>  <span>Контакты</span></a></li>
+<li><a href="{% url 'website-main' %}"><i class="fa fa-circle-o"></i>  <span>Главная страница</span></a></li>
+<li><a href="{% url 'website-about' %}"><i class="fa fa-circle-o"></i>  <span>О нас</span></a></li>
+<li><a href="{% url 'website-service' %}"><i class="fa fa-circle-o"></i>  <span>Услуги</span></a></li>
+<li><a href="{% url 'website-contact' %}"><i class="fa fa-circle-o"></i>  <span>Контакты</span></a></li>
 </ul>
 </li>
 <li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Настройки системы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>

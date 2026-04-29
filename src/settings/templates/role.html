@@ -45,7 +45,10 @@
                             <tr>
                                 {% for form in roles_for_forms %}
                                     <tr>
-                                        <td>{{ form.instance.get_role_display }}</td>
+                                        <td>
+                                            {{ form.instance.get_role_display }}
+                                            <input type="hidden" name="role_{{ form.instance.id }}" value="form.instance.get_role_display">
+                                        </td>
                                         {% for item in form %}
                                             <td>{{ item }}</td>
                                         {% endfor %}

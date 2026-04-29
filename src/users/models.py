@@ -27,22 +27,24 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
 class Role(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, related_name='roles')
+    user = models.ManyToManyField(User, limit_choices_to={'is_admin': True}, related_name='roles')
     role = models.CharField(max_length=40, choices=Roles.choices, default=Language.choices[1][1])
-    statistics = models.BooleanField(default=False)
-    transaction = models.BooleanField(default=False)
-    receipts = models.BooleanField(default=False)
-    payment_account = models.BooleanField(default=False)
-    apartments = models.BooleanField(default=False)
-    house = models.BooleanField(default=False)
-    messages = models.BooleanField(default=False)
-    call_master = models.BooleanField(default=False)
-    counters = models.BooleanField(default=False)
-    site_control = models.BooleanField(default=False)
-    services = models.BooleanField(default=False)
-    tariff = models.BooleanField(default=False)
-    role_list = models.BooleanField(default=False)
-    users = models.BooleanField(default=False)
+    statistics = models.BooleanField(default=False) # Статистика
+    transaction = models.BooleanField(default=False) # Касса
+    receipts = models.BooleanField(default=False) # Квитанции
+    payment_account = models.BooleanField(default=False) # Лицевой счет
+    apartments_owner = models.BooleanField(default=False) # Владелци квартир
+    apartments = models.BooleanField(default=False) # Квартири
+    house = models.BooleanField(default=False) # Дома
+    messages = models.BooleanField(default=False) # Сообщения
+    call_master = models.BooleanField(default=False) # Заявка мастера
+    counters = models.BooleanField(default=False) # Счетчики
+    site_control = models.BooleanField(default=False) # Управления сайтом
+    services = models.BooleanField(default=False) # Услуги
+    tariff = models.BooleanField(default=False) # Таріфи
+    role_list = models.BooleanField(default=False) # Роли
+    users = models.BooleanField(default=False) # Пользователи
+    payment_data = models.BooleanField(default=False) # Платежни реквезити
 
 
 class Message(models.Model):
