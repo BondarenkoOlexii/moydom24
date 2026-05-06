@@ -147,10 +147,10 @@ class MasterRequestForm(forms.ModelForm):
             'role': forms.Select(attrs={'id': 'masterrequest-type', 'class': 'form-control', 'value': ''}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields['role'].initial = 'director'
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #
+    #     self.fields['role'].initial = 'director'
 
 # class SectionFormSet(InlineFormSetFactory):
 #     model = Section

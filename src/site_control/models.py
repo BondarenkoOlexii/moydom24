@@ -18,6 +18,7 @@ class Main_Page(models.Model):
         choices=PageChoise.choices,
         default=PageChoise.main,
     )
+    show_app = models.BooleanField(default=True)
 
 
 class About_Page(models.Model):

@@ -20,10 +20,14 @@ from django.urls import path
 from django.urls import include
 from config import settings
 from src.adminpanel.api import api
+from django.contrib.sitemaps.views import sitemap
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', api.urls),
     path('select2/', include('django_select2.urls')),
-    path('adminpanel/', include('src.adminpanel.urls'))
+    path('adminpanel/', include('src.adminpanel.urls')),
+    #path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap",)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

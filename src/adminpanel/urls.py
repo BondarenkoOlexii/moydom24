@@ -11,9 +11,12 @@ from src.users.views import ListUser, CreateUser, DeleteUser, UpdateUser, Create
     SpecificMessage, DeleteMessage, MasterList, CreateMaster, UpdateMaster, DeleteMaster
 
 from src.settings.views import PaymentInfoCreate, TransactionProposeList, TransactionProposeCreate, TransactionProposeUpdate,\
-    TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView
+    TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView, ListCounter, \
+    CreateCounter, DetailListCounter, UpdateCounter, DeleteCounter
 
 from src.site_control.views import CreateMainPageView, CreateAboutPageView, CreateContactPageView, CreateServicePageView
+
+from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
@@ -69,4 +72,17 @@ urlpatterns = [
     path('website/about', CreateAboutPageView.as_view(), name='website-about'),
     path('website/contact', CreateContactPageView.as_view(), name='website-contact'),
     path('website/service', CreateServicePageView.as_view(), name='website-service'),
+
+    path('account', AccountList.as_view(), name='account'),
+    path('account/<int:pk>', AccountDetail.as_view(), name='show_account'),
+    path('account/create', CreateAccount.as_view(), name='account_create'),
+    path('account/update/<int:pk>', UpdateAccount.as_view(), name='account_update'),
+    path('account/delete/<int:pk>', DeleteAccount.as_view(), name='account_delete'),
+
+    path('counter', ListCounter.as_view(), name='counter'),
+    path('counter/counter-list', DetailListCounter.as_view(), name='counter-list'),
+    path('counter/create', CreateCounter.as_view(), name='counter_create'),
+    path('counter/update/<int:pk>', UpdateCounter.as_view(), name='counter_update'),
+    path('counter/delete/<int:pk>', DeleteCounter.as_view(), name='counter_delete'),
+
 ]

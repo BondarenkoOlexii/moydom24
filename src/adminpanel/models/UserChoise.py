@@ -26,3 +26,8 @@ class UserStatus(models.TextChoices):
     active = 'active', 'Активен'
     new = 'new', 'Новий'
     inactive = 'inactive', 'Отключен'
+
+
+class AccountStatus(models.TextChoices):
+    active = 'active', 'Активен'
+    inactive = 'inactive', 'Неактивен'

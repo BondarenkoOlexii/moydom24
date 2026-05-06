@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, View
 
+from src.adminpanel.mixin import AdminpanelRestrictionMixin
 from .models import Main_Page, About_Page, Contact_Page, Additional_Block
 from .forms import SeoBlockForm, MainPageForm, AdditionalMainFormSet, AboutPageForm, AdditionalForm,\
     AdditionalAboutFileFormSet, ContactForm, ServiceFormSet
@@ -13,7 +14,9 @@ from src.common.models import Image
 # Create your views here.
 
 
-class CreateMainPageView(UpdateView):
+class CreateMainPageView(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'site_control'
+
     model = Main_Page
     template_name = 'back_main.html'
     form_class = MainPageForm
@@ -95,11 +98,12 @@ class CreateMainPageView(UpdateView):
 
 
 
-class CreateAboutPageView(UpdateView):
+class CreateAboutPageView(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'site_control'
+
     model = About_Page
     template_name = 'back_about.html'
     form_class = AboutPageForm
-    success_url = reverse_lazy('website-about')
 
     def get_object(self, queryset=None):
         try:
@@ -137,7 +141,7 @@ class CreateAboutPageView(UpdateView):
 
         seoform = SeoBlockForm(request.POST, request.FILES, prefix='seoblock', instance=seo_instance)
         additional_form = AdditionalForm(request.POST, request.FILES, prefix='additional_form', instance=additional_instance)
-        formset = AdditionalMainFormSet(request.POST, request.FILES, prefix='file_formset', instance=self.object)
+        formset = AdditionalAboutFileFormSet(request.POST, request.FILES, prefix='file_formset', instance=self.object)
 
         if form.is_valid() and seoform.is_valid() and formset.is_valid() and additional_form.is_valid():
             return self.form_valid(form, seoform, formset, additional_form)
@@ -163,11 +167,11 @@ class CreateAboutPageView(UpdateView):
 
         form.save()
 
-        to_delete = self.request.POST.getlist('delete_gallery_images')
+        to_delete = self.request.POST.getlist('delete_gallery_checkbox')
         if to_delete:
             Image.objects.filter(id__in=to_delete).delete()
 
-        images = self.request.FILES.getlist('gallery_images')
+        images = self.request.FILES.getlist('image')
 
         for image in images:
             upload_img = Image.objects.create(photo=image)
@@ -192,7 +196,7 @@ class CreateAboutPageView(UpdateView):
         additional_form.instance = self.object
         additional_form.save()
 
-        return self.get_success_url()
+        return HttpResponseRedirect(self.get_success_url())
 
     def form_invalid(self, form, seoform, formset, additional_form):
         print(form.errors)
@@ -201,9 +205,12 @@ class CreateAboutPageView(UpdateView):
         print(additional_form.errors)
         return self.render_to_response(self.get_context_data(form=form, seoform=seoform, formset=formset, additional_form=additional_form))
 
-
+    def get_success_url(self):
+        return reverse_lazy('website-about')
     
-class CreateContactPageView(UpdateView):
+class CreateContactPageView(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'site_control'
+
     model = Contact_Page
     template_name = 'back_contact.html'
     form_class = ContactForm
@@ -262,7 +269,9 @@ class CreateContactPageView(UpdateView):
 
 
 
-class CreateServicePageView(View):
+class CreateServicePageView(AdminpanelRestrictionMixin, View):
+    required_section = 'site_control'
+
     template_name = 'back_service.html'
     success_url = 'website-service'
 

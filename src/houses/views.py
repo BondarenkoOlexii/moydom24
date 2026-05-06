@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
+from src.adminpanel.mixin import AdminpanelRestrictionMixin
 from .models import House, Section, Image, Apartment, Call_Master
 from .forms import HouseForm, SectionInlineFormSet, StoreyInlineFormSet, HousesAdminInlineFormSet, ApartmentForm,\
     MasterRequestForm
@@ -10,17 +11,23 @@ from .forms import HouseForm, SectionInlineFormSet, StoreyInlineFormSet, HousesA
 # Create your views here.
 
 
-class ListHouse(ListView):
+class ListHouse(AdminpanelRestrictionMixin, ListView):
+    required_section = 'house'
+
     model = House
     template_name = 'house.html'
     context_object_name = 'houses'  #кастомна назва до якої ми звертаємось в шаблоні
 
-class DetailHouse(DetailView):
+class DetailHouse(AdminpanelRestrictionMixin, DetailView):
+    required_section = 'house'
+
     model = House
     template_name = 'show_house.html'
     context_object_name = 'house'
 
-class CreateHouse(CreateView):
+class CreateHouse(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'house'
+
     template_name = 'create_user.html'
     model = House
     form_class = HouseForm
@@ -91,7 +98,9 @@ class CreateHouse(CreateView):
 
 
 
-class UpdateHouse(UpdateView):
+class UpdateHouse(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'house'
+
     template_name = 'create_user.html'
     model = House
     form_class = HouseForm
@@ -131,14 +140,13 @@ class UpdateHouse(UpdateView):
         img_list = ['image_1', 'image_2', 'image_3', 'image_4', 'image_5']
 
         for img in img_list:
-            if not img.has_changed():
-                continue
-            field_name = img
-            img_obj = form.cleaned_data.get(img)
-            if img_obj:
-                upload_img = Image.objects.create(photo=img_obj)
+            if img in form.changed_data:
+                field_name = img
+                img_obj = form.cleaned_data.get(img)
+                if img_obj:
+                    upload_img = Image.objects.create(photo=img_obj)
 
-                setattr(self.object, field_name, upload_img)
+                    setattr(self.object, field_name, upload_img)
 
 
         self.object.save()
@@ -164,22 +172,30 @@ class UpdateHouse(UpdateView):
     def get_success_url(self):
         return reverse('house')
 
-class DeleteHouse(DeleteView):
+class DeleteHouse(AdminpanelRestrictionMixin, DeleteView):
+    required_section = 'house'
+
     model = House
     success_url = reverse_lazy('house')
 
 
-class ApartmentList(ListView):
+class ApartmentList(AdminpanelRestrictionMixin, ListView):
+    required_section = 'apartments'
+
     model = Apartment
     template_name = 'apartment.html'
     context_object_name = 'apartments'
 
-class DetailApartment(DetailView):
+class DetailApartment(AdminpanelRestrictionMixin, DetailView):
+    required_section = 'apartments'
+
     model = Apartment
     template_name = 'show_apart.html'
     context_object_name = 'apartment'
 
-class CreateApartment(CreateView):
+class CreateApartment(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'apartments'
+
     model = Apartment
     template_name = 'create_apartment.html'
     form_class = ApartmentForm
@@ -198,7 +214,9 @@ class CreateApartment(CreateView):
         return reverse_lazy('apartment')
 
 
-class UpdateApartment(UpdateView):
+class UpdateApartment(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'apartments'
+
     model = Apartment
     template_name = 'create_apartment.html'
     form_class = ApartmentForm
@@ -218,32 +236,42 @@ class UpdateApartment(UpdateView):
         return reverse_lazy('apartment')
 
 
-class DeleteApartmnent(DeleteView):
+class DeleteApartmnent(AdminpanelRestrictionMixin, DeleteView):
+    required_section = 'apartments'
+
     model = Apartment
     success_url = reverse_lazy('apartment')
 
 
 
-class ListMasterRequest(ListView):
+class ListMasterRequest(AdminpanelRestrictionMixin, ListView):
+    required_section = 'call_master'
+
     model = Call_Master
     template_name = 'master-request.html'
     context_object_name = 'masters'
 
 
-class NewMasterRequest(CreateView):
+class NewMasterRequest(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'call_master'
+
     model = Call_Master
     template_name = 'new-master-request.html'
     form_class = MasterRequestForm
     success_url = reverse_lazy('request-master-list')
 
 
-class UpdateMasterRequest(UpdateView):
+class UpdateMasterRequest(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'call_master'
+
     model = Call_Master
     template_name = 'new-master-request.html'
     form_class = MasterRequestForm
     success_url = reverse_lazy('request-master-list')
 
 
-class DeleteMasterRequest(DeleteView):
+class DeleteMasterRequest(AdminpanelRestrictionMixin, DeleteView):
+    required_section = 'call_master'
+
     model = Call_Master
     success_url = reverse_lazy('request-master-list')

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Лицевые счета</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Лицевые счета</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+            <!--<div class="col-xs-12 col-sm-6">-->
+            <!--<h2 class="page-header">Квартиры</h2>-->
+            <!--</div>-->
+            <div class="col-xs-12 col-lg-9">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="small-box bg-green overflow-hidden">
+                            <div class="inner">
+                                <h3>107 900.00 грн</h3>
+                                <p>Состояние кассы</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <!--<span class="small-box-footer">&nbsp;</span>-->
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="small-box bg-blue overflow-hidden">
+                            <div class="inner">
+                                <h3>90 000.00 грн</h3>
+                                <p>Баланс по счетам</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <!--<span class="small-box-footer">&nbsp;</span>-->
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="small-box bg-red overflow-hidden">
+                            <div class="inner">
+                                <h3>0.00 грн</h3>
+                                <p>Задолженность по счетам</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <!--<span class="small-box-footer">&nbsp;</span>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-3">
+                <div class="btn-group pull-right margin-bottom">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Выберите действие <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'account_create' %}">Добавить лицевой счет</a></li>
+                        <li><a href="/admin/account/export">Выгрузить в Excel</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools">
+                            <a href="/admin/account/index" class="btn btn-default btn-sm">
+                                <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="w0" class="grid-view">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover table-striped linkedRow">
+                                <thead>
+                                    <tr><th style="width: 125px; min-width: 125px">№</th><th>Статус</th><th style="width: 100px; min-width: 100px">Квартира</th><th style="min-width: 200px">Дом</th><th style="width: 160px; min-width: 65px">Секция</th><th style="min-width: 200px">Владелец</th><th style="width: 120px; min-width: 120px">Остаток (грн)</th><th style="width: 80px; min-width: 80px">&nbsp;</th></tr><tr id="w0-filters" class="filters"><td><input type="text" class="form-control" name="AccountSearch[uid]"></td><td><select id="accountsearch-status" class="form-control select2-hidden-accessible" name="AccountSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">
+                                    <option value=""></option>
+                                    <option value="10">Активен</option>
+                                    <option value="0">Неактивен</option>
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accountsearch-status-container"><span class="select2-selection__rendered" id="select2-accountsearch-status-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><input type="text" class="form-control" name="AccountSearch[searchFlat]"></td><td><select id="accountsearch-searchhouse" class="form-control select2-hidden-accessible" name="AccountSearch[searchHouse]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accountsearch-searchhouse-container"><span class="select2-selection__rendered" id="select2-accountsearch-searchhouse-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accountsearch-searchsection" class="form-control select2-hidden-accessible" name="AccountSearch[searchSection]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_00d9e7b8" style="display:none" tabindex="-1" aria-hidden="true">
+                                    <option value="">Выберите дом</option>
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accountsearch-searchsection-container"><span class="select2-selection__rendered" id="select2-accountsearch-searchsection-container"><span class="select2-selection__placeholder">Выберите дом</span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accountsearch-searchuserid" class="form-control select2-hidden-accessible" name="AccountSearch[searchUserId]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_ea5d4d6f" style="display:none" tabindex="-1" aria-hidden="true">
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accountsearch-searchuserid-container"><span class="select2-selection__rendered" id="select2-accountsearch-searchuserid-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accountsearch-searchhasdebt" class="form-control select2-hidden-accessible" name="AccountSearch[searchHasDebt]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">
+                                    <option value=""></option>
+                                    <option value="1">Есть долг</option>
+                                    <option value="0">Нет долга</option>
+                                    </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accountsearch-searchhasdebt-container"><span class="select2-selection__rendered" id="select2-accountsearch-searchhasdebt-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td>&nbsp;</td></tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in accounts %}
+                                    <tr data-href="{% url 'show_account' item.id %}">
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.get_status_display }}</td>
+                                        <td>{{ item.apartment_id }}</td>
+                                        <td>{{ item.apartment.house.name }}</td>
+                                        <td>{{ item.apartment.section.name }}</td>
+                                        <td>{{ item.apartment.owner.first_name }}</td>
+                                        <td>{{ item.balance }}</td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-sm" href="{% url 'account_update' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-default btn-sm" href="{% url 'account_delete' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix"></div>
+                    </div>
+
+                    <div class="box-footer">
+                        <div>Количество счетов: <span class="text-bold">11</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

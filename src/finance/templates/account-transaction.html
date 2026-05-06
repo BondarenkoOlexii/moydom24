@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>
+            Касса        </h1>
+
+        <ul class="breadcrumb"><li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+<li class="active">Касса</li>
+</ul>    </section>
+
+    <section class="content">
+
+<div class="row">
+    <div class="col-xs-12 col-lg-9">
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="small-box bg-green overflow-hidden">
+                    <div class="inner">
+                        <h3>107 900.00 грн</h3>
+                        <p>Состояние кассы</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-dollar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="small-box bg-blue overflow-hidden">
+                    <div class="inner">
+                        <h3>90 000.00 грн</h3>
+                        <p>Баланс по счетам</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-dollar"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="small-box bg-red overflow-hidden">
+                    <div class="inner">
+                        <h3>0.00 грн</h3>
+                        <p>Задолженность по счетам</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-dollar"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-lg-3">
+        <div class="btn-group pull-right margin-bottom">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Выберите действие <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="/admin/account-transaction/create?type=in">Создать приход</a></li>
+                <li><a href="/admin/account-transaction/create?type=out">Создать расход</a></li>
+                <li><a href="/admin/account-transaction/export">Выгрузить в Excel</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+                <div class="box-tools">
+                    <a href="/admin/account-transaction/index" class="btn btn-default btn-sm">
+                        <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div id="w0" class="grid-view">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-bordered table-hover table-striped linkedRow">
+                        <thead>
+                            <tr><th style="width: 125px; min-width: 125px">№</th><th style="width: 125px; min-width: 125px"><a href="/admin/account-transaction/index?sort=searchUidDate" data-sort="searchUidDate">Дата</a></th><th style="width: 120px; min-width: 120px">Статус</th><th>Тип платежа</th><th style="min-width: 200px">Владелец</th><th style="min-width: 160px">Лицевой счет</th><th>Приход/расход</th><th style="width: 110px; min-width: 110px">Сумма (грн)</th><th style="width: 80px; min-width: 80px">&nbsp;</th></tr><tr id="w0-filters" class="filters"><td><input type="text" class="form-control" name="AccountTransactionSearch[uid]"></td><td><input type="text" id="accounttransactionsearch-searchuiddaterange" class="form-control" name="AccountTransactionSearch[searchUidDateRange]" data-krajee-daterangepicker="daterangepicker_c8dff207"></td><td><select id="accounttransactionsearch-status" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
+                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-status-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-status-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accounttransactionsearch-transaction_purpose_id" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[transaction_purpose_id]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
+                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-transaction_purpose_id-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-transaction_purpose_id-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accounttransactionsearch-searchuserid" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[searchUserId]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_ea5d4d6f" style="display:none" tabindex="-1" aria-hidden="true"></select>
+                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-searchuserid-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-searchuserid-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><input type="text" class="form-control" name="AccountTransactionSearch[searchAccountUid]"></td><td><select id="accounttransactionsearch-type" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[type]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
+                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-type-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-type-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer clearfix"></div>
+            </div>
+            <div class="box-footer">
+                <div>Проведен приход: <span class="text-bold">108 300.00 грн</span></div>
+                <div>Проведен расход: <span class="text-bold">15 700.00 грн</span></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Новое показание</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/counter-data/counters">Счетчики</a></li>
+            <li class="active">Новое показание</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <form id="w0" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-xs-12 col-md-7 col-lg-6">
+                    <div class="page-header-spec">
+                        <div class="form-group field-counterdata-uid required">
+                            <div class="input-group">
+                                <div class="input-group-addon">№</div>
+                                {{ form.special_id }}
+                            </div>
+                        </div>
+
+                        <span class="label-mid">от</span>
+                        <div class="form-group field-counterdata-uid_date">
+                            <div id="counterdata-uid_date-kvdate" class="input-group  date">
+                                <span class="input-group-addon kv-date-calendar" title="Выбрать дату"><i class="glyphicon glyphicon-calendar"></i></span>
+                                {{ form.create_time }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-body">
+                    <input type="hidden" id="counterdata-id" name="CounterData[id]">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group">
+                                <label for="flatform-house_id">Дом</label>
+                                <select id="flatform-house_id" class="form-control" name="house_id">
+                                    {% for house in all_house %}
+                                        <option value="{{ house.id }}">
+                                            {{ house.name }}
+                                        </option>
+                                    {% endfor %}
+                                    <option value="">Выберите...</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="flatform-section_id">Секция</label>
+                                <select id="flatform-section_id" class="form-control" name="section_id">
+                                    {% if current_section %}
+                                        <option value="{{ current_section.id }}" selected>{{ current_section.name }}</option>
+                                    {% else %}
+                                        <option value="">Выберите...</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+
+                            <div class="form-group field-flatform-user_id">
+                                <label class="control-label" for="flatform-user_id">Квартира</label>
+                                {{ form.apartment }}
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group field-counterdata-service_id">
+                                <label class="control-label" for="counterdata-service_id">Счетчик</label>
+                                {{ form.service }}
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="form-group field-counterdata-status">
+                                <label class="control-label" for="counterdata-status">Статус</label>
+                                {{ form.status }}
+                                <div class="help-block"></div>
+                            </div>
+
+                            <input type="hidden" id="counterdata-isautosetlast" name="CounterData[isAutoSetLast]" value="1">
+                            <div class="form-group field-counterdata-amount_total">
+                                <label class="control-label" for="counterdata-amount_total">Показания счетчика</label>
+                                {{ form.indicator }}
+
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            <div class="form-group">
+                                <a href="{% url 'counter' %}" class="btn btn-default margin-bottom-15">Отменить</a>
+                                <input type="submit" class="btn btn-success margin-bottom-15" name="action_save" value="Сохранить">
+                                <input type="submit" class="btn btn-success margin-bottom-15 bg-green-active" name="action_save_add" value="Сохранить и добавить новые показания">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+
+<script src="{% static 'dist/js/jquery.js' %}"></script>
+<script src="{% static 'dist/js/selects2.js' %}"> </script>
+
+<script>
+    $(document).ready(function() {
+        // 1. Ініціалізація календаря для твого поля
+        $('#counterdata-uid_date').datepicker({
+            format: 'yyyy-mm-dd', // Формат для Django (Year-Month-Day)
+            autoclose: true,
+            language: 'ru',
+            todayHighlight: true,
+            orientation: "bottom auto"
+        });
+
+        // 2. Зробимо так, щоб при натисканні на іконку календаря він теж відкривався
+        $('#counterdata-uid_date-kvdate .kv-date-calendar').on('click', function() {
+            $('#userform-birthdate').datepicker('show');
+        });
+    });
+</script>
+
+{% endblock %}

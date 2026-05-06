@@ -14,7 +14,7 @@ from src.adminpanel.mixin import AdminpanelRestrictionMixin
 
 
 class ListUser(AdminpanelRestrictionMixin, ListView):
-    required_section = 'users'
+    required_section = 'apartments_owner'
 
     model = User
     template_name = 'user.html'
@@ -53,7 +53,7 @@ class ListUser(AdminpanelRestrictionMixin, ListView):
 
 
 class CreateUser(AdminpanelRestrictionMixin, CreateView):
-    required_section = 'users'
+    required_section = 'apartments_owner'
 
     model = User
     template_name = 'create_user.html'
@@ -81,7 +81,7 @@ class CreateUser(AdminpanelRestrictionMixin, CreateView):
     def get_success_url(self):
         return reverse('user')
 class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
-    required_section = 'users'
+    required_section = 'apartments_owner'
 
     model = User
     template_name = 'create_user.html'
@@ -108,13 +108,15 @@ class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
     def get_success_url(self):
         return reverse('user')
 class DeleteUser(AdminpanelRestrictionMixin, DeleteView):
-    required_section = 'users'
+    required_section = 'apartments_owner'
 
     model = User
     success_url = reverse_lazy('user')
 
 
-class CreateMessage(CreateView):
+class CreateMessage(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'messages'
+
     model = Message
     template_name = 'new_message.html'
     form_class = MessageForm
@@ -170,7 +172,9 @@ class CreateMessage(CreateView):
         return reverse('user')
 
 
-class EmailInvite(FormView):
+class EmailInvite(AdminpanelRestrictionMixin, FormView):
+    required_section = 'messages'
+
     form_class = InviteMessage
     template_name = 'invite_message.html'
     success_url = 'invite_message'
@@ -195,22 +199,30 @@ class EmailInvite(FormView):
 
 
 
-class ListMessage(ListView):
+class ListMessage(AdminpanelRestrictionMixin, ListView):
+    required_section = 'messages'
+
     model = Message
     template_name = 'messages.html'
     context_object_name = 'messages'
 
-class SpecificMessage(DetailView):
+class SpecificMessage(AdminpanelRestrictionMixin, DetailView):
+    required_section = 'messages'
+
     model = Message
     template_name = 'current_message.html'
     context_object_name = 'view'
 
-class DeleteMessage(DeleteView):
+class DeleteMessage(AdminpanelRestrictionMixin, DeleteView):
+    required_section = 'messages'
+
     model = Message
     success_url = reverse_lazy('messages')
 
 
-class MasterList(ListView):
+class MasterList(AdminpanelRestrictionMixin, ListView):
+    required_section = 'users'
+
     model = User
     template_name = 'masters.html'
     context_object_name = 'form'
@@ -227,7 +239,9 @@ class MasterList(ListView):
 
         return context
 
-class CreateMaster(CreateView):
+class CreateMaster(AdminpanelRestrictionMixin, CreateView):
+    required_section = 'users'
+
     model = User
     template_name = 'new_master.html'
     form_class = CreateMasterForm
@@ -257,7 +271,9 @@ class CreateMaster(CreateView):
         return reverse('master-list')
 
 
-class UpdateMaster(UpdateView):
+class UpdateMaster(AdminpanelRestrictionMixin, UpdateView):
+    required_section = 'users'
+
     model = User
     template_name = 'new_master.html'
     form_class = CreateMasterForm
@@ -314,6 +330,8 @@ class UpdateMaster(UpdateView):
         return super().form_valid(form)
 
 
-class DeleteMaster(DeleteView):
+class DeleteMaster(AdminpanelRestrictionMixin, DeleteView):
+    required_section = 'users'
+
     model = User
     success_url = reverse_lazy('master-list')

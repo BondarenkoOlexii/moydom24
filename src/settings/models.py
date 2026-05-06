@@ -1,9 +1,8 @@
 from django.db import models
 
-from src.adminpanel.models.FinanceChoise import TransactionChoise, InvoiceChoise
-from src.finance.models import Payment_Account, Cash_Register
 from src.adminpanel.models.SettingChoise import CountersChoise
 from src.adminpanel.models.FinanceChoise import CashRegisterChoise
+from src.houses.models import Apartment
 
 
 # Create your models here.
@@ -37,27 +36,11 @@ class Tarrif_Service_Price(models.Model):
 
 class Counters(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    account = models.ForeignKey(Payment_Account, on_delete=models.CASCADE)
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     indicator = models.CharField(max_length=20)
+    special_id = models.CharField(max_length=220, unique=True)
     status = models.CharField(choices=CountersChoise.choices, default=CountersChoise.choices[0][0])
-
-
-
-class Transaction(models.Model):
-    cash_register = models.ForeignKey(Cash_Register, on_delete=models.CASCADE)
-    status = models.CharField(TransactionChoise.choices, default=TransactionChoise.choices[0][0])
-    amount = models.CharField(max_length=10)
-    create_time = models.DateTimeField()
-    service = models.ManyToManyField(Service)
-
-
-class Invoice(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
-    total_amount = models.CharField(max_length=10)
-    type = models.CharField(choices=InvoiceChoise.choices, default=InvoiceChoise.choices[0][0])
-    comment = models.TextField()
-    create_time = models.DateTimeField()
+    create_time = models.DateField()
 
 
 class PaymentInfo(models.Model):

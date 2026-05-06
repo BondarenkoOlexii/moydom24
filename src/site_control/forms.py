@@ -39,11 +39,12 @@ class MainPageForm(forms.ModelForm):
 
     class Meta:
         model = Main_Page
-        fields = ['name', 'description']
+        fields = ['name', 'description', 'show_app']
 
         widgets = {
             'name': forms.TextInput(attrs={'id': 'websitehomeform-hometitle', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'id': 'message-description', 'class': 'compose-textarea form-control'}),
+            'show_app': forms.CheckboxInput(attrs={'id': 'websitehomeform-homeisshowapps', 'type': 'checkbox'}),
         }
 
 

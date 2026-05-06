@@ -45,6 +45,7 @@ class Role(models.Model):
     role_list = models.BooleanField(default=False) # Роли
     users = models.BooleanField(default=False) # Пользователи
     payment_data = models.BooleanField(default=False) # Платежни реквезити
+    transaction_propose = models.BooleanField(default=False)
 
 
 class Message(models.Model):

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
-from .models import PaymentInfo, TransactionPurpose, Service, Measurement, Tariff, Tarrif_Service_Price
-from ..users.models import Role
+from .models import PaymentInfo, TransactionPurpose, Service, Measurement, Tariff, Tarrif_Service_Price, Counters
+from src.users.models import Role
 
 
 class PaymentInfoForm(forms.ModelForm):
@@ -116,4 +116,21 @@ class RoleForm(forms.ModelForm):
         widgets = {
             field: forms.CheckboxInput(attrs={'class': 'text-center'})
             for field in fields
+        }
+
+
+
+class CounterForm(forms.ModelForm):
+    class Meta:
+        model = Counters
+        fields = ['special_id', 'indicator', 'status', 'create_time', 'service', 'apartment']
+
+        widgets = {
+            'service': forms.Select(attrs={'class': 'form-control'}),
+            'apartment': forms.Select(attrs={'id': 'flatform-flat_id', 'class': 'form-control'}),
+            'special_id': forms.TextInput(attrs={'id': 'counterdata-uid', 'class': 'form-control'}),
+            'indicator': forms.NumberInput(attrs={'id': 'counterdata-amount_total', 'class': 'form-control', 'step': '0.1', 'min': '0'}),
+            'status': forms.Select(attrs={'id': 'counterdata-status', 'class': 'form-control'}),
+            'create_time': forms.DateInput(attrs={'id': 'counterdata-uid_date', 'class': 'form-control krajee-datepicker', 'name': 'MasterRequest[date_request]',
+                                                  'data-datepicker-source':'masterrequest-date_request-kvdate', 'data-datepicker-type': '3', 'data-krajee-kvdatepicker': 'kvDatepicker_1643d6f1'})
         }
