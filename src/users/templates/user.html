@@ -82,7 +82,11 @@
                                             <td></td>
                                             <td></td>
                                             <td>{{ item.date_joined }}</td>
-                                            <td>{{ item.user_status }}</td>
+                                            <td>
+                                                <small class="label {{ item.get_color_status }}">
+                                                    {{ item.user_status }}
+                                                </small>
+                                            </td>
                                             <td></td>
                                             <td>
                                                 <div class="btn-group pull-right">

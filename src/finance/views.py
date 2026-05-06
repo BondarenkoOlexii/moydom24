@@ -81,8 +81,20 @@ class ListInvoice(TemplateView):
 class InvoiceDatatableView(AjaxDatatableView):
     model = Invoice
     title = 'Квитанції'
+    initial_order = [['id', "desc"]] # То як буде відфільтрований список при першому заході по id від нового до старого
+
+    length_menu = [[10, 20, 50, 100], [10, 20, 50, 100]] # Пагінація
+
+    column_defs = [
+        {'name': 'id', 'visible': True, 'searchable': False},
+        {'name': 'status', 'visible': True, 'searchable': False},
+        {'name': 'create_time', 'visible': True, 'searchable': False},
+        {'name': 'service', 'foreign_field': 'service__service', 'visible': True, 'searchable': True, 'choices': True}, # це для Foreign Key і випадаючого списка (choices: True якщо в нас є вбудований choise в моделі)
+
+    ]
 
 class CreateInvoice(CreateView):
     model = Invoice
     template_name = 'create_invoice.html'
     form_class = InvoiceForm
+
