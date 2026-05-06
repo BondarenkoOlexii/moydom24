@@ -1,12 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
+from ajax_datatable.views import AjaxDatatableView
 
 from src.adminpanel.mixin import AdminpanelRestrictionMixin
 
-from .models import Payment_Account
-from .forms import PaymentAccountForm
+from .models import Payment_Account, Invoice
+from .forms import PaymentAccountForm, InvoiceForm
 
 from src.houses.models import House
 # Create your views here.
@@ -68,3 +69,20 @@ class UpdateAccount(UpdateView):
 class DeleteAccount(DeleteView):
     model = Payment_Account
     success_url = reverse_lazy('account')
+
+
+
+class ListInvoice(TemplateView):
+    #model = Invoice
+    template_name = 'invoice.html'
+    #context_object_name = 'invoices'
+
+
+class InvoiceDatatableView(AjaxDatatableView):
+    model = Invoice
+    title = 'Квитанції'
+
+class CreateInvoice(CreateView):
+    model = Invoice
+    template_name = 'create_invoice.html'
+    form_class = InvoiceForm

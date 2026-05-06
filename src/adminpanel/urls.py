@@ -16,7 +16,7 @@ from src.settings.views import PaymentInfoCreate, TransactionProposeList, Transa
 
 from src.site_control.views import CreateMainPageView, CreateAboutPageView, CreateContactPageView, CreateServicePageView
 
-from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail
+from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail, ListInvoice
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
@@ -84,5 +84,7 @@ urlpatterns = [
     path('counter/create', CreateCounter.as_view(), name='counter_create'),
     path('counter/update/<int:pk>', UpdateCounter.as_view(), name='counter_update'),
     path('counter/delete/<int:pk>', DeleteCounter.as_view(), name='counter_delete'),
+
+    path('invoice', ListInvoice.as_view(), name='invoice'),
 
 ]

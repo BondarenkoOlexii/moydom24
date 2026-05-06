@@ -1,6 +1,6 @@
 from django import forms
 
-from src.finance.models import Payment_Account
+from src.finance.models import Payment_Account, Invoice
 
 class PaymentAccountForm(forms.ModelForm):
     class Meta:
@@ -12,3 +12,8 @@ class PaymentAccountForm(forms.ModelForm):
             'bank_book': forms.TextInput(attrs={'id': 'account-uid', 'class': 'form-control'}),
             'status': forms.Select(attrs={'id': 'account-status', 'class': 'form-control'})
         }
+
+class InvoiceForm(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = ['type', 'comment', 'create_time', 'service', 'transaction']

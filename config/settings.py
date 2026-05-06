@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 ADMINPANEL_APPS = [
     'django_select2',
+    'ajax_datatable',
     'src.adminpanel.apps.AdminpanelConfig',
     'src.common.apps.CommonConfig',
     'src.houses.apps.HousesConfig',
