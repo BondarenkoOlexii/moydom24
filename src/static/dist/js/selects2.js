@@ -1,6 +1,25 @@
 $(document).ready(function() {
     // 1. Ініціалізуємо звичайний Select2 для країни
-    $('#flatform-house_id').select2();
+    $('#flatform-house_id').select2({
+        placeholder: "Выберите дом",
+        ajax: {
+            url: '/api/house/',
+            dataType: 'json',
+            delay: 250,
+            data: function (params){
+                return {
+                    q: params.term
+                };
+
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
 //
 //    // 2. Ініціалізуємо Select2 для міста з підтримкою AJAX
     $('#flatform-section_id').select2({
@@ -50,6 +69,7 @@ $(document).ready(function() {
     });
 
     $('#flatform-flat_id').select2({
+
         placeholder: 'Выберите квартиру',
         ajax: {
             url: '/api/apartment/',
@@ -71,6 +91,67 @@ $(document).ready(function() {
             cache: true
         }
     });
+
+
+    $('#invoice-tariff_id').select2({
+        placeholder: 'Выберите тариф',
+        ajax: {
+            url: '/api/tariff/',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term
+                };
+            },
+
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+
+
+
+    $('#flatform-flat_id').on('change', function(){
+        var apartmentId = $(this).val();
+        var $paymentInput = $('#account_uid');
+        var $fullnameSpan = $('#user-fullname');
+        var $phonenumSpan = $('#user-phone');
+
+        $paymentInput.val('')
+
+        if (apartmentId) {
+            $.ajax({
+                url: '/api/payment_account/',
+                type: 'GET',
+                data: {
+                    apartment_id: apartmentId
+                },
+
+                success: function(response){
+                    if (response && response.length > 0) {
+                        $paymentInput.val(response[0].text);
+                        $fullnameSpan.text(response[0].full_name);
+                        $phonenumSpan.text(response[0].phone)
+
+                    } else {
+                        $paymentInput.val('Счет не найден')
+                    }
+                },
+
+            })
+
+        }
+
+    })
+
+
+    $
+
 
 
     // 3. Логіка блокування/розблокування та очищення

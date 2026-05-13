@@ -12,6 +12,9 @@ class Tariff(models.Model):
     description = models.TextField()
     create_time = models.DateTimeField(auto_now=True, null=True, blank=True)
 
+    def __str__(self):
+        return self.name
+
 class Measurement(models.Model):
     unit_of_measurement = models.CharField(max_length=10)
 

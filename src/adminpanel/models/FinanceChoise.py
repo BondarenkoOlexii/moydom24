@@ -6,8 +6,8 @@ class CashRegisterChoise(models.TextChoices):
     expense = 'expense', 'Расход'
 
 class TransactionChoise(models.TextChoices):
-    no_conducted = 'no_conducted', 'Не проведена'
     conducted = 'conducted', 'Проведена'
+    no_conducted = 'no_conducted', 'Не проведена'
 
 class InvoiceChoise(models.TextChoices):
     no_paid = 'no_paid', 'Не оплачено'

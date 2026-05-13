@@ -36,76 +36,165 @@
 
                     <div id="w0" class="grid-view">
                         <div class="box-body table-responsive no-padding">
-                            <table class="table table-bordered table-hover table-striped linkedRow">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Пользователь</th>
-                                        <th>Роль</th>
-                                        <th>Телефон</th>
-                                        <th>Email (логин)</th>
-                                        <th>Статус</th>
-                                        <th style="width: 114px; min-width: 114px">&nbsp;</th>
-                                    </tr>
-                                    <tr id="w0-filters" class="filters">
-                                        <td>&nbsp;</td>
-                                        <td><input type="text" class="form-control" name="UserAdminSearch[searchFullname]"></td>
-                                        <td><select id="useradminsearch-role" class="form-control select2-hidden-accessible" name="UserAdminSearch[role]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">
-                                        </select>
-                                            <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;">
-                                                <span class="selection">
-                                                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-useradminsearch-role-container">
-                                                        <span class="select2-selection__rendered" id="select2-useradminsearch-role-container">
-                                                            <span class="select2-selection__placeholder"></span>
-                                                        </span>
-                                                        <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </td>
-                                        <td> </td>
-                                </thead>
+                            <table class="table table-bordered table-hover table-striped linkedRow" id="master_ajax_datatable_permissions">
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th>#</th>-->
+<!--                                        <th>Пользователь</th>-->
+<!--                                        <th>Роль</th>-->
+<!--                                        <th>Телефон</th>-->
+<!--                                        <th>Email (логин)</th>-->
+<!--                                        <th>Статус</th>-->
+<!--                                        <th style="width: 114px; min-width: 114px">&nbsp;</th>-->
+<!--                                    </tr>-->
+<!--                                    <tr id="w0-filters" class="filters">-->
+<!--                                        <td>&nbsp;</td>-->
+<!--                                        <td><input type="text" class="form-control" name="UserAdminSearch[searchFullname]"></td>-->
+<!--                                        <td><select id="useradminsearch-role" class="form-control select2-hidden-accessible" name="UserAdminSearch[role]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">-->
+<!--                                        </select>-->
+<!--                                            <span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;">-->
+<!--                                                <span class="selection">-->
+<!--                                                    <span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-useradminsearch-role-container">-->
+<!--                                                        <span class="select2-selection__rendered" id="select2-useradminsearch-role-container">-->
+<!--                                                            <span class="select2-selection__placeholder"></span>-->
+<!--                                                        </span>-->
+<!--                                                        <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>-->
+<!--                                                    </span>-->
+<!--                                                </span>-->
+<!--                                            </span>-->
+<!--                                        </td>-->
+<!--                                        <td> </td>-->
+<!--                                </thead>-->
 
-                                <tbody>
-                                {% for item in form %}
-                                    <tr>
-                                        <td>{{ item.id }}</td>
-                                        <td>{{ item.first_name }} {{ item.last_name }}</td>
-                                        <td>
-                                            {% for role_obj in item.roles.all %}
-                                                {{ role_obj.get_role_display }}
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{ item.phone_number }}</td>
-                                        <td>{{ item.email }}</td>
-                                        <td>{{ item.user_status }}</td>
-                                        <td>
-                                            <form action="" method="post">
-                                                {% csrf_token %}
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-sm" href="/admin/user-admin/invite/1" title="Отправить приглашение" data-toggle="tooltip"><i class="fa fa-repeat"></i></a>
-                                                    <a class="btn btn-default btn-sm" href="{% url 'master-list-update' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
-                                                    <a class="btn btn-default btn-sm" href="{% url 'master-list-delete' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>
-                                                </div>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
+<!--                                <tbody>-->
+<!--                                {% for item in form %}-->
+<!--                                    <tr>-->
+<!--                                        <td>{{ item.id }}</td>-->
+<!--                                        <td>{{ item.first_name }} {{ item.last_name }}</td>-->
+<!--                                        <td>-->
+<!--                                            {% for role_obj in item.roles.all %}-->
+<!--                                                {{ role_obj.get_role_display }}-->
+<!--                                            {% endfor %}-->
+<!--                                        </td>-->
+<!--                                        <td>{{ item.phone_number }}</td>-->
+<!--                                        <td>{{ item.email }}</td>-->
+<!--                                        <td>{{ item.user_status }}</td>-->
+<!--                                        <td>-->
+<!--                                            <form action="" method="post">-->
+<!--                                                {% csrf_token %}-->
+<!--                                                <div class="btn-group pull-right">-->
+<!--                                                    <a class="btn btn-default btn-sm" href="/admin/user-admin/invite/1" title="Отправить приглашение" data-toggle="tooltip"><i class="fa fa-repeat"></i></a>-->
+<!--                                                    <a class="btn btn-default btn-sm" href="{% url 'master-list-update' item.id %}" title="Редактировать" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>-->
+<!--                                                    <a class="btn btn-default btn-sm" href="{% url 'master-list-delete' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?"><i class="fa fa-trash"></i></a>-->
+<!--                                                </div>-->
+<!--                                            </form>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                {% endfor %}-->
+<!--                                </tbody>-->
                             </table>
                         </div>
-        <div class="box-footer clearfix"><ul class="pagination pagination-sm no-margin pull-right"><li class="prev disabled"><span>«</span></li>
-        <li class="active"><a href="/admin/user-admin/index?page=1&amp;per-page=50" data-page="0">1</a></li>
-        <li><a href="/admin/user-admin/index?page=2&amp;per-page=50" data-page="1">2</a></li>
-        <li><a href="/admin/user-admin/index?page=3&amp;per-page=50" data-page="2">3</a></li>
-        <li><a href="/admin/user-admin/index?page=4&amp;per-page=50" data-page="3">4</a></li>
-        <li><a href="/admin/user-admin/index?page=5&amp;per-page=50" data-page="4">5</a></li>
-        <li><a href="/admin/user-admin/index?page=6&amp;per-page=50" data-page="5">6</a></li>
-        <li class="next"><a href="/admin/user-admin/index?page=2&amp;per-page=50" data-page="1">»</a></li></ul></div></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+
+<script language="javascript">
+
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#master_ajax_datatable_permissions'),
+            "{% url 'master_datatable' %}",
+            {
+                // extra_options (example)
+                processing: false,
+                autoWidth: false,
+                full_row_select: true,
+                scrollX: false,
+
+                dom:
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'box-footer clearfix'p>",
+
+                columnDefs: [
+                    { width: "80px", targets: -1, className: "text-center" }
+                ],
+
+                pagingType: "simple_numbers",
+                language: {
+                    paginate: {
+                        previous: "«",
+                        next: "»"
+                    },
+                    lengthMenu: "Показувати _MENU_ записів",
+                    info: "Показано від _START_ до _END_ із _TOTAL_ записів",
+                    infoEmpty: "Немає записів",
+                    zeroRecords: "Нічого не знайдено"
+                },
+
+                drawCallback: function(settings) {
+                    var wrapper = $(settings.nTableWrapper);
+
+                    // Знаходимо ul список пагінації
+                    var ul = wrapper.find('.dataTables_paginate ul');
+
+                    // Очищаємо можливе сміття від DataTables і ставимо рівно те, що треба
+                    ul.removeClass().addClass('pagination pagination-sm no-margin pull-right');
+
+                    // Прибираємо стандартні відступи DataTables, щоб список приліг впритул до краю
+                    wrapper.find('.dataTables_paginate').css({
+                        'float': 'none',
+                        'text-align': 'right',
+                        'margin': '0'
+                    });
+                },
+
+                initComplete: function(settings, json) {
+                    $('.datatable-column-filter-row input').addClass('form-control').attr('placeholder', 'Пошук');
+                    $('.datatable-column-filter-row select').addClass('form-control');
+                }
+            }, {
+                // extra_data
+                // ...
+            },
+        );
+    });
+
+</script>
+
+
+<script>
+    $(document).ready(function(){
+
+        $('#datatable tbody').off('click', 'tr');
+
+        $('#datatable tbody').on('click', 'tr', function(e){
+
+            if ($(e.target).closest('a', 'button').length > 0) {
+                return;
+            }
+
+            var table = $('#datatable').DataTable();
+            var data = table.row(this).data();
+
+            if (data && data.detail_url) {
+                window.location.href = data.detail_url;
+            }
+        });
+    });
+</script>
 
 {% endblock %}

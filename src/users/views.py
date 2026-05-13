@@ -1,55 +1,108 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView
-from django.db.models import Q # Фільтр щоб легше шукати, | - OR
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView, DetailView, TemplateView
+from ajax_datatable.views import AjaxDatatableView
 
 from .models import User, Image, Message, Role
 from .forms import UserForm, MessageForm, InviteMessage, CreateMasterForm
-from src.houses.models import Apartment
+from src.houses.models import Apartment, House
+from src.adminpanel.models.UserChoise import UserStatus
 from config_celery.celery_email_worker import send_invite_email, app
 from src.adminpanel.mixin import AdminpanelRestrictionMixin
 # Create your views here.
 
 
 
-class ListUser(AdminpanelRestrictionMixin, ListView):
+class ListUser(AdminpanelRestrictionMixin, TemplateView):
     required_section = 'apartments_owner'
 
-    model = User
     template_name = 'user.html'
-    context_object_name = 'users'
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #
-    #     search_id_query = self.request.GET.get('UserSearch[uid]', '')
-    #     search_name_query = self.request.GET.get('UserSearch[searchFullname]', '')
-    #     search_phone_query = self.request.GET.get('UserSearch[searchPhone]', '')
-    #     search_email_query = self.request.GET.get('UserSearch[email]', '')
-    #
-    #     if search_name_query:
-    #         queryset = queryset.filter(user_id__icontains=search_id_query)
-    #
-    #     if search_name_query:
-    #         queryset = queryset.filter(
-    #             Q(first_name__icontains=search_name_query) |
-    #             Q(middle_name__icontains=search_name_query) |
-    #             Q(last_name__icontains=search_name_query)
-    #         )
-    #
-    #     if search_phone_query:
-    #         queryset = queryset.filter(phone_number__icontains=search_phone_query)
-    #
-    #     if search_email_query:
-    #         queryset = queryset.filter(email__icontains=search_email_query)
-    #
-    #     return queryset
 
-    def get_context_data(self, **kwargs): # Щоб все не зникло після перезавантаження
-        contex = super().get_context_data(**kwargs)
-        contex['filter'] = self.request.GET
-        return contex
+class UserDatatableView(AjaxDatatableView):
+    model = User
+    title = "Пользователи"
+    initial_order = [['user_id', 'asc']]
+
+    length_menu = [[10, 20, 50, 100], [10, 20, 50, 100]]
+
+    column_defs = [
+        {'name': 'id', 'searchable': False, 'visible': False},
+        {'name': 'user_id', 'title': 'ID', 'visible': True, 'searchable': True},
+        {'name': 'first_name', 'title': 'ФИО', 'visible': True, 'searchable': True},
+        {'name': 'phone_number', 'title': 'Телефон', 'visible': True, 'searchable': True},
+        {'name': 'email', 'title': 'Emain', 'visible': True, 'searchable': True},
+        {'name': 'house_name', 'title': 'Доми', 'visible': True, 'placeholder': True, 'choices': [('', 'Выберите дом')], 'searchable': True, 'orderable': False},
+        {'name': 'apartment_num', 'title': 'Квартири', 'visible': True, 'placeholder': True, 'choices': [('', 'Выберите квартиру')], 'searchable': True, 'orderable': False},
+        {'name': 'date_joined', 'title': 'Добавлен', 'visible': True, 'searchable': True},
+        {'name': 'user_status', 'title': 'Статус', 'visible': True, 'searchable': False, 'choices': UserStatus.choices, 'autofilter': True},
+        {'name': 'actions', 'title': '', 'visible': True, 'searchable': False, 'orderable': False},
+    ]
+
+    def get_column_defs(self, request):
+        column_defs = super().get_column_defs(request)
+
+        for col in column_defs:
+            if col['name'] == 'house_name':
+                col['choices'] = [('', 'Выберите дом')] + [(h.id, h.name) for h in House.objects.all()]
+
+        return column_defs
+
+    def customize_row(self, row, obj):
+        apt = obj.apartment_set.first() if hasattr(obj, 'apartment_set') else None
+
+        row['house_name'] = apt.house.name if apt and apt.house else '—'
+        row['apartment_num'] = f"№ {apt.apartment_number}" if apt else '—'
+
+
+
+        edit_url = reverse('update_user', kwargs={'pk': obj.id})
+        delete_url = reverse('delete_user', kwargs={'pk': obj.id})
+
+        row['actions'] = f'''
+                    <div class="btn-group pull-right">
+                       <a class="btn btn-default btn-sm" href="{edit_url}" title="Редагувати" data-toggle="tooltip">
+                           <i class="fa fa-pencil"></i>
+                       </a>
+
+                       <a class="btn btn-default btn-sm" href="{delete_url}" title="Видалити" data-toggle="tooltip">
+                          <i class="fa fa-trash"></i>
+                       </a>
+                    </div>
+                '''
+
+    def filter_queryset(self, params, qs):
+        # 1. ПЕРЕХОПЛЮЄМО ЗНАЧЕННЯ НАШИХ ФІЛЬТРІВ (Будинок і Квартира)
+        house_val = None
+        apt_val = None
+        clean_links = []
+
+        for col in params.get('column_links', []):
+            if col.name == 'house_name':
+                house_val = col.search_value
+            elif col.name == 'apartment_num':
+                apt_val = col.search_value
+            else:
+                # Зберігаємо всі інші колонки (щоб пошук по ФІО і Телефону працював)
+                clean_links.append(col)
+
+        # 2. Ховаємо наші кастомні колонки від бібліотеки, щоб вона не зламала QuerySet!
+        params['column_links'] = clean_links
+
+        # 3. Викликаємо стандартний пошук
+        qs = super().filter_queryset(params, qs)
+
+        # 4. Вручну застосовуємо фільтрацію по базі даних
+        # Зверни увагу: я використовую 'apartment', бо так було в твоїй помилці раніше
+        if house_val:
+            qs = qs.filter(apartment__house_id=house_val).distinct()
+        if apt_val:
+            qs = qs.filter(apartment__id=apt_val).distinct()
+
+        return qs
+
+
 
 
 class CreateUser(AdminpanelRestrictionMixin, CreateView):
@@ -80,6 +133,8 @@ class CreateUser(AdminpanelRestrictionMixin, CreateView):
 
     def get_success_url(self):
         return reverse('user')
+
+
 class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
     required_section = 'apartments_owner'
 
@@ -107,6 +162,8 @@ class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('user')
+
+
 class DeleteUser(AdminpanelRestrictionMixin, DeleteView):
     required_section = 'apartments_owner'
 
@@ -220,24 +277,108 @@ class DeleteMessage(AdminpanelRestrictionMixin, DeleteView):
     success_url = reverse_lazy('messages')
 
 
-class MasterList(AdminpanelRestrictionMixin, ListView):
+class MasterList(AdminpanelRestrictionMixin, TemplateView):
     required_section = 'users'
 
-    model = User
     template_name = 'masters.html'
-    context_object_name = 'form'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         role_list = User.objects.prefetch_related('roles')
 
-        # for obj in role_list:
-        #     user_role = obj.roles.first()
-
         context['roles'] = role_list
 
         return context
+
+
+class MasterDatatableView(AjaxDatatableView):
+    model = User
+    title = "Мастера"
+    initial_order = [['id', 'asc']]
+
+    length_menu = [[10, 20, 50, 100], [10, 20, 50, 100]]
+
+    column_defs = [
+        # {'name': 'id', 'searchable': False, 'visible': False},
+        {'name': 'id', 'title': 'ID', 'visible': True, 'searchable': True},
+        {'name': 'first_name', 'title': 'ФИО', 'visible': True, 'searchable': True},
+
+        {'name': 'role', 'title': 'Роли', 'visible': True, 'placeholder': True, 'choices': [('', 'Выберите роль')], 'searchable': True, 'orderable': False},
+
+        {'name': 'phone_number', 'title': 'Телефон', 'visible': True, 'searchable': True},
+        {'name': 'email', 'title': 'Emain', 'visible': True, 'searchable': True},
+        {'name': 'user_status', 'title': 'Статус', 'visible': True, 'searchable': False, 'choices': UserStatus.choices, 'autofilter': True},
+        {'name': 'actions', 'title': '', 'visible': True, 'searchable': False, 'orderable': False},
+    ]
+
+
+    def get_column_defs(self, request): # Тут заповнюємо список ролей
+        defs = super().get_column_defs(request)
+
+        for item in defs:
+            if item['name'] == 'role':
+                item['choices'] = [('', '')] + [(r.id, r.role) for r in Role.objects.all()]
+
+        return defs
+
+
+    def customize_row(self, row, obj):
+        master_role = obj.roles.first() if hasattr(obj, 'roles') else None
+
+        row['role'] = master_role.get_role_display() if master_role else '-'
+
+
+        status_text = obj.get_user_status_display() if obj.user_status else '-'
+
+        status_color = obj.get_color_status() if hasattr(obj, 'get_color_status') else 'label-danger'
+
+        row['user_status'] = f'<span class="label {status_color}">{status_text}</span>'
+
+        #row['detail_url'] = reverse('') - детейл для мастера
+
+
+
+        edit_url = reverse('master-list-update', kwargs={'pk': obj.id})
+        delete_url = reverse('master-list-delete', kwargs={'pk': obj.id})
+
+        row['actions'] = f'''
+                    <div class="btn-group pull-right">
+                       <a class="btn btn-default btn-sm" href="{edit_url}" title="Редагувати" data-toggle="tooltip">
+                           <i class="fa fa-pencil"></i>
+                       </a>
+
+                       <a class="btn btn-default btn-sm" href="{delete_url}" title="Видалити" data-toggle="tooltip">
+                          <i class="fa fa-trash"></i>
+                       </a>
+                    </div>
+                '''
+
+    def filter_queryset(self, params, qs):
+        role_val = None
+        clean_links = []
+
+        for item in params.get('column_links', []):
+            if item.name == 'role':
+                role_val = item.search_value
+            else:
+                clean_links.append(item)
+
+        params['column_links'] = clean_links
+        qs = super().filter_queryset(params, qs)
+
+        if role_val:
+            qs = qs.filter(roles__id=role_val).distinct()
+
+        return qs
+
+    def get_initial_queryset(self, request=None):
+        qs = super().get_initial_queryset(request)
+        # Повертаємо тільки тих користувачів, у яких є хоча б одна роль (тобто вони майстри)
+        # Або можна фільтрувати по qs.filter(is_staff=True), залежить від твоєї логіки
+        return qs.filter(is_staff=True).distinct().prefetch_related('roles')
+
+
 
 class CreateMaster(AdminpanelRestrictionMixin, CreateView):
     required_section = 'users'

@@ -13,13 +13,13 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=20, null=True, blank=True)
     middle_name = models.CharField(max_length=20, null=True, blank=True)
     last_name = models.CharField(max_length=20, null=True, blank=True)
-    language = models.CharField(max_length=4, choices=Language.choices, default=Language.choices[1][1], null=True, blank=True)
+    language = models.CharField(max_length=4, choices=Language.choices, default=Language.choices[1][0], null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True, validators=[phone_validator], unique=True)
     viber = models.CharField(max_length=20, null=True, blank=True, validators=[phone_validator])
     telegram = models.CharField(max_length=225, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    user_status = models.CharField(choices=UserStatus.choices, default=UserStatus.choices[1][1])
+    user_status = models.CharField(choices=UserStatus.choices, default=UserStatus.choices[1][0])
     main_image = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='user_main_image', null=True, blank=True)
     user_id = models.BigIntegerField(unique=True, null=True, blank=True)
 
@@ -27,7 +27,7 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
     def get_color_status(self):
-        if self.user_status == UserStatus.active:
+        if self.user_status == 'active':
             return 'label-success'
         elif self.user_status == UserStatus.new:
             return 'label-warning'

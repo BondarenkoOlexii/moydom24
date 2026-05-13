@@ -48,62 +48,62 @@
                             <button type="submit" style="display: none;"></button>
                         </form>
                         <div class="box-body table-responsive no-padding">
-                            <table class="table table-bordered table-hover table-striped linkedRow">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 110px; min-width: 110px">ID</th>
-                                        <th><a href="/admin/user/index?sort=searchFullname" data-sort="searchFullname">ФИО</a></th>
-                                        <th style="width: 140px; min-width: 140px">Телефон</th><th style="width: 140px; min-width: 140px">Email</th>
-                                        <th style="min-width: 250px">Дом</th><th style="min-width: 300px">Квартира</th>
-                                        <th style="width: 110px; min-width: 110px"><a href="/admin/user/index?sort=searchCreatedDate" data-sort="searchCreatedDate">Добавлен</a></th>
-                                        <th>Статус</th><th style="width: 80px; min-width: 80px">Есть долг</th><th style="width: 114px; min-width: 114px">&nbsp;</th>
-                                    </tr>
+                            <table class="table table-bordered table-hover table-striped linkedRow" id="user_ajax_datatable_permissions">
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th style="width: 110px; min-width: 110px">ID</th>-->
+<!--                                        <th><a href="/admin/user/index?sort=searchFullname" data-sort="searchFullname">ФИО</a></th>-->
+<!--                                        <th style="width: 140px; min-width: 140px">Телефон</th><th style="width: 140px; min-width: 140px">Email</th>-->
+<!--                                        <th style="min-width: 250px">Дом</th><th style="min-width: 300px">Квартира</th>-->
+<!--                                        <th style="width: 110px; min-width: 110px"><a href="/admin/user/index?sort=searchCreatedDate" data-sort="searchCreatedDate">Добавлен</a></th>-->
+<!--                                        <th>Статус</th><th style="width: 80px; min-width: 80px">Есть долг</th><th style="width: 114px; min-width: 114px">&nbsp;</th>-->
+<!--                                    </tr>-->
 
-                                    <tr id="w0-filters" class="filters">
-                                        <td><input type="text" class="form-control" name="UserSearch[uid]" value="{{ search_query }}" placeholder="ID" form="search-form"></td>
-                                        <td><input type="text" class="form-control" name="UserSearch[searchFullname]" form="search-form"></td>
-                                        <td><input type="text" class="form-control" name="UserSearch[searchPhone]" form="search-form"></td>
-                                        <td><input type="text" class="form-control" name="UserSearch[email]" form="search-form"></td>
-                                        <td>
-                                            <select id="usersearch-searchhouse" class="form-control select2-hidden-accessible" name="UserSearch[searchHouse]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">
-                                                <option value=""></option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </thead>
+<!--                                    <tr id="w0-filters" class="filters">-->
+<!--                                        <td><input type="text" class="form-control" name="UserSearch[uid]" value="{{ search_query }}" placeholder="ID" form="search-form"></td>-->
+<!--                                        <td><input type="text" class="form-control" name="UserSearch[searchFullname]" form="search-form"></td>-->
+<!--                                        <td><input type="text" class="form-control" name="UserSearch[searchPhone]" form="search-form"></td>-->
+<!--                                        <td><input type="text" class="form-control" name="UserSearch[email]" form="search-form"></td>-->
+<!--                                        <td>-->
+<!--                                            <select id="usersearch-searchhouse" class="form-control select2-hidden-accessible" name="UserSearch[searchHouse]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true">-->
+<!--                                                <option value=""></option>-->
+<!--                                            </select>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
 
-                                <tbody>
-                                    {% for item in users %}
-                                        <tr>
-                                            <td>{{ item.user_id }}</td>
-                                            <td>{{ item.first_name }} {{item.middle_name}} {{ item.last_name }}</td>
-                                            <td>{{ item.phone_number }}</td>
-                                            <td>{{ item.email }}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{ item.date_joined }}</td>
-                                            <td>
-                                                <small class="label {{ item.get_color_status }}">
-                                                    {{ item.user_status }}
-                                                </small>
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-sm" href="{% url 'update_user' item.id %}" title="Редактировать" data-toggle="tooltip">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </a>
-                                                    <form method="post">
-                                                          {% csrf_token %}
-                                                        <a class="btn btn-default btn-sm" href="{% url 'delete_user' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
+<!--                                <tbody>-->
+<!--                                    {% for item in users %}-->
+<!--                                        <tr>-->
+<!--                                            <td>{{ item.user_id }}</td>-->
+<!--                                            <td>{{ item.first_name }} {{item.middle_name}} {{ item.last_name }}</td>-->
+<!--                                            <td>{{ item.phone_number }}</td>-->
+<!--                                            <td>{{ item.email }}</td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td>{{ item.date_joined }}</td>-->
+<!--                                            <td>-->
+<!--                                                <small class="label {{ item.get_color_status }}">-->
+<!--                                                    {{ item.user_status }}-->
+<!--                                                </small>-->
+<!--                                            </td>-->
+<!--                                            <td></td>-->
+<!--                                            <td>-->
+<!--                                                <div class="btn-group pull-right">-->
+<!--                                                    <a class="btn btn-default btn-sm" href="{% url 'update_user' item.id %}" title="Редактировать" data-toggle="tooltip">-->
+<!--                                                        <i class="fa fa-pencil"></i>-->
+<!--                                                    </a>-->
+<!--                                                    <form method="post">-->
+<!--                                                          {% csrf_token %}-->
+<!--                                                        <a class="btn btn-default btn-sm" href="{% url 'delete_user' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">-->
+<!--                                                            <i class="fa fa-trash"></i>-->
+<!--                                                        </a>-->
+<!--                                                    </form>-->
+<!--                                                </div>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    {% endfor %}-->
+<!--                                </tbody>-->
                             </table>
                         </div>
                         <div class="box-footer clearfix"><ul class="pagination pagination-sm no-margin pull-right"><li class="prev disabled"><span>«</span></li>
@@ -123,5 +123,109 @@
         </div>
             </section>
         </div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+
+<script language="javascript">
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#user_ajax_datatable_permissions'),
+            "{% url 'user_datatable' %}",
+            {
+
+                // extra_options (example)
+                processing: false,
+                autoWidth: false,
+                full_row_select: true,
+                scrollX: false,
+
+                dom:
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'box-footer clearfix'p>",
+
+                columnDefs: [
+                    { width: "80px", targets: -1, className: "text-center" }
+                ],
+
+                pagingType: "simple_numbers",
+                language: {
+                    paginate: {
+                        previous: "«",
+                        next: "»"
+                    },
+                    lengthMenu: "Показувати _MENU_ записів",
+                    info: "Показано від _START_ до _END_ із _TOTAL_ записів",
+                    infoEmpty: "Немає записів",
+                    zeroRecords: "Нічого не знайдено"
+                },
+
+                drawCallback: function(settings) {
+                    var wrapper = $(settings.nTableWrapper);
+
+                    // Знаходимо ul список пагінації
+                    var ul = wrapper.find('.dataTables_paginate ul');
+
+                    // Очищаємо можливе сміття від DataTables і ставимо рівно те, що треба
+                    ul.removeClass().addClass('pagination pagination-sm no-margin pull-right');
+
+                    // Прибираємо стандартні відступи DataTables, щоб список приліг впритул до краю
+                    wrapper.find('.dataTables_paginate').css({
+                        'float': 'none',
+                        'text-align': 'right',
+                        'margin': '0'
+                    });
+                },
+
+
+                initComplete: function(settings, json) {
+                    var apartmentSelect = $('.datatable-column-filter-row th:eq(5) select');
+
+                    // Додаємо їм красиві класи Bootstrap
+                    $('.datatable-column-filter-row input').addClass('form-control input-sm');
+                    $('.datatable-column-filter-row select').addClass('form-control input-sm');
+
+                    // 2. БЛОКУЄМО ЗАЛЕЖНІ ПОЛЯ ПРИ СТАРТІ (як на твоєму фото)
+                    apartmentSelect.empty().append('<option value="">Выберите дом</option>').prop('disabled', true);
+                },
+            }
+        );
+
+        $(document).on('change', '.datatable-column-filter-row th:eq(4) select', function() {
+            var houseId = $(this).val();
+            var apartmentSelect = $('.datatable-column-filter-row th:eq(5) select');
+
+
+            if (houseId) {
+                // Одразу показуємо "Загрузка..." в ОБОХ списках
+                apartmentSelect.empty().append('<option value="">Загрузка...</option>').prop('disabled', true);
+
+                // ЗАПИТ 1: Отримуємо секції
+                // (Якщо знову не буде працювати, спробуй додати /adminpanel перед /api, як ми обговорювали)
+                $.get('/api/apartment/?house_id=' + houseId)
+                    .done(function(data) {
+                        apartmentSelect.empty().append('<option value="">Все квартири</option>');
+                        $.each(data, function(index, item) {
+                            apartmentSelect.append('<option value="' + item.id + '">' + item.text + '</option>');
+                        });
+                        apartmentSelect.prop('disabled', false); // Розблоковуємо секції
+                    });
+
+            } else {
+                // Якщо скинули будинок (обрали "Все дома") — блокуємо обидва поля
+                apartmentSelect.empty().append('<option value="">Выберите дом</option>').prop('disabled', true);
+            }
+        });
+
+    });
+</script>
 
 {% endblock %}

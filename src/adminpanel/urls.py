@@ -4,11 +4,11 @@ from src.adminpanel.api import api
 
 from .views import dashboard
 
-from src.houses.views import ListHouse, DetailHouse, CreateHouse, DeleteHouse, UpdateHouse, ApartmentList, CreateApartment,\
+from src.houses.views import ListHouse, HouseDatatableView, DetailHouse, CreateHouse, DeleteHouse, UpdateHouse, ApartmentList, ApartmentDatatableView, CreateApartment,\
     UpdateApartment, DeleteApartmnent, DetailApartment, ListMasterRequest, NewMasterRequest, DeleteMasterRequest, UpdateMasterRequest
 
-from src.users.views import ListUser, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage,\
-    SpecificMessage, DeleteMessage, MasterList, CreateMaster, UpdateMaster, DeleteMaster
+from src.users.views import ListUser, UserDatatableView, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage,\
+    SpecificMessage, DeleteMessage, MasterList, MasterDatatableView, CreateMaster, UpdateMaster, DeleteMaster
 
 from src.settings.views import PaymentInfoCreate, TransactionProposeList, TransactionProposeCreate, TransactionProposeUpdate,\
     TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView, ListCounter, \
@@ -16,10 +16,17 @@ from src.settings.views import PaymentInfoCreate, TransactionProposeList, Transa
 
 from src.site_control.views import CreateMainPageView, CreateAboutPageView, CreateContactPageView, CreateServicePageView
 
-from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail, ListInvoice
+from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail, ListInvoice, \
+    CreateInvoice
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
+
+    path('api/datatable/house', HouseDatatableView.as_view(), name='house_datatable'),
+    path('api/datatable/apartment', ApartmentDatatableView.as_view(), name='apartment_datatable'),
+    path('api/datatable/user', UserDatatableView.as_view(), name='user_datatable'),
+    path('api/datatable/master', MasterDatatableView.as_view(), name='master_datatable'),
+
     path('house', ListHouse.as_view(template_name="house.html"), name='house'),
     path('house/<int:pk>', DetailHouse.as_view(), name='detail_house'),
     path('house/create_house', CreateHouse.as_view(template_name="create_house.html"), name='create_house'),
@@ -86,5 +93,8 @@ urlpatterns = [
     path('counter/delete/<int:pk>', DeleteCounter.as_view(), name='counter_delete'),
 
     path('invoice', ListInvoice.as_view(), name='invoice'),
+    path('invoice/create', CreateInvoice.as_view(), name='invoice_create')
+
+
 
 ]

@@ -7,7 +7,7 @@ from ajax_datatable.views import AjaxDatatableView
 from src.adminpanel.mixin import AdminpanelRestrictionMixin
 
 from .models import Payment_Account, Invoice
-from .forms import PaymentAccountForm, InvoiceForm
+from .forms import PaymentAccountForm, InvoiceForm, InvoiceServiceFormSet
 
 from src.houses.models import House
 # Create your views here.
@@ -98,3 +98,49 @@ class CreateInvoice(CreateView):
     template_name = 'create_invoice.html'
     form_class = InvoiceForm
 
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        if self.request.POST:
+            ctx['formset'] = InvoiceServiceFormSet(self.request.POST, prefix='invoiceservice_set')
+        else:
+            ctx['formset'] = InvoiceServiceFormSet(prefix='invoiceservice_set')
+
+        return ctx
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+
+
+        self.object = None
+
+        form = self.get_form()
+        formset = InvoiceServiceFormSet(request.POST, instance=self.object, prefix='invoiceservice_set')
+
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
+            return self.form_invalid(form, formset)
+
+
+    def form_valid(self, form, formset):
+        self.object = form.save(commit=False)
+
+        payment_account = form.cleaned_data.get("payment_account")
+
+
+        formset.instance = self.object
+        formset.save()
+
+        return self.get_success_url()
+
+    def form_invalid(self, form, formset):
+        print(form.errors)
+        print(formset.errors)
+
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+
+    def get_success_url(self):
+        return reverse_lazy('invoice')

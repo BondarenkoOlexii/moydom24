@@ -24,14 +24,14 @@
                                     <div class="form-group field-invoice-uid required">
                                         <div class="input-group">
                                             <div class="input-group-addon">№</div>
-                                                <input type="text" id="invoice-uid" class="form-control" name="Invoice[uid]" value="06052601537" aria-required="true">
+                                                {{ form.invoice_unique_id }}
                                             </div>
                                         </div>
                                         <span class="label-mid">от</span>
                                         <div class="form-group field-invoice-uid_date">
                                             <div id="invoice-uid_date-kvdate" class="input-group  date">
                                                 <span class="input-group-addon kv-date-calendar" title="Выбрать дату"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                <input type="text" id="invoice-uid_date" class="form-control krajee-datepicker" name="Invoice[uid_date]" value="06.05.2026" data-datepicker-source="invoice-uid_date-kvdate" data-datepicker-type="2" data-krajee-kvdatepicker="kvDatepicker_1643d6f1">
+                                                {{ form.create_time }}
                                             </div>
                                         </div>
                                     </div>
@@ -55,21 +55,21 @@
                                         <input type="hidden" id="invoice-id" name="Invoice[id]">
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="house_id">Дом</label>
-                                                    <select id="house_id" class="form-control" name="house_id"></select>
+                                                <div class="form-group field-flatform-house_id required">
+                                                    <label for="flatform-house_id">Дом</label>
+                                                    <select id="flatform-house_id" class="form-control" name="house_id"></select>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="section_id">Секция</label>
-                                                    <select id="section_id" class="form-control" name="section_id">
+                                                <div class="form-group field-flatform-section_id required">
+                                                    <label for="flatform-section_id">Секция</label>
+                                                    <select id="flatform-section_id" class="form-control">
                                                         <option value="">Выберите...</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group field-invoice-flat_id required">
-                                                    <label class="control-label" for="invoice-flat_id">Квартира</label>
-                                                    <select id="invoice-flat_id" class="form-control" name="Invoice[flat_id]"aria-required="true">
+                                                <div class="form-group field-flatform-flat_id required">
+                                                    <label class="control-label" for="flatform-flat_id">Квартира</label>
+                                                    <select id="flatform-flat_id" class="form-control" aria-required="true">
                                                         <option value="">Выберите...</option>
                                                     </select>
                                                     <div class="help-block"></div>
@@ -78,18 +78,19 @@
 
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group field-invoice-is_checked">
-                                                    <input type="hidden" name="Invoice[is_checked]" value="0"><label><input type="checkbox" id="invoice-is_checked" name="Invoice[is_checked]" value="1" checked=""> Проведена</label>
+                                                    {{ form.status }}
+                                                    <label class="control-label">Проведена</label>
                                                     <div class="help-block"></div>
                                                 </div>
                                                 <div class="form-group field-invoice-status required">
                                                     <label class="control-label" for="invoice-status">Статус</label>
-                                                    <select id="invoice-status" class="form-control" name="Invoice[status]" aria-required="true"></select>
+                                                    {{ form.type }}
                                                     <div class="help-block"></div>
                                                 </div>
 
                                                 <div class="form-group field-invoice-tariff_id required">
                                                     <label class="control-label" for="invoice-tariff_id">Тариф</label>
-                                                    <select id="invoice-tariff_id" class="form-control" name="Invoice[tariff_id]" onchange="tariffId = $(this).val()" aria-required="true"></select>
+                                                    {{ form.tariff }}
                                                     <div class="help-block"></div>
                                                 </div>
 
@@ -99,7 +100,7 @@
                                                             <label class="control-label" for="invoice-period_start">Период с</label>
                                                             <div id="invoice-period_start-kvdate" class="input-group  date">
                                                               <span class="input-group-addon kv-date-calendar" title="Выбрать дату"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                              <input type="text" id="invoice-period_start" class="form-control krajee-datepicker" name="Invoice[period_start]" value="06.05.2026" data-datepicker-source="invoice-period_start-kvdate" data-datepicker-type="2" data-krajee-kvdatepicker="kvDatepicker_1643d6f1">
+                                                              {{ form.period_start }}
                                                             </div>
                                                             <div class="help-block"></div>
                                                         </div>
@@ -109,7 +110,7 @@
                                                             <label class="control-label" for="invoice-period_end">Период по</label>
                                                             <div id="invoice-period_end-kvdate" class="input-group  date">
                                                                 <span class="input-group-addon kv-date-calendar" title="Выбрать дату"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                                <input type="text" id="invoice-period_end" class="form-control krajee-datepicker" name="Invoice[period_end]" value="06.05.2026" data-datepicker-source="invoice-period_end-kvdate" data-datepicker-type="2" data-krajee-kvdatepicker="kvDatepicker_1643d6f1">
+                                                                {{ form.period_end }}
                                                             </div>
                                                           <div class="help-block"></div>
                                                         </div>
@@ -122,11 +123,11 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group">
                                                     <label for="account_uid">Лицевой счет</label>
-                                                    <input type="text" id="account_uid" class="form-control" name="account_uid">
+                                                    {{ form.payment_account }}
                                                 </div>
 
-                                                <p><b>Владелец:</b> <span id="user-fullname">не выбран</span></p>
-                                                <p><b>Телефон:</b> <span id="user-phone">не выбран</span></p>
+                                                <p><b>Владелец:</b> <span id="user-fullname"></span></p>
+                                                <p><b>Телефон:</b> <span id="user-phone"></span></p>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                         </div>
@@ -146,12 +147,35 @@
                                                         <th style="width: 40px; min-width: 40px;"></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="form-invoiceservice-rows">
+
+                                                <tbody id="container-invoiceservice_set" class="tab-content">
+
+                                                {{ formset.management_form }}
+
+                                                {% for form in formset %}
+                                                    <tr class="invoiceservice_set-row">
+                                                        <td>
+                                                            {% for hidden in formset.empty_form.hidden_fields %}
+                                                                {{ hidden }}
+                                                            {% endfor %}
+                                                            {{ form.service }}
+                                                        </td>
+                                                        <td>{{ form.indicator }}</td>
+                                                        <td>{{ form.measurement }}</td>
+                                                        <td>{{ form.measurement_price }}</td>
+                                                        <td>{{ form.price }}</td>
+                                                        <td>
+                                                            <span class="input-group-btn">
+                                                                <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <td colspan="4" valing="middle">
-                                                            <button type="button" class="btn btn-default btn-hover-change form-row-add-invoiceservice-btn">
+                                                            <button type="button" class="btn btn-default btn-hover-change form-row-add-invoiceservice-btn" data-prefix="invoiceservice_set">
                                                                 Добавить услугу
                                                             </button>
                                                             <button type="button" class="btn btn-default set-tariff-services">
@@ -177,7 +201,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 text-right">
                                         <div class="form-group">
-                                            <a href="/admin/invoice/index" class="btn btn-default">Отменить</a>
+                                            <a href="{% url 'invoice' %}" class="btn btn-default">Отменить</a>
                                             <button type="submit" class="btn btn-success">Сохранить</button>
                                         </div>
                                     </div>
@@ -185,82 +209,88 @@
                           </div>
                       </div>
                   </form>
-  <!--<div class="row">-->
-  <!--    <div class="col-xs-12">-->
-  <!--        <div class="box">-->
-  <!--            <div class="box-header with-border">-->
-  <!--                <h3 class="box-title">Показания счетчиков</h3>-->
-  <!--            </div>-->
-
-  <!--            <div id="counters" data-pjax-container="" data-pjax-push-state="" data-pjax-timeout="1000">            <div id="w0" class="grid-view"><div class="box-body table-responsive no-padding"><table class="table table-bordered table-hover table-striped table-nowrap"><thead>-->
-  <!--<tr><th style="width: 125px; min-width: 125px">№</th><th>Статус</th><th style="width: 125px; min-width: 125px">Дата</th><th style="width: 125px; min-width: 125px">Месяц</th><th style="min-width: 200px">Дом</th><th style="min-width: 160px">Секция</th><th style="width: 110px; min-width: 110px">№ квартиры</th><th>Счетчик</th><th style="width: 90px; min-width: 90px">Показания</th><th style="width: 90px; min-width: 90px">Ед. изм.</th></tr><tr id="w0-filters" class="filter-hidden"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><input type="hidden" id="filterMonthYear" name="CounterDataSearch[searchUidMonthYear]"><input type="hidden" id="filterFlatId" name="CounterDataSearch[flat_id]"></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>-->
-  <!--</thead>-->
-  <!--<tbody>-->
-  <!--<tr data-key="581"><td>20072300581</td><td><small class="label label-warning">Новое</small></td><td>20.07.2050</td><td>Июль 2050</td><td>ЖК "Королевские сады"</td><td>Секция 3</td><td>95</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">231231.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="969"><td>26112500969</td><td><small class="label label-warning">Новое</small></td><td>26.11.2029</td><td>Ноябрь 2029</td><td>Шпиль</td><td>Секция 2 - жилой сектор</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">-921.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="1020"><td>12042601020</td><td><small class="label label-warning">Новое</small></td><td>26.04.2026</td><td>Апрель 2026</td><td>ЖК "Башня Чкалов"</td><td>Секция 1</td><td>1001</td><td>Няня</td><td style="background-color: #DFD5; font-weight: normal">1111111.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="1019"><td>25032601019</td><td><small class="label label-success">Учтено</small></td><td>25.03.2026</td><td>Март 2026</td><td>ЖК Милославичі</td><td><span class="not-set">(не задано)</span></td><td>40</td><td>Подземный паркинг</td><td style="background-color: #DFD5; font-weight: normal">1.0</td><td style="background-color: #DFD5; font-weight: normal">месяц</td></tr>-->
-  <!--<tr data-key="1013"><td>02022601013</td><td><small class="label label-success">Учтено</small></td><td>02.03.2026</td><td>Март 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Газопровод 1</td><td style="background-color: #DFD5; font-weight: normal">25.0</td><td style="background-color: #DFD5; font-weight: normal">один этаж</td></tr>-->
-  <!--<tr data-key="1014"><td>02022601014</td><td><small class="label label-success">Учтено</small></td><td>28.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal">23.0</td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="1018"><td>07022601018</td><td><small class="label label-success">Учтено и оплачено</small></td><td>07.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">23.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="1017"><td>03022601017</td><td><small class="label label-success">Учтено и оплачено</small></td><td>03.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="1016"><td>03022601015</td><td><small class="label label-warning">Новое</small></td><td>03.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">32.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="1012"><td>02022601012</td><td><small class="label label-success">Учтено и оплачено</small></td><td>02.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Газопровод 1</td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal">один этаж</td></tr>-->
-  <!--<tr data-key="1011"><td>02022601011</td><td><small class="label label-warning">Новое</small></td><td>02.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="1010"><td>02022600996</td><td><small class="label label-success">Учтено и оплачено</small></td><td>02.02.2026</td><td>Февраль 2026</td><td>Nan's House</td><td>Секция Первая</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="995"><td>20012600995</td><td><small class="label label-success">Учтено</small></td><td>20.01.2026</td><td>Январь 2026</td><td>Дом ЗЕЛЁНЫЙ</td><td>Секция 1</td><td>1</td><td>Обслуживание дома</td><td style="background-color: #DFD5; font-weight: normal">1.0</td><td style="background-color: #DFD5; font-weight: normal">месяц</td></tr>-->
-  <!--<tr data-key="994"><td>18012600994</td><td><small class="label label-warning">Новое</small></td><td>18.01.2026</td><td>Январь 2026</td><td>ЖК "Башня Чкалов"</td><td>Секция 1</td><td>111</td><td>Курьер 1</td><td style="background-color: #DFD5; font-weight: normal">12.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="993"><td>17012600993</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Дом Каркашадзе"</td><td>Секция 2</td><td>763</td><td>Няня</td><td style="background-color: #DFD5; font-weight: normal">11.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="992"><td>17012600992</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Морская Симфония"</td><td>Секция 1</td><td>43</td><td>Курьер 1</td><td style="background-color: #DFD5; font-weight: normal">1.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="991"><td>17012600991</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Морская Симфония"</td><td>Секция 1</td><td>616</td><td>Курьер 1</td><td style="background-color: #DFD5; font-weight: normal">1.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="990"><td>17012600990</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Башня Чкалов"</td><td>Секция 1</td><td>111</td><td>Курьер 1</td><td style="background-color: #DFD5; font-weight: normal">12.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="989"><td>17012600989</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td>Курьер 1</td><td style="background-color: #DFD5; font-weight: normal">12.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="988"><td>17012600988</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>13</td><td>Курьер 1</td><td style="background-color: #DFD5; font-weight: normal">12.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="987"><td>17012600987</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal">123213.0</td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="986"><td>17012600983</td><td><small class="label label-warning">Новое</small></td><td>17.01.2026</td><td>Январь 2026</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal">1312.0</td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="982"><td>02122500981</td><td><small class="label label-warning">Новое</small></td><td>02.12.2025</td><td>Декабрь 2025</td><td>ЖК "Альтаир 3"</td><td>Секция 1</td><td>12</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="980"><td>02122500978</td><td><small class="label label-primary"></small></td><td>02.12.2025</td><td>Декабрь 2025</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal">35.0</td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="976"><td>02122500976</td><td><small class="label label-warning">Новое</small></td><td>02.12.2025</td><td>Декабрь 2025</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Охрана территории</td><td style="background-color: #DFD5; font-weight: normal">1.0</td><td style="background-color: #DFD5; font-weight: normal">месяц</td></tr>-->
-  <!--<tr data-key="975"><td>02122500975</td><td><small class="label label-warning">Новое</small></td><td>02.12.2025</td><td>Декабрь 2025</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Газопровод 1</td><td style="background-color: #DFD5; font-weight: normal">1.2</td><td style="background-color: #DFD5; font-weight: normal">один этаж</td></tr>-->
-  <!--<tr data-key="974"><td>02122500974</td><td><small class="label label-warning">Новое</small></td><td>02.12.2025</td><td>Декабрь 2025</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Водопровод 1</td><td style="background-color: #DFD5; font-weight: normal">33.2</td><td style="background-color: #DFD5; font-weight: normal">m³</td></tr>-->
-  <!--<tr data-key="973"><td>02122500973</td><td><small class="label label-warning">Новое</small></td><td>02.12.2025</td><td>Декабрь 2025</td><td>ЖК "Рожевий рай"</td><td>Секция 7</td><td>13</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">25.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="970"><td>01122500970</td><td><small class="label label-warning">Новое</small></td><td>29.11.2025</td><td>Ноябрь 2025</td><td>Шпиль</td><td>Секция 2 - жилой сектор</td><td>2</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">200.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="902"><td>19112500902</td><td><small class="label label-warning">Новое</small></td><td>29.11.2025</td><td>Ноябрь 2025</td><td>Шпиль</td><td>Секция 2 - жилой сектор</td><td>2</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">-200.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="905"><td>19112500905</td><td><small class="label label-success">Учтено и оплачено</small></td><td>19.11.2025</td><td>Ноябрь 2025</td><td>Шпиль</td><td>Секция 2 - жилой сектор</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">300.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="899"><td>11112500899</td><td><small class="label label-warning">Новое</small></td><td>11.11.2025</td><td>Ноябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 1</td><td>777</td><td>Выгул животного</td><td style="background-color: #DFD5; font-weight: normal">89898989.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="898"><td>07112500898</td><td><small class="label label-warning">Новое</small></td><td>07.11.2025</td><td>Ноябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 1</td><td>777</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">777.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="897"><td>30102500897</td><td><small class="label label-warning">Новое</small></td><td>30.10.2025</td><td>Октябрь 2025</td><td>ЖК "Новые Черемушки"</td><td>Секция 1</td><td>54</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="903"><td>19112500903</td><td><small class="label label-warning">Новое</small></td><td>22.10.2025</td><td>Октябрь 2025</td><td>Шпиль</td><td>Секция 2 - жилой сектор</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">500.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="896"><td>18102500896</td><td><small class="label label-warning">Новое</small></td><td>18.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">10.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="893"><td>06102500893</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td>Няня</td><td style="background-color: #DFD5; font-weight: normal">435.0</td><td style="background-color: #DFD5; font-weight: normal">час</td></tr>-->
-  <!--<tr data-key="892"><td>06102500892</td><td><small class="label label-primary">Нулевое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">55.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="891"><td>06102500891</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">56.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="890"><td>06102500890</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Морская Симфония"</td><td>Секция 2</td><td>100</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">33.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="889"><td>06102500889</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>Дом ЗЕЛЁНЫЙ</td><td>Секция 1</td><td>1</td><td>Электричество 1</td><td style="background-color: #DFD5; font-weight: normal">44.0</td><td style="background-color: #DFD5; font-weight: normal">кВт.ч</td></tr>-->
-  <!--<tr data-key="888"><td>06102500888</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Скай Сити"</td><td>Секция 3</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="887"><td>06102500887</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Морская Симфония"</td><td>Секция 2</td><td>100</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="886"><td>06102500886</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="885"><td>06102500885</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="884"><td>06102500884</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="883"><td>06102500883</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="882"><td>06102500882</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>14</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="881"><td>06102500881</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Башня Чкалов"</td><td>Секция 2</td><td>13</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--<tr data-key="880"><td>06102500880</td><td><small class="label label-warning">Новое</small></td><td>06.10.2025</td><td>Октябрь 2025</td><td>ЖК "Морская Симфония"</td><td>Секция 2</td><td>100</td><td><span class="not-set">(не задано)</span></td><td style="background-color: #DFD5; font-weight: normal">34.0</td><td style="background-color: #DFD5; font-weight: normal"><span class="not-set">(не задано)</span></td></tr>-->
-  <!--</tbody></table></div>-->
-  <!--<div class="box-footer clearfix"><ul class="pagination pagination-sm no-margin pull-right"><li class="prev disabled"><span>«</span></li>-->
-  <!--<li class="active"><a href="/admin/invoice/create?page=1&amp;per-page=50" data-page="0">1</a></li>-->
-  <!--<li><a href="/admin/invoice/create?page=2&amp;per-page=50" data-page="1">2</a></li>-->
-  <!--<li><a href="/admin/invoice/create?page=3&amp;per-page=50" data-page="2">3</a></li>-->
-  <!--<li><a href="/admin/invoice/create?page=4&amp;per-page=50" data-page="3">4</a></li>-->
-  <!--<li><a href="/admin/invoice/create?page=5&amp;per-page=50" data-page="4">5</a></li>-->
-  <!--<li><a href="/admin/invoice/create?page=6&amp;per-page=50" data-page="5">6</a></li>-->
-  <!--<li class="next"><a href="/admin/invoice/create?page=2&amp;per-page=50" data-page="1">»</a></li></ul></div></div>            </div>        </div>-->
-  <!--    </div>-->
-  <!--</div>-->
-
-
-</div>
+                </div>
     </section>
 </div>
 
+
+<template id="empty-template-invoiceservice_set">
+    <tr class="invoiceservice_set-row">
+        <td>
+            {% for hidden in formset.empty_form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {{ formset.empty_form.service }}
+        </td>
+        <td>{{ formset.empty_form.indicator }}</td>
+        <td>{{ formset.empty_form.measurement }}</td>
+        <td>{{ formset.empty_form.measurement_price }}</td>
+        <td>{{ formset.empty_form.price }}</td>
+
+        <td>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+        </span>
+        </td>
+    </tr>
+</template>
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+<script src="{% static 'dist/js/selects2.js' %}"></script>
+<script src="{% static 'dist/js/formset.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#invoice-uid_date, #invoice-period_start_date, #invoice-period_end_date').datepicker({
+            format: 'yyyy-mm-dd', // Формат для Django (Year-Month-Day)
+            autoclose: true,
+            language: 'ru',
+            todayHighlight: true,
+            orientation: "bottom auto"
+        });
+    });
+</script>
+
+<script>
+$(document).ready(function(){
+    $('.set-tariff-services').click(async function(e){ // тут треба id з кнопки
+
+        e.preventDefault();
+
+        let ivoicetariff = $('#invoice-tariff_id').val(); //тут треба id з селекта tariff
+
+        if (!ivoicetariff) {
+            alert("Будь ласка, оберіть тариф перед завантаженням послуг")
+            return;
+        }
+
+        try {
+
+            let response = await fetch(`/api/tariff/${ivoicetariff}/service`); // туть нада ссилочка на ninja
+
+            let data = await response.json();
+
+            data.forEach(item=> {
+                $('.form-row-add-invoiceservice-btn').trigger('click'); // клікаємо по кнопці, добавити ссилку на цю кнопку
+
+                let $newRow = $('#container-invoiceservice_set').children().last();
+
+
+                $newRow.find('select[name$="-service"]').val(item.service_id);
+                $newRow.find('input[name$="-price"]').val(item.price);
+                $newRow.find('select[name$="-measurement"]').val(item.measurement);
+
+                });
+            } catch (error) {
+                console.error("Не вдалося завантажити послуги:", error);
+                alert("Сталася помилка при завантаженні тарифу.")
+            }
+    });
+});
+</script>
 {% endblock %}

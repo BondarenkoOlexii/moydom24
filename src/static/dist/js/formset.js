@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // Додавання нової форми
-    $('.form-row-add-section-btn, .form-row-add-storey-btn, .form-row-add-houseuseradmins-btn, .form-row-add-service-btn, .form-row-add-measurement-btn, .form-row-add-tariffservice-btn, .form-row-add-websitedocument-btn, .form-row-add-webservice-btn').click(function(e) {
+    $('.form-row-add-section-btn, .form-row-add-storey-btn, .form-row-add-houseuseradmins-btn, .form-row-add-service-btn, .form-row-add-measurement-btn, .form-row-add-tariffservice-btn, .form-row-add-websitedocument-btn, .form-row-add-webservice-btn, .form-row-add-invoiceservice-btn').click(function(e) {
         e.preventDefault();
 
         console.log("Я працюю");

@@ -2,7 +2,7 @@ from django.db import models
 from src.houses.models import Apartment
 from src.adminpanel.models.FinanceChoise import CashRegisterChoise
 from src.adminpanel.models.UserChoise import AccountStatus
-from src.settings.models import Service
+from src.settings.models import Service, Tariff, Measurement
 from src.adminpanel.models.FinanceChoise import TransactionChoise
 from src.adminpanel.models.FinanceChoise import InvoiceChoise
 # Create your models here.
@@ -31,10 +31,24 @@ class Transaction(models.Model):
 
 
 class Invoice(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    invoice_unique_id = models.IntegerField(unique=True)
+    service = models.ManyToManyField(Service, through='ThoughInvoiceService')
+    tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE)
     transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
     total_amount = models.CharField(max_length=10)
     type = models.CharField(choices=InvoiceChoise.choices, default=InvoiceChoise.choices[0][0])
-    comment = models.TextField()
-    create_time = models.DateTimeField()
+    status = models.BooleanField(default=True)
+    payment_account = models.OneToOneField(Payment_Account, on_delete=models.CASCADE)
+    create_time = models.DateField()
+    period_start = models.DateField()
+    period_end = models.DateField()
 
+
+class ThoughInvoiceService(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    indicator = models.CharField(max_length=20)
+    measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE, null=True, blank=True)
+    measurement_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

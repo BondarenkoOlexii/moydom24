@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+
+
 <div class="content-wrapper" style="min-height: 1026.88px;">
     <section class="content-header">
         <h1>
@@ -41,60 +43,60 @@
 
                 <div id="w0" class="grid-view">
                     <div class="box-body table-responsive no-padding">
-                        <table class="table table-bordered table-hover table-striped linkedRow" id="ajax_datatable_permissions">
-                            <thead>
-                                <tr>
-                                    <th style="width: 40px; min-width: 40px">#</th>
-                                    <th><a href="/admin/house/index?sort=name" data-sort="name">Название</a></th>
-                                    <th><a href="/admin/house/index?sort=address" data-sort="address">Адрес</a></th>
-                                    <th style="width: 80px; min-width: 80px">&nbsp;</th>
-                                </tr>
-                                <tr id="w0-filters" class="filters">
-                                    <td>&nbsp;</td>
-                                    <td><input type="text" class="form-control" name="HouseSearch[name]"></td>
-                                    <td><input type="text" class="form-control" name="HouseSearch[address]"></td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in houses  %}
-                                <tr data-href="{% url 'detail_house' item.id %}">
-                                    <td>{{item.id}}</td>
-                                    <td>{{ item.name }}</td>
-                                    <td>{{ item.adress }}</td>
-                                    <td>
-                                        <div class="btn-group pull-right">
-                                            <a class="btn btn-default btn-sm" href="{% url 'update_house' item.id %}" title="Редактировать" data-toggle="tooltip">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <form method="post">
-                                                  {% csrf_token %}
-                                                <a class="btn btn-default btn-sm" href="{% url 'delete_house' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="4">Данних немає</td>
-                                </tr>
-                                {% endfor %}
+                        <table class="table table-bordered table-hover table-striped linkedRow" id="house_ajax_datatable_permissions">
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <th style="width: 40px; min-width: 40px">#</th>-->
+<!--                                    <th><a href="/admin/house/index?sort=name" data-sort="name">Название</a></th>-->
+<!--                                    <th><a href="/admin/house/index?sort=address" data-sort="address">Адрес</a></th>-->
+<!--                                    <th style="width: 80px; min-width: 80px">&nbsp;</th>-->
+<!--                                </tr>-->
+<!--                                <tr id="w0-filters" class="filters">-->
+<!--                                    <td>&nbsp;</td>-->
+<!--                                    <td><input type="text" class="form-control" name="HouseSearch[name]"></td>-->
+<!--                                    <td><input type="text" class="form-control" name="HouseSearch[address]"></td>-->
+<!--                                    <td>&nbsp;</td>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                {% for item in houses  %}-->
+<!--                                <tr data-href="{% url 'detail_house' item.id %}">-->
+<!--                                    <td>{{item.id}}</td>-->
+<!--                                    <td>{{ item.name }}</td>-->
+<!--                                    <td>{{ item.adress }}</td>-->
+<!--                                    <td>-->
+<!--                                        <div class="btn-group pull-right">-->
+<!--                                            <a class="btn btn-default btn-sm" href="{% url 'update_house' item.id %}" title="Редактировать" data-toggle="tooltip">-->
+<!--                                                <i class="fa fa-pencil"></i>-->
+<!--                                            </a>-->
+<!--                                            <form method="post">-->
+<!--                                                  {% csrf_token %}-->
+<!--                                                <a class="btn btn-default btn-sm" href="{% url 'delete_house' item.id %}" title="Удалить" data-toggle="tooltip" data-pjax="0" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">-->
+<!--                                                    <i class="fa fa-trash"></i>-->
+<!--                                                </a>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                {% empty %}-->
+<!--                                <tr>-->
+<!--                                    <td colspan="4">Данних немає</td>-->
+<!--                                </tr>-->
+<!--                                {% endfor %}-->
 
-                            </tbody>
+<!--                            </tbody>-->
                         </table>
                     </div>
                 </div>
-                <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li class="prev disabled"><span>«</span></li>
-                        <li class="active"><a href="/admin/house/index?page=1&amp;per-page=50" data-page="0">1</a></li>
-                        <li><a href="/admin/house/index?page=2&amp;per-page=50" data-page="1">2</a></li>
-                        <li><a href="/admin/house/index?page=3&amp;per-page=50" data-page="2">3</a></li>
-                        <li class="next"><a href="/admin/house/index?page=2&amp;per-page=50" data-page="1">»</a></li>
-                    </ul>
-                </div>
+<!--                <div class="box-footer clearfix">-->
+<!--                    <ul class="pagination pagination-sm no-margin pull-right">-->
+<!--                        <li class="prev disabled"><span>«</span></li>-->
+<!--                        <li class="active"><a href="/admin/house/index?page=1&amp;per-page=50" data-page="0">1</a></li>-->
+<!--                        <li><a href="/admin/house/index?page=2&amp;per-page=50" data-page="1">2</a></li>-->
+<!--                        <li><a href="/admin/house/index?page=3&amp;per-page=50" data-page="2">3</a></li>-->
+<!--                        <li class="next"><a href="/admin/house/index?page=2&amp;per-page=50" data-page="1">»</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
             <div class="box-footer">
                 <div>Количество домов: <span class="text-bold">{{houses.count}}</span></div>
@@ -103,6 +105,75 @@
     </div>
         </section>
     </div>
+{% endblock %}
 
 
+{% block scripts %}
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+<script language="javascript">
+
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#house_ajax_datatable_permissions'),
+            "{% url 'house_datatable' %}",
+            {
+                // extra_options (example)
+                processing: false,
+                autoWidth: false,
+                full_row_select: true,
+                scrollX: false,
+
+                dom:
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'box-footer clearfix'p>",
+
+                columnDefs: [
+                    { width: "80px", targets: -1, className: "text-center" }
+                ],
+
+                pagingType: "simple_numbers",
+                language: {
+                    paginate: {
+                        previous: "«",
+                        next: "»"
+                    },
+                    lengthMenu: "Показувати _MENU_ записів",
+                    info: "Показано від _START_ до _END_ із _TOTAL_ записів",
+                    infoEmpty: "Немає записів",
+                    zeroRecords: "Нічого не знайдено"
+                },
+
+                drawCallback: function(settings) {
+                    var wrapper = $(settings.nTableWrapper);
+
+                    // Знаходимо ul список пагінації
+                    var ul = wrapper.find('.dataTables_paginate ul');
+
+                    // Очищаємо можливе сміття від DataTables і ставимо рівно те, що треба
+                    ul.removeClass().addClass('pagination pagination-sm no-margin pull-right');
+
+                    // Прибираємо стандартні відступи DataTables, щоб список приліг впритул до краю
+                    wrapper.find('.dataTables_paginate').css({
+                        'float': 'none',
+                        'text-align': 'right',
+                        'margin': '0'
+                    });
+                },
+
+                initComplete: function(settings, json) {
+                    $('.datatable-column-filter-row input').addClass('form-control').attr('placeholder', 'Пошук');
+                    $('.datatable-column-filter-row select').addClass('form-control');
+                }
+            }, {
+                // extra_data
+                // ...
+            },
+        );
+    });
+
+</script>
 {% endblock %}

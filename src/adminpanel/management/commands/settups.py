@@ -41,8 +41,9 @@ class Command(BaseCommand):
                 user_status=user_obj['user_status'],
                 is_admin=user_obj['is_admin'],
             )
-            if is_super:
+            if user.obj.get('is_superuser'):
                 user.is_superuser = True
+                user.save()
 
             create_staff.append(user)
 
