@@ -98,7 +98,6 @@ class CreateInvoice(CreateView):
     template_name = 'create_invoice.html'
     form_class = InvoiceForm
 
-
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
@@ -125,10 +124,7 @@ class CreateInvoice(CreateView):
 
 
     def form_valid(self, form, formset):
-        self.object = form.save(commit=False)
-
-        payment_account = form.cleaned_data.get("payment_account")
-
+        self.object = form.save()
 
         formset.instance = self.object
         formset.save()

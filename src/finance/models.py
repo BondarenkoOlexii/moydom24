@@ -33,9 +33,9 @@ class Transaction(models.Model):
 class Invoice(models.Model):
     invoice_unique_id = models.IntegerField(unique=True)
     service = models.ManyToManyField(Service, through='ThoughInvoiceService')
-    tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE)
-    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
-    total_amount = models.CharField(max_length=10)
+    tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE, null=True, blank=True)
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, null=True, blank=True)
+    total_amount = models.CharField(max_length=10, null=True, blank=True)
     type = models.CharField(choices=InvoiceChoise.choices, default=InvoiceChoise.choices[0][0])
     status = models.BooleanField(default=True)
     payment_account = models.OneToOneField(Payment_Account, on_delete=models.CASCADE)

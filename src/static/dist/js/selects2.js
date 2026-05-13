@@ -136,7 +136,7 @@ $(document).ready(function() {
                     if (response && response.length > 0) {
                         $paymentInput.val(response[0].text);
                         $fullnameSpan.text(response[0].full_name);
-                        $phonenumSpan.text(response[0].phone)
+                        $phonenumSpan.text(response[0].phone_number)
 
                     } else {
                         $paymentInput.val('Счет не найден')

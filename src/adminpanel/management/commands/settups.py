@@ -41,7 +41,7 @@ class Command(BaseCommand):
                 user_status=user_obj['user_status'],
                 is_admin=user_obj['is_admin'],
             )
-            if user.obj.get('is_superuser'):
+            if user_obj.get('is_superuser'):
                 user.is_superuser = True
                 user.save()
 
