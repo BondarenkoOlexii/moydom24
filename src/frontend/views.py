@@ -76,7 +76,9 @@ class ListCabinetUser(ListView):
 
         ctx['apartments'] = Apartment.objects.filter(owner=user_id)
 
+        ctx['payment_account'] = Payment_Account.objects.filter(apartment__owner=user_id).first()
 
+        return ctx
 
 class UpdateUserCabinet(CreateView):
     model = User

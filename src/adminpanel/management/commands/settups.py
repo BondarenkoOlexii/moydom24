@@ -42,8 +42,7 @@ class Command(BaseCommand):
                 is_admin=user_obj['is_admin'],
             )
             if user_obj.get('is_superuser'):
-                user.is_superuser = True
-                user.save()
+                sup_user = User.objects.create_superuser(user)
 
             create_staff.append(user)
 
