@@ -34,11 +34,9 @@ class CreateMainPageView(AdminpanelRestrictionMixin, UpdateView):
 
         seo_instance = getattr(self.object, 'seoblock', None) if self.object else None
 
-        if self.request.POST:
-            ctx['seoform'] = SeoBlockForm(self.request.POST, self.request.FILES, prefix='seoblock', instance=seo_instance)
-            ctx['formset'] = AdditionalMainFormSet(self.request.POST, self.request.FILES, prefix='formset', instance=self.object)
-        else:
+        if 'seoform' not in ctx:
             ctx['seoform'] = SeoBlockForm(prefix='seoblock', instance=seo_instance)
+        if 'formset' not in ctx:
             ctx['formset'] = AdditionalMainFormSet(prefix='formset', instance=self.object)
         return ctx
     def post(self, request, *args, **kwargs):
@@ -46,8 +44,10 @@ class CreateMainPageView(AdminpanelRestrictionMixin, UpdateView):
 
         form = self.get_form()
 
-        seoform = SeoBlockForm(request.POST, request.FILES, prefix='seoblock')
-        formset = AdditionalMainFormSet(request.POST, request.FILES, prefix='formset')
+        seo_instance = getattr(self.object, 'seoblock', None) if self.object else None
+        seoform = SeoBlockForm(request.POST, request.FILES, prefix='seoblock', instance=seo_instance)
+
+        formset = AdditionalMainFormSet(request.POST, request.FILES, prefix='formset', instance=self.object)
 
 
         if form.is_valid() and seoform.is_valid() and formset.is_valid():
@@ -69,28 +69,39 @@ class CreateMainPageView(AdminpanelRestrictionMixin, UpdateView):
         for img in img_list:
             field_name = img
             img_obj = form.cleaned_data.get(img)
-            print(img_obj)
             if img_obj:
                 upload_img = Image.objects.create(photo=img_obj)
-                print(upload_img)
                 setattr(self.object, field_name, upload_img)
 
         form.save()
 
-        formset.instance = self.object
+        formset_instance = formset.save(commit=False)
+
+        for f in formset:
+            additional_instance = f.instance
+            additional_instance.main_page = self.object
+
+            additional_img_obj = f.cleaned_data.get('additional_image')
+            if additional_img_obj:
+                additional_img_obj = Image.objects.create(photo=additional_img_obj)
+                additional_instance.additional_image = additional_img_obj
+
+            additional_instance.save()
+
         formset.save()
 
-        return self.get_success_url()
+        return HttpResponseRedirect(self.get_success_url())
 
 
     def form_invalid(self, form, seoform, formset):
+        print("ВСЕ РІВНО ЯКАСЬ ПОМИЛКА")
         print(form.errors)
         print(seoform.errors)
         print(formset.errors)
         return self.render_to_response(self.get_context_data(form=form, seoform=seoform, formset=formset))
 
     def get_success_url(self):
-        return redirect('website-main')
+        return reverse_lazy('website-main')
 
 
 

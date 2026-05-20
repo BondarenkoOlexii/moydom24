@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Квитанция</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/invoice/index">Квитанции</a></li>
+            <li class="active">Квитанция №01042601524</li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12 col-md-7 col-lg-6">
+                <div class="page-header-spec">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                №
+                            </div>
+                            <div class="form-control pull-right">{{ invoice.invoice_unique_id }}</div>
+                        </div>
+                    </div>
+                    <span class="label-mid">от</span>
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </div>
+                            <div class="form-control pull-right">{{ invoice.create_time }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Просмотр квитанции</h3>
+                <div class="box-tools">
+                    <a href="/admin/invoice/print/1535" class="btn btn-default btn-sm">
+                        <span class="hidden-xs">Печать</span><i class="fa fa-print visible-xs" aria-hidden="true"></i>
+                    </a>
+                    <a href="/admin/invoice/print/1535" class="btn btn-default btn-sm">
+                        <span class="hidden-xs">Отправить на e-mail</span><i class="fa fa-envelope-o visible-xs" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'invoice_update' invoice.id %}" class="btn btn-primary btn-sm">
+                        <span class="hidden-xs">Редактировать квитанцию</span><i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped table-view">
+                    <tbody>
+                        <tr>
+                            <td>Проведена</td>
+                            <td>
+                                {% if invoice.type == True %}
+                                    <small class="label label-success">Проведена</small>
+                                {% else %}
+                                    <small class="label label-danger">Не проведена</small>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Статус</td>
+                            <td>
+                                {% if invoice.status == 'Не оплачено' %}
+                                    <small class="label label-danger">Неоплачена</small>
+                                {% elif invoice.status == 'Частично' %}
+                                    <small class="label label-warning">Частично</small>
+                                {% else %}
+                                    <small class="label label-success">Оплачено</small>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Период</td>
+                            <td>
+                                {{ invoice.period_start }} - {{ invoice.period_end }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Владелец</td>
+                            <td>
+                                <a href="/admin/user/2">{{ invoice.payment_account.apartment.owner.first_name }} {{ invoice.payment_account.apartment.owner.last_name }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Лицевой счет</td>
+                            <td>
+                                <a href="/admin/account/726">{{ invoice.payment_account.bank_book }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Телефон</td>
+                            <td>{{ invoice.payment_account.apartment.owner.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>Дом</td>
+                            <td>
+                                <a href="/admin/house/416">{{ invoice.payment_account.apartment.house.name }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Квартира</td>
+                            <td>
+                                <a href="/admin/flat/714">{{ invoice.payment_account.apartment.apartment_number }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Секция</td>
+                            <td>{{ invoice.payment_account.apartment.section.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Тариф</td>
+                            <td>
+                                 <a href="/admin/tariff/261">{{ invoice.tariff.name }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-responsive no-padding margin-top-15">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px; min-width: 40px;">#</th>
+                                <th>Услуга</th>
+                                <th>Количество потребления (расход)</th>
+                                <th style="width: 80px; min-width: 80px;">Ед. изм.</th>
+                                <th>Цена за ед., грн</th>
+                                <th>Стоимость, грн</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td colspan="2"><b>Итого: {{ invoice.total_amount }}</b></td>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            {% for form in formset %}
+                                <tr>
+                                    <td>{{ form.id }}</td>
+                                    <td>{{ form.service.service }}</td>
+                                    <td>{{ form.indicator }}</td>
+                                    <td>{{ form.measurement.unit_of_measurement }}</td>
+                                    <td>{{ form.measurement_price }}</td>
+                                    <td>{{ form.price }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

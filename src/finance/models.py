@@ -44,6 +44,7 @@ class Invoice(models.Model):
     period_end = models.DateField()
 
 
+
 class ThoughInvoiceService(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)

@@ -119,29 +119,32 @@
                                 {{ formset.management_form }}
                                 {% for item in formset %}
                                     <div class="col-md-4">
+                                        {{ item.id }}
+                                        {% for hidden in item.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
                                     <h4>Блок</h4>
-                                    <img src="{% if item.additional_image %}{{ item.additional_image.url.photo }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="" class="img-responsive margin-bottom-15">
+                                    <img src="{% if item.instance.additional_image %}{{ item.instance.additional_image.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg{% endif %}" alt="" class="img-responsive margin-bottom-15">
 
-                                    <div class="form-group field-websitehomefeature-0-id">
-                                        <input type="hidden" id="websitehomefeature-0-id" class="form-control" name="WebsiteHomeFeature[0][id]" value="1">
+                                    <div class="form-group field-websitehomefeature-id">
+                                        <input type="hidden" id="websitehomefeature-id" class="form-control" value="1">
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group field-websitehomefeature-0-imagefile">
-                                        <label class="control-label" for="websitehomefeature-0-imagefile">Рекомендуемый размер: (1000x600)</label>
-                                        <input type="hidden" name="WebsiteHomeFeature[0][imageFile]" value="">
+                                    <div class="form-group field-websitehomefeature-imagefile">
+                                        <label class="control-label" for="websitehomefeature-imagefile">Рекомендуемый размер: (1000x600)</label>
                                         {{ item.additional_image }}
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group field-websitehomefeature-0-title">
-                                        <label class="control-label" for="websitehomefeature-0-title">Заголовок блока</label>
+                                    <div class="form-group field-websitehomefeature-title">
+                                        <label class="control-label" for="websitehomefeature-title">Заголовок блока</label>
                                         {{ item.additional_name }}
                                         <div class="help-block"></div>
                                     </div>
 
-                                    <div class="form-group margin-bottom-30 field-websitehomefeature-0-description">
-                                        <label class="control-label" for="websitehomefeature-0-description">Описание</label>
+                                    <div class="form-group margin-bottom-30 field-websitehomefeature-description">
+                                        <label class="control-label" for="websitehomefeature-description">Описание</label>
                                         {{ item.additional_description }}
                                         <div class="help-block"></div>
                                     </div>

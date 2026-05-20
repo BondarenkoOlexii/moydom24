@@ -117,7 +117,7 @@ class AdditionalForm(forms.ModelForm):
             'additional_description': forms.Textarea(attrs={'id': 'message-description', 'class': 'compose-textarea form-control'}),
         }
 
-AdditionalMainFormSet = inlineformset_factory(Main_Page, Additional_Block, AdditionalForm, extra=6, can_delete=False)
+AdditionalMainFormSet = inlineformset_factory(Main_Page, Additional_Block, AdditionalForm, extra=6, max_num=6, can_delete=False)
 
 
 # Additional Form for About Page

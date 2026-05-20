@@ -84,60 +84,60 @@
 
                     <div id="w0" class="grid-view">
                         <div class="box-body table-responsive no-padding">
-                            <table class="table table-bordered table-hover table-striped linkedRow">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 40px; min-width: 40px">
-                                            <input type="checkbox" class="select-on-check-all" name="selection_all" value="1">
-                                        </th>
-                                        <th style="width: 125px; min-width: 125px">№ квитанции</th>
-                                        <th style="width: 100px; min-width: 100px">Статус</th>
-                                        <th style="width: 125px; min-width: 125px"><a href="/admin/invoice/index?sort=searchUidDate" data-sort="searchUidDate">Дата</a></th>
-                                        <th style="width: 135px; min-width: 135px"><a href="/admin/invoice/index?sort=period_end" data-sort="period_end">Месяц</a></th>
-                                        <th>Квартира</th><th style="min-width: 200px">Владелец</th>
-                                        <th style="width: 120px; min-width: 120px">Проведена</th>
-                                        <th style="width: 100px; min-width: 100px">Сумма (грн)</th>
-                                        <th style="width: 114px; min-width: 114px">&nbsp;</th>
-                                    </tr>
+                            <table class="table table-bordered table-hover table-striped linkedRow" id="invoice_ajax_datatable_permissions">
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th style="width: 40px; min-width: 40px">-->
+<!--                                            <input type="checkbox" class="select-on-check-all" name="selection_all" value="1">-->
+<!--                                        </th>-->
+<!--                                        <th style="width: 125px; min-width: 125px">№ квитанции</th>-->
+<!--                                        <th style="width: 100px; min-width: 100px">Статус</th>-->
+<!--                                        <th style="width: 125px; min-width: 125px"><a href="/admin/invoice/index?sort=searchUidDate" data-sort="searchUidDate">Дата</a></th>-->
+<!--                                        <th style="width: 135px; min-width: 135px"><a href="/admin/invoice/index?sort=period_end" data-sort="period_end">Месяц</a></th>-->
+<!--                                        <th>Квартира</th><th style="min-width: 200px">Владелец</th>-->
+<!--                                        <th style="width: 120px; min-width: 120px">Проведена</th>-->
+<!--                                        <th style="width: 100px; min-width: 100px">Сумма (грн)</th>-->
+<!--                                        <th style="width: 114px; min-width: 114px">&nbsp;</th>-->
+<!--                                    </tr>-->
 
-                                    <tr id="w0-filters" class="filters">
-                                        <td>&nbsp;</td>
-                                        <td><input type="text" class="form-control" name="InvoiceSearch[uid]"></td>
-                                        <td>
-                                            <div class="kv-plugin-loading loading-invoicesearch-status">&nbsp;</div>
-                                            <select id="invoicesearch-status" class="form-control" name="InvoiceSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none">
-                                            </select>
-                                        </td>
+<!--                                    <tr id="w0-filters" class="filters">-->
+<!--                                        <td>&nbsp;</td>-->
+<!--                                        <td><input type="text" class="form-control" name="InvoiceSearch[uid]"></td>-->
+<!--                                        <td>-->
+<!--                                            <div class="kv-plugin-loading loading-invoicesearch-status">&nbsp;</div>-->
+<!--                                            <select id="invoicesearch-status" class="form-control" name="InvoiceSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none">-->
+<!--                                            </select>-->
+<!--                                        </td>-->
 
-                                        <td>
-                                            <input type="text" id="invoicesearch-searchuiddaterange" class="form-control" name="InvoiceSearch[searchUidDateRange]" data-krajee-daterangepicker="daterangepicker_c8dff207">
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <input type="text" id="invoicesearch-searchuiddaterange" class="form-control" name="InvoiceSearch[searchUidDateRange]" data-krajee-daterangepicker="daterangepicker_c8dff207">-->
+<!--                                        </td>-->
 
-                                        <td>
-                                            <input type="text" id="invoicesearch-searchmonthyear" class="form-control krajee-datepicker" name="InvoiceSearch[searchMonthYear]" data-datepicker-source="invoicesearch-searchmonthyear" data-datepicker-type="1" data-krajee-kvdatepicker="kvDatepicker_27df5828">
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <input type="text" id="invoicesearch-searchmonthyear" class="form-control krajee-datepicker" name="InvoiceSearch[searchMonthYear]" data-datepicker-source="invoicesearch-searchmonthyear" data-datepicker-type="1" data-krajee-kvdatepicker="kvDatepicker_27df5828">-->
+<!--                                        </td>-->
 
-                                        <td>
-                                            <input type="text" class="form-control" name="InvoiceSearch[searchFlat]">
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <input type="text" class="form-control" name="InvoiceSearch[searchFlat]">-->
+<!--                                        </td>-->
 
-                                        <td>
-                                            <div class="kv-plugin-loading loading-invoicesearch-searchuserid">&nbsp;</div>
-                                            <select id="invoicesearch-searchuserid" class="form-control" name="InvoiceSearch[searchUserId]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_ea5d4d6f" style="display:none"></select>
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <div class="kv-plugin-loading loading-invoicesearch-searchuserid">&nbsp;</div>-->
+<!--                                            <select id="invoicesearch-searchuserid" class="form-control" name="InvoiceSearch[searchUserId]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_ea5d4d6f" style="display:none"></select>-->
+<!--                                        </td>-->
 
-                                        <td>
-                                            <div class="kv-plugin-loading loading-invoicesearch-is_checked">&nbsp;</div>
-                                            <select id="invoicesearch-is_checked" class="form-control" name="InvoiceSearch[is_checked]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none"></select>
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <div class="kv-plugin-loading loading-invoicesearch-is_checked">&nbsp;</div>-->
+<!--                                            <select id="invoicesearch-is_checked" class="form-control" name="InvoiceSearch[is_checked]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none"></select>-->
+<!--                                        </td>-->
 
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                </thead>
+<!--                                        <td>&nbsp;</td>-->
+<!--                                        <td>&nbsp;</td>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
 
-                                <tbody>
-                                </tbody>
+<!--                                <tbody>-->
+<!--                                </tbody>-->
                             </table>
                         </div>
                         <div class="box-footer clearfix"></div></div>
@@ -148,4 +148,139 @@
     </section>
 </div>
 
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.uk.min.js"></script>
+
+<script>
+    $('#datatable tbody').on('click', 'tr[data-href]', function(){
+        window.location.href = $(this).data('href');
+    })
+</script>
+
+
+<script language="javascript">
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#invoice_ajax_datatable_permissions'),
+            "{% url 'invoice_datatable' %}",
+            {
+                // extra_options (example)
+                processing: false,
+                autoWidth: false,
+                full_row_select: false,
+                scrollX: false,
+
+                dom:
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'box-footer clearfix'p>",
+
+                columnDefs: [
+                    { width: "80px", targets: -1, className: "text-center" }
+                ],
+
+                pagingType: "simple_numbers",
+                language: {
+                    paginate: {
+                        previous: "«",
+                        next: "»"
+                    },
+                    lengthMenu: "Показувати _MENU_ записів",
+                    info: "Показано від _START_ до _END_ із _TOTAL_ записів",
+                    infoEmpty: "Немає записів",
+                    zeroRecords: "Нічого не знайдено"
+                },
+
+                drawCallback: function(settings) {
+                    var wrapper = $(settings.nTableWrapper);
+
+                    // Знаходимо ul список пагінації
+                    var ul = wrapper.find('.dataTables_paginate ul');
+
+                    // Очищаємо можливе сміття від DataTables і ставимо рівно те, що треба
+                    ul.removeClass().addClass('pagination pagination-sm no-margin pull-right');
+
+                    // Прибираємо стандартні відступи DataTables, щоб список приліг впритул до краю
+                    wrapper.find('.dataTables_paginate').css({
+                        'float': 'none',
+                        'text-align': 'right',
+                        'margin': '0'
+                    });
+                },
+
+                initComplete: function(settings, json) {
+
+                    var api = this.api();
+
+                    $('.datatable-column-filter-row input, .datatable-column-filter-row select').addClass('form-control');
+
+                    var columnIndex = api.column('period_start:name').index();
+
+
+
+                    // Якщо таку колонку знайдено
+                    if (columnIndex !== undefined) {
+
+                        var $dateInput = $('.datatable-column-filter-row').find('td, th').eq(columnIndex).find('input');
+
+                        $('.datatable-column-filter-row input').not($dateInput).attr('placeholder', 'Пошук');
+
+                        $dateInput.attr('placeholder', 'Месяц');
+
+                        $dateInput.datepicker({
+                            format: 'yyyy-mm-dd',
+                            autoclose: true,
+                            language: 'uk',
+                            todayHighlight: true,
+                            orientation: "bottom auto",
+                            zIndexOffset: 9999,
+                            minViewMode: "months"
+
+
+                        }).on('changeDate', function(e){
+                            $(this).trigger('keyup');
+                            $(this).trigger('change');
+                        });
+
+                    } else {
+                        $('.datatable-column-filter-row input').attr('placeholder', 'Пошук');
+                    }
+                }
+            }
+        );
+    });
+
+</script>
+
+
+<script>
+$(document).ready(function() {
+    // Чекаємо, поки DataTable завершить малювання рядків
+    $(document).on('draw.dt', function (e, settings) {
+
+        var rows = $('table tbody tr[data-href]');
+
+        // Вимикаємо всі старі кліки від бібліотеки
+        rows.off('click');
+
+        // Вішаємо наш чистесенький перехід
+        rows.on('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var url = $(this).attr('data-href') || $(this).data('href');
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

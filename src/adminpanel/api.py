@@ -1,12 +1,12 @@
-from ninja import NinjaAPI, Schema
-from typing import Optional
+from ninja import NinjaAPI, Schema, Query
+from typing import Optional, List
 from django.db.models import F
 from django.core.paginator import Paginator
 
 
 
 from src.houses.models import House, Section, Storey, Apartment
-from src.settings.models import Service, Tariff, Tarrif_Service_Price
+from src.settings.models import Service, Tariff, Tarrif_Service_Price, Counters
 from src.users.models import User, Role
 from src.finance.models import Payment_Account
 
@@ -160,7 +160,25 @@ def get_tariff_services(request, tariff_id: int):
     return result
 
 
+class InvoiceCounter(Schema):
+    counter_id: int
+    indicator: float
+    service_id: int
 
+
+@api.get("invoice/counters", response=list[InvoiceCounter])
+def get_invoice_counter(request, apartment_id: int, service_ids: List[int] = Query([])):
+    counter = Counters.objects.filter(service__in=service_ids, apartment=apartment_id)
+
+    result = []
+
+    for i in counter:
+        result.append({
+            'counter_id': i.id,
+            'indicator': i.indicator,
+            'service_id': i.service_id})
+
+    return result
 
 
 

@@ -1,0 +1,40 @@
+{% extends 'front_base.html' %}
+
+{% load static %}
+{% block front_content %}
+
+<div class="map-half-screen">
+  <iframe src="{{ object.coordinate }}" loading="lazy" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+<div class="contacts">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-8">
+                <div class="page-header">
+                    <h1>{{ object.name }}</h1>
+                </div>
+
+                <div class="box">
+                    <p>{{ object.description }}<a target="_blank" rel="nofollow" href="{{ object.url }}"><b><i></i></b><u></u>{{ object.url }}</a></p><p></p><p></p><p><b></b></p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-5 col-md-4">
+                <div class="page-header">
+                    <h3>Контакты</h3>
+                </div>
+                <div class="box">
+                        <p><i class="fas fa-user-circle"></i> {{ contact.full_name }}</p>
+                        <p><i class="fas fa-compass"></i> {{ contact.location }}</p>
+                        <p><i class="fas fa-map-marker"></i>{{ contact.adress }}</p>
+                        <p><i class="fas fa-phone"></i> <a href="tel:{{contact.phone_number}}">{{contact.phone_number}}</a></p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:{{contact.email_adress}}">{{contact.email_adress}}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

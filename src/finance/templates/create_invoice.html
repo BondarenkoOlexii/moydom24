@@ -43,8 +43,8 @@
                                             Выберите действие <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#!" class="set-tariff-services">Выставить все услуги согласно тарифу</a></li>
-                                            <li><a href="#!" class="add-counters">Добавить показания счетчиков</a></li>
+                                            <li><a href="#" class="set-tariff-services">Выставить все услуги согласно тарифу</a></li>
+                                            <li><a href="#" class="add-counters">Добавить показания счетчиков</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -57,20 +57,34 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group field-flatform-house_id required">
                                                     <label for="flatform-house_id">Дом</label>
-                                                    <select id="flatform-house_id" class="form-control" name="house_id"></select>
+                                                    <select id="flatform-house_id" class="form-control" name="house_id">
+                                                        {% if house %}
+                                                            <option value="{{ house.id }}">{{ house.name }}</option>
+                                                        {% else %}
+                                                            <option value="">Выберите...</option>
+                                                        {% endif %}
+                                                    </select>
                                                 </div>
 
                                                 <div class="form-group field-flatform-section_id required">
                                                     <label for="flatform-section_id">Секция</label>
                                                     <select id="flatform-section_id" class="form-control">
-                                                        <option value="">Выберите...</option>
+                                                        {% if section %}
+                                                            <option value="{{ section.id }}">{{ section.name }}</option>
+                                                        {% else %}
+                                                                <option value="">Выберите...</option>
+                                                        {% endif %}
                                                     </select>
                                                 </div>
 
                                                 <div class="form-group field-flatform-flat_id required">
                                                     <label class="control-label" for="flatform-flat_id">Квартира</label>
                                                     <select id="flatform-flat_id" class="form-control" aria-required="true">
-                                                        <option value="">Выберите...</option>
+                                                        {% if apartment %}
+                                                            <option value="{{ apartment.id }}">{{ apartment.apartment_number }}</option>
+                                                        {% else %}
+                                                                <option value="">Выберите...</option>
+                                                        {% endif %}
                                                     </select>
                                                     <div class="help-block"></div>
                                                 </div>
@@ -135,6 +149,7 @@
 
                                 <div class="row">
                                     <div class="col-xs-12">
+                                        {{ formset.management_form }}
                                         <div class="table-responsive no-padding">
                                             <table class="table table-bordered table-hover">
                                                 <thead>
@@ -148,14 +163,14 @@
                                                     </tr>
                                                 </thead>
 
-                                                <tbody id="container-invoiceservice_set" class="tab-content">
 
-                                                {{ formset.management_form }}
+                                                <tbody id="container-invoiceservice_set" class="tab-content">
 
                                                 {% for form in formset %}
                                                     <tr class="invoiceservice_set-row">
                                                         <td>
-                                                            {% for hidden in formset.empty_form.hidden_fields %}
+                                                            {{ form.id }}
+                                                            {% for hidden in form.hidden_fields %}
                                                                 {{ hidden }}
                                                             {% endfor %}
                                                             {{ form.service }}
@@ -168,6 +183,9 @@
                                                             <span class="input-group-btn">
                                                                 <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
                                                             </span>
+                                                            <div style="display: none;">
+                                                                {{ form.DELETE }}
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -188,6 +206,7 @@
                                                         <td style="min-width: 180px;">
                                                             <div class="h4">
                                                                 Итого: <b><span id="price-total">0.00</span></b> грн
+                                                                {{ form.total_amount }}
                                                             </div>
                                                         </td>
                                                         <td style="width: 40px; min-width: 40px;"></td>
@@ -220,6 +239,7 @@
             {% for hidden in formset.empty_form.hidden_fields %}
                 {{ hidden }}
             {% endfor %}
+
             {{ formset.empty_form.service }}
         </td>
         <td>{{ formset.empty_form.indicator }}</td>
@@ -228,9 +248,9 @@
         <td>{{ formset.empty_form.price }}</td>
 
         <td>
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
-        </span>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-danger form-row-remove-btn"><i class="fa fa-trash"></i></button>
+            </span>
         </td>
     </tr>
 </template>
@@ -280,7 +300,6 @@ $(document).ready(function(){
 
                 let $newRow = $('#container-invoiceservice_set').children().last();
 
-
                 $newRow.find('select[name$="-service"]').val(item.service_id);
                 $newRow.find('input[name$="-measurement_price"]').val(item.price);
                 $newRow.find('select[name$="-measurement"]').val(item.measurement);
@@ -292,5 +311,120 @@ $(document).ready(function(){
             }
     });
 });
+</script>
+
+<script>
+$(document).ready(function() {
+    $('.add-counters').click(async function(e) {
+        e.preventDefault();
+
+        let apartmentId = $('#flatform-flat_id').val();
+        if (!apartmentId) {
+            alert('Будь ласка, спочатку виберіть квартиру!');
+            return;
+        }
+
+        // 1. Збираємо всі вибрані послуги з рядків
+        let selectedServices = [];
+        $('#container-invoiceservice_set select[name$="-service"]').each(function() {
+            let serviceId = $(this).val();
+            if (serviceId) {
+                selectedServices.push(serviceId);
+            }
+        });
+
+        // Якщо жодної послуги не вибрано, немає сенсу робити запит
+        if (selectedServices.length === 0) {
+            console.log("Немає обраних послуг для перевірки лічильників.");
+            return;
+        }
+
+        // 2. Формуємо правильні query-параметри для списку
+        // Це створить рядок типу: apartment_id=5&service_ids=1&service_ids=4&service_ids=7
+        let params = new URLSearchParams();
+        params.append('apartment_id', apartmentId);
+        selectedServices.forEach(id => params.append('service_ids', id));
+
+        try {
+            // 3. Відправляємо запит
+            let response = await fetch(`/api/invoice/counters?${params.toString()}`);
+
+            if (!response.ok) {
+                console.error("🚨 Сервер повернув статус:", response.status);
+                console.error("🚨 Тіло відповіді від сервера:", rawText);
+                return;
+            }
+
+            let countersData = await response.json();
+
+            // 4. Створюємо словник (Map) для швидкого пошуку
+            let countersMap = {};
+            countersData.forEach(counter => {
+                countersMap[counter.service_id] = counter;
+            });
+
+            // 5. Оновлюємо рядки, як ми це робили раніше
+            $('#container-invoiceservice_set .invoiceservice_set-row').each(function() {
+                let $row = $(this);
+                let serviceId = $row.find('select[name$="-service"]').val();
+
+                if (serviceId && countersMap[serviceId] !== undefined) {
+                    let counterData = countersMap[serviceId];
+                    let priceVal = parseFloat($row.find('input[name$="-measurement_price"]').val()) || 0;
+
+                    $row.find('input[name$="-indicator"]').val(counterData.indicator);
+
+                    let totalPrice = counterData.indicator * priceVal;
+                    $row.find('input[name$="-price"]').val(totalPrice.toFixed(2));
+                }
+            });
+
+            calculateGrandTotal();
+
+        } catch (error) {
+            console.error("❌ Локальна помилка у браузері:", err);
+        }
+    });
+
+    function calculateGrandTotal() {
+        let total = 0;
+        $('#container-invoiceservice_set input[name$="-price"]').each(function() {
+            let val = parseFloat($(this).val());
+            if (!isNaN(val)) {
+                total += val;
+            }
+        });
+        $('#price-total').text(total.toFixed(2));
+
+        $('#invoice-total_amount').val(total.toFixed(2));
+    }
+
+    $(document).on('input', 'input[name$="-price"]', function() {
+        calculateGrandTotal();
+    });
+
+    $(document).on('input', 'input[name$="-indicator"], input[name$="-measurement_price"]', function() {
+
+        let $row = $(this).closest('tr');
+
+        let indicator = parseFloat($row.find('input[name$="-indicator"]').val()) || 0;
+        let measurement_price = parseFloat($row.find('input[name$="-measurement_price"]').val()) || 0;
+
+        let rowPrice = indicator * measurement_price;
+
+        $row.find('input[name$="-price"]').val(rowPrice.toFixed(2));
+
+        calculateGrandTotal();
+    });
+});
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#')
+
+
+    })
 </script>
 {% endblock %}

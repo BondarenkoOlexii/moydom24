@@ -54,7 +54,6 @@ class Additional_Block(models.Model):
 
     @property
     def is_both_empty(self):
-
         return self.main_page_id is None and self.about_page_id is None
 
 class Additional_File(models.Model):
