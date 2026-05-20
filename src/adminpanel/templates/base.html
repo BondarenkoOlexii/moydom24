@@ -528,35 +528,67 @@
 <aside class="main-sidebar">
     <!-- sidebar -->
     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 1028px;"><section class="sidebar" style="overflow: hidden; width: auto; height: 1028px;">
+        {% if user.is_staff or user.is_super_user %}
+            <ul class="sidebar-menu tree" data-widget="tree">
+                <li class="active"><a href="/admin/"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
+                <li><a href="/admin/account-transaction/index"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
+                <li><a href="{% url 'invoice' %}"><i class="fa fa-files-o"></i>  <span>Квитанции на оплату</span></a></li>
+                <li><a href="{% url 'account' %}"><i class="fa fa-credit-card"></i>  <span>Лицевые счета</span></a></li>
+                <li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
+                <li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
+                <li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
+                <li><a href="{% url 'messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
+                <li><a href="{% url 'request-master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
+                <li><a href="{% url 'counter' %}"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
+                <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="{% url 'website-main' %}"><i class="fa fa-circle-o"></i>  <span>Главная страница</span></a></li>
+                        <li><a href="{% url 'website-about' %}"><i class="fa fa-circle-o"></i>  <span>О нас</span></a></li>
+                        <li><a href="{% url 'website-service' %}"><i class="fa fa-circle-o"></i>  <span>Услуги</span></a></li>
+                        <li><a href="{% url 'website-contact' %}"><i class="fa fa-circle-o"></i>  <span>Контакты</span></a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Настройки системы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="{% url 'service' %}"><i class="fa fa-briefcase"></i>  <span>Услуги</span></a></li>
+                        <li><a href="{% url 'tariff' %}"><i class="fa fa-money"></i>  <span>Тарифы</span></a></li>
+                        <li><a href="{% url 'role' %}"><i class="fa fa-user"></i>  <span>Роли</span></a></li>
+                        <li><a href="{% url 'master-list' %}"><i class="fa fa-user-plus"></i>  <span>Пользователи</span></a></li>
+                        <li><a href="{% url 'pay-company' %}"><i class="fa fa-credit-card"></i>  <span>Платежные реквизиты</span></a></li>
+                        <li><a href="{% url 'transaction-purpose' %}"><i class="fa fa-list-ol"></i>  <span>Статьи платежей</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        {% elif user.is_aethuficated and not user.is_staff and not user.is_superuser %}
+            <ul class="sidebar-menu tree" data-widget="tree">
+                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Сводки</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Сводка 1</span></a></li>
+                    </ul>
+                </li>
 
-        <ul class="sidebar-menu tree" data-widget="tree"><li class="active"><a href="/admin/"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
-<li><a href="/admin/account-transaction/index"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
-<li><a href="{% url 'invoice' %}"><i class="fa fa-files-o"></i>  <span>Квитанции на оплату</span></a></li>
-<li><a href="{% url 'account' %}"><i class="fa fa-credit-card"></i>  <span>Лицевые счета</span></a></li>
-<li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
-<li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
-<li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
-<li><a href="{% url 'messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
-<li><a href="{% url 'request-master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
-<li><a href="{% url 'counter' %}"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
-<li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-<ul class="treeview-menu">
-<li><a href="{% url 'website-main' %}"><i class="fa fa-circle-o"></i>  <span>Главная страница</span></a></li>
-<li><a href="{% url 'website-about' %}"><i class="fa fa-circle-o"></i>  <span>О нас</span></a></li>
-<li><a href="{% url 'website-service' %}"><i class="fa fa-circle-o"></i>  <span>Услуги</span></a></li>
-<li><a href="{% url 'website-contact' %}"><i class="fa fa-circle-o"></i>  <span>Контакты</span></a></li>
-</ul>
-</li>
-<li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Настройки системы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-<ul class="treeview-menu">
-<li><a href="{% url 'service' %}"><i class="fa fa-briefcase"></i>  <span>Услуги</span></a></li>
-<li><a href="{% url 'tariff' %}"><i class="fa fa-money"></i>  <span>Тарифы</span></a></li>
-<li><a href="{% url 'role' %}"><i class="fa fa-user"></i>  <span>Роли</span></a></li>
-<li><a href="{% url 'master-list' %}"><i class="fa fa-user-plus"></i>  <span>Пользователи</span></a></li>
-<li><a href="{% url 'pay-company' %}"><i class="fa fa-credit-card"></i>  <span>Платежные реквизиты</span></a></li>
-<li><a href="{% url 'transaction-purpose' %}"><i class="fa fa-list-ol"></i>  <span>Статьи платежей</span></a></li>
-</ul>
-</li></ul>
+                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Квитанции</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Квитанция 1</span></a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Тарифы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Тариф 1</span></a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Тарифы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Тариф 1</span></a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i>  <span>Вызов мастера</span></a></li>
+                <li><a href="{% url 'view_user_cabinet' %}"><i class="fa fa-envelope-o"></i><span>Профиль</span></a></li>
+            </ul>
+        {% endif %}
     </section><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 1028px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
     <!-- /.sidebar -->
 </aside>

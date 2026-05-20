@@ -72,7 +72,7 @@ class ListCabinetUser(ListView):
 
         user_id = self.request.user.id
 
-        ctx['object'] = User.objects.get(id=user_id)
+        ctx['object'] = User.objects.filter(id=user_id).first()
 
         ctx['apartments'] = Apartment.objects.filter(owner=user_id)
 

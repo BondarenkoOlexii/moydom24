@@ -11,5 +11,4 @@ urlpatterns = [
     path('contact', ContactView.as_view(), name='contact'),
 
     path('cabinet/user/view', ListCabinetUser.as_view(), name='view_user_cabinet'),
-    path('cabinet/user/update', UpdateUserCabinet.as_view(), name='update_user_cabinet')
 ]
