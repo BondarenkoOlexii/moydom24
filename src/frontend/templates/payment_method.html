@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="payment_option">
+                <input type="radio" id="privat" name="payment_method" value="privat24">
+                <label>
+                    <img src="{% static 'dist/logo/privat24.png' %}" alt="Privat24" width="200" height="100">
+                </label>
+            </div>
+
+            <div class="payment_option">
+                <input type="radio" id="cards" name="payment_method" value="cards">
+                <label>
+                    <img src="{% static 'dist/logo/Visa-MasterCard.png' %}" alt="Visa MasterCard" width="200" height="100">
+                </label>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-sm btn-success">Оплатить</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

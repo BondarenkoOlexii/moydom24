@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, DetailView, ListView, CreateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseRedirect
@@ -8,13 +8,13 @@ from ajax_datatable.views import AjaxDatatableView
 # Create your views here.
 
 from src.site_control.models import Main_Page, About_Page, Contact_Page, Additional_Block, Additional_File
-from src.users.models import User
+from src.users.models import User, Message
 from src.users.forms import UserForm
 from src.houses.models import Apartment, Call_Master
 from src.common.models import Image
 from src.finance.models import Payment_Account, Tariff, Invoice, ThoughInvoiceService
 from src.users.views import BasicUpdateUser
-from .forms import CabinetCallMaster, CustomLoginForm
+from .forms import CabinetCallMaster, CustomLoginForm, PaymentMethodChoise
 
 
 class CustomUserLogin(LoginView):
@@ -149,7 +149,7 @@ class UpdateUserCabinet(BasicUpdateUser):
         user = self.request.user.id
         print(user)
         try:
-            cabinet = User.objects.get(user_id=user)
+            cabinet = User.objects.get(id=user)
             return cabinet
         except(AttributeError, User.DoesNotExist):
             return None
@@ -173,6 +173,11 @@ class CreateCabinetMasterRequest(CreateView):
     model = Call_Master
     template_name = 'user_call_master.html'
     form_class = CabinetCallMaster
+
+
+class ListCabinetMessages(ListView):
+    model = Message
+    template_name = "cabinet_messages.html"
 
 
 class ListCabinetTariff(ListView):
@@ -240,3 +245,7 @@ class CabinetInvoiceView(DetailView):
         ctx['services'] = ThoughInvoiceService.objects.filter(invoice_id=pk)
 
         return ctx
+
+
+class CabinetInvoicePaymentMethod(TemplateView):
+    template_name = 'payment_method.html'

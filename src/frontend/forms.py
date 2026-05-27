@@ -29,3 +29,7 @@ class CustomLoginForm(AuthenticationForm):
         if 'cabinet' in self.request.path:
             self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email или ID'})
 
+
+
+class PaymentMethodChoise(forms.Form):
+    rad_choise = forms.ChoiceField(widget=forms.RadioSelect)

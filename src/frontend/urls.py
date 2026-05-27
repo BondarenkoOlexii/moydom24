@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import ContactView, AboutView, ServiceView, MainView, ListCabinetUser, UpdateUserCabinet,\
     ListCabinetMasterRequest, CreateCabinetMasterRequest, ListCabinetTariff, ListCabinetInvoice,\
-    CabinetInvoiceDatatableView, CustomUserLogin, CabinetInvoiceView
+    CabinetInvoiceDatatableView, CustomUserLogin, CabinetInvoiceView, ListCabinetMessages, CabinetInvoicePaymentMethod
 
 
 
@@ -17,8 +17,10 @@ urlpatterns = [
     path('cabinet/user/update/<int:pk>', UpdateUserCabinet.as_view(), name='update_user_cabinet'),
     path('cabinet/master-request', ListCabinetMasterRequest.as_view(), name='list_user_master_request'),
     path('cabinet/master-request/create', CreateCabinetMasterRequest.as_view(), name='create_user_master_request'),
+    path('cabinet/messages', ListCabinetMessages.as_view(), name='list_cabinet_messages'),
     path('cabinet/tariff', ListCabinetTariff.as_view(), name='list_user_tariff'),
     path('cabinet/invoice', ListCabinetInvoice.as_view(), name='list_user_invoice'),
     path('api/datatable/cabinet_invoice', CabinetInvoiceDatatableView.as_view(), name='cabinet_invoice_datatable'),
     path('cabinet/invoice/<int:pk>', CabinetInvoiceView.as_view(), name='cabinet_invoice_view'),
+    path('cabinet/invoice/pay/<int:pk>', CabinetInvoicePaymentMethod.as_view(), name='cabinet_invoice_pay'),
 ]
