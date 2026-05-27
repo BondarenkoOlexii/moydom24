@@ -19,8 +19,12 @@ from src.site_control.views import CreateMainPageView, CreateAboutPageView, Crea
 from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail, ListInvoice, \
     CreateInvoice, InvoiceDatatableView, UpdateInvoice, DeleteInvoice, DetailInvoice
 
+from src.frontend.views import CustomAdminLogin, CustomUserLogout
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
+    path('login', CustomAdminLogin.as_view(), name='admin_login'),
+    path('logout', CustomUserLogout.as_view(), name='logout'),
 
     path('api/datatable/house', HouseDatatableView.as_view(), name='house_datatable'),
     path('api/datatable/apartment', ApartmentDatatableView.as_view(), name='apartment_datatable'),

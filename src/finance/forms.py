@@ -11,7 +11,7 @@ class PaymentAccountForm(forms.ModelForm):
         fields = ['bank_book', 'status', 'apartment']
 
         widgets = {
-            'apartment': forms.Select(attrs={'id': 'flatform-flat_id', 'class': 'form-control'}),
+            'apartment': forms.Select(attrs={'id': 'flatform-apartment_id', 'class': 'form-control'}),
             'bank_book': forms.TextInput(attrs={'id': 'account-uid', 'class': 'form-control'}),
             'status': forms.Select(attrs={'id': 'account-status', 'class': 'form-control'})
         }

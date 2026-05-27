@@ -88,6 +88,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'src.adminpanel.backends.CustomAdminModelBackend',
+    'src.adminpanel.backends.CustomModelBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -100,6 +107,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'src.adminpanel.context_processor.aside_bar',
             ],
         },
     },
@@ -219,3 +227,8 @@ CACHES = {
 }
 
 SELECT2_CACHE_BACKEND = "select2"
+
+
+#######################################################################
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30

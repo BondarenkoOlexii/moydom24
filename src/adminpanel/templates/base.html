@@ -496,23 +496,27 @@
                                                 <!-- User Account -->
                                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!--<img src="/admin/dist/img/user2-160x160.jpg" class="user-image" alt="Nana Nanovna">-->
-                                                                                    <i class="fa fa-user-circle text-purple"></i>
-                            <span class="hidden-xs">Nana Nanovna</span>
+                            <img src="{% if request.user.main_image %}{{ request.user.main_image.photo.url }} {% else %} https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="user-image">
+                            <span class="hidden-xs">{{ request.user.first_name }} {{ request.user.last_name }} </span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <!--<img src="/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="Nana Nanovna">-->
-                                <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"></i></span>
-                                <p>Nana Nanovna (Директор)</p>
+                                <img src="{% if request.user.main_image %}{{ request.user.main_image.photo.url }} {% else %} <span><i class='fa fa-user-circle text-purple bg-gray-light img-circle'></i></span>{% endif %}"
+                                     class="img-circle" alt="{{ request.user.first_name }} {{ request.user.last_name }}">
+                                <p>{{ request.user.first_name }} {{ request.user.last_name }} {% if request.user.is_admin %}{% endif %}</p>
                             </li>
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a class="btn btn-default btn-flat" href="/admin/user-admin/update-my">Профиль</a>                                </div>
+                                    <a class="btn btn-default btn-flat" href="{% url 'master-list-update' request.user.id %}">Профиль</a>                                </div>
                                 <div class="pull-right">
-                                    <a class="btn btn-default btn-flat" href="/admin/site/logout" data-method="post">Выход</a>                                </div>
+                                    <form method="POST" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-default btn-flat">Выход</button>
+<!--                                        <a class="btn btn-default btn-flat" href="{% url 'logout' %}" data-method="post">Выход</a>-->
+                                    </form>
+                                </div>
                             </li>
                         </ul>
                     </li>
@@ -528,7 +532,7 @@
 <aside class="main-sidebar">
     <!-- sidebar -->
     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 1028px;"><section class="sidebar" style="overflow: hidden; width: auto; height: 1028px;">
-        {% if user.is_staff or user.is_super_user %}
+        {% if user.is_staff or user.is_superuser %}
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="active"><a href="/admin/"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
                 <li><a href="/admin/account-transaction/index"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
@@ -559,34 +563,35 @@
                     </ul>
                 </li>
             </ul>
-        {% elif user.is_aethuficated and not user.is_staff and not user.is_superuser %}
-            <ul class="sidebar-menu tree" data-widget="tree">
-                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Сводки</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+
+            {% elif user.is_authenticated and not user.is_staff and not user.is_superuser %}
+            <ul class="sidebar-menu tree active" data-widget="tree">
+                <li class="treeview"><a href="#"><i class="fa fa-line-chart"></i>  <span>Сводки</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Сводка 1</span></a></li>
+                        {% for apartment in apartments %}
+                            <li><a href="#"><i class="fa fa-building"></i>  <span>{{ apartment.house.name }}{{ apartment.apartment_number }}</span></a></li>
+                        {% endfor %}
                     </ul>
                 </li>
 
-                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Квитанции</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="treeview"><a href="#"><i class="fa fa-files-o"></i>  <span>Квитанции</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Квитанция 1</span></a></li>
+                        {% for apartment in apartments %}
+                            <li><a href="{% url 'list_user_invoice' %}?apartment={{ apartment.id }}"><i class="fa fa-file-text-o"></i>  <span>{{ apartment.house.name }}{{ apartment.apartment_number }}</span></a></li>
+                        {% endfor %}
                     </ul>
                 </li>
 
-                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Тарифы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="treeview"><a href="#"><i class="fa fa-money"></i>  <span>Тарифы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Тариф 1</span></a></li>
-                    </ul>
-                </li>
-
-                <li class="treeview"><a href="#"><i class="fa fa-cogs"></i>  <span>Тарифы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-briefcase"></i>  <span>Тариф 1</span></a></li>
+                        {% for apartment in apartments %}
+                            <li><a href="{% url 'list_user_tariff' %}?apartment={{ apartment.id }}"><i class="fa fa-file-text-o"></i>  <span>{{ apartment.house.name }}{{ apartment.apartment_number }}</span></a></li>
+                        {% endfor %}
                     </ul>
                 </li>
                 <li><a href="#"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i>  <span>Вызов мастера</span></a></li>
-                <li><a href="{% url 'view_user_cabinet' %}"><i class="fa fa-envelope-o"></i><span>Профиль</span></a></li>
+                <li><a href="{% url 'list_user_master_request' %}"><i class="fa fa-wrench"></i>  <span>Вызов мастера</span></a></li>
+                <li><a href="{% url 'view_user_cabinet' %}"><i class="fa fa-user"></i><span>Профиль</span></a></li>
             </ul>
         {% endif %}
     </section><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 1028px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>

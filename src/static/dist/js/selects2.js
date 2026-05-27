@@ -147,10 +147,41 @@ $(document).ready(function() {
 
         }
 
-    })
+    });
 
 
-    $
+    $('#flatform-apartment_id').on('change', function(){
+        var apartmentId = $(this).val();
+        var $paymentInput = $('#account-uid');
+        var $fullnameSpan = $('#user-fullname');
+        var $phonenumSpan = $('#user-phone');
+
+        $paymentInput.val('')
+
+        if (apartmentId) {
+            $.ajax({
+                url: '/api/bank_book/',
+                type: 'GET',
+                data: {
+                    apartment_id: apartmentId
+                },
+
+                success: function(response){
+                    if (response && response.length > 0) {
+                        $fullnameSpan.text(response[0].full_name);
+                        $phonenumSpan.text(response[0].phone_number)
+
+                    } else {
+                        $paymentInput.val('Счет не найден')
+                    }
+                },
+
+            })
+
+        }
+
+    });
+
 
 
 

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Тарифы - {{ apartment.house.name }}, кв.{{ apartment.apartment_number }}</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/cabinet/"><i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Тарифы - {{ apartment.house.name }}, кв.{{ apartment.apartment_number }}</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="box">
+            <div class="box-body">
+                <div class="table-responsive no-padding">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="min-width:250px">Услуга</th>
+                                <th style="min-width:150px">Ед. изм.</th>
+                                <th style="min-width:150px">Цена за ед., грн</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in objects %}
+                            <tr>
+                                <td>{{ item.service.service }}</td>
+                                <td>{{ item.service.measurement.unit_of_measurement }}</td>
+                                <td>{{ item.measurement_price }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Квитанции на оплату</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/cabinet/"><i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Квитанции на оплату</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools">
+                            <a href="/cabinet/invoice/index?InvoiceSearch%5Bflat_id%5D=714" class="btn btn-default btn-sm">
+                                <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="w0" class="grid-view">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover table-striped linkedRow" id="cabinet_invoice_datatable_permissions">
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th>№</th>-->
+<!--                                        <th><a href="/cabinet/invoice/index?InvoiceSearch%5Bflat_id%5D=714&amp;sort=searchUidDate" data-sort="searchUidDate">Дата</a></th>-->
+<!--                                        <th>Статус</th>-->
+<!--                                        <th>Сумма</th>-->
+<!--                                    </tr>-->
+<!--                                    <tr id="w0-filters" class="filters">-->
+<!--                                        <td>&nbsp;</td>-->
+<!--                                        <td><input type="text" id="invoicesearch-searchuiddate" class="form-control krajee-datepicker" name="InvoiceSearch[searchUidDate]" data-datepicker-source="invoicesearch-searchuiddate" data-datepicker-type="1" data-krajee-kvdatepicker="kvDatepicker_1643d6f1"></td>-->
+<!--                                        <td><select id="invoicesearch-status" class="form-control select2-hidden-accessible" name="InvoiceSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select><span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-invoicesearch-status-container"><span class="select2-selection__rendered" id="select2-invoicesearch-status-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td>-->
+<!--                                        <td>&nbsp;</td>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+
+<!--                                <tbody>-->
+<!--                                -->
+<!--                                </tbody>-->
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+
+    <script language="javascript">
+
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const apartmentId = urlParams.get('apartment');
+            console.log("!!! JS БАЧИТЬ ID КВАРТИРИ:", apartmentId);
+
+            let tableUrl = "{% url 'cabinet_invoice_datatable' %}";
+            if (apartmentId) {
+                tableUrl += "?apartment=" + apartmentId;
+            }
+
+            AjaxDatatableViewUtils.initialize_table(
+                $('#cabinet_invoice_datatable_permissions'),
+                tableUrl,
+                {
+
+                    // extra_options (example)
+                    processing: false,
+                    autoWidth: false,
+                    full_row_select: true,
+                    scrollX: false,
+
+                    dom:
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'box-footer clearfix'p>",
+
+                    columnDefs: [
+                        { width: "80px", targets: -1, className: "text-center" }
+                    ],
+
+                    pagingType: "simple_numbers",
+                    language: {
+                        paginate: {
+                            previous: "«",
+                            next: "»"
+                        },
+                        lengthMenu: "Показувати _MENU_ записів",
+                        info: "Показано від _START_ до _END_ із _TOTAL_ записів",
+                        infoEmpty: "Немає записів",
+                        zeroRecords: "Нічого не знайдено"
+                    },
+
+                    drawCallback: function(settings) {
+                        var wrapper = $(settings.nTableWrapper);
+
+                        // Знаходимо ul список пагінації
+                        var ul = wrapper.find('.dataTables_paginate ul');
+
+                        // Очищаємо можливе сміття від DataTables і ставимо рівно те, що треба
+                        ul.removeClass().addClass('pagination pagination-sm no-margin pull-right');
+
+                        // Прибираємо стандартні відступи DataTables, щоб список приліг впритул до краю
+                        wrapper.find('.dataTables_paginate').css({
+                            'float': 'none',
+                            'text-align': 'right',
+                            'margin': '0'
+                        });
+                    },
+
+                    initComplete: function(settings, json) {
+                        $('.datatable-column-filter-row input').addClass('form-control input-sm');
+                        $('.datatable-column-filter-row select').addClass('form-control input-sm');
+                    }
+                },
+            );
+        });
+
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        $('#cabinet_invoice_datatable_permissions').on('click', 'tbody tr', function(e){
+
+            if ($(e.target).closest('a, button, input').length){
+                return;
+            }
+
+            let url = $(this).attr('data-url');
+
+            console.log("Клік по рядку! Знайдено URL:", url);
+
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+    </script>
+
+{% endblock %}

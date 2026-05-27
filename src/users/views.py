@@ -123,6 +123,9 @@ class CreateUser(AdminpanelRestrictionMixin, CreateView):
             upload_img = Image.objects.create(photo=img_obj)
             self.object.main_image = upload_img
 
+        self.object.set_password(form.cleaned_data.get('password'))
+        self.object.username = f"{form.cleaned_data.get('first_name')} {form.cleaned_data.get('middle_name')} {form.cleaned_data.get('last_name')}"
+
         self.object.save()
 
         return HttpResponseRedirect(self.get_success_url())
@@ -135,9 +138,7 @@ class CreateUser(AdminpanelRestrictionMixin, CreateView):
         return reverse('user')
 
 
-class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
-    required_section = 'apartments_owner'
-
+class BasicUpdateUser(UpdateView):
     model = User
     template_name = 'create_user.html'
     form_class = UserForm
@@ -162,6 +163,11 @@ class UpdateUser(AdminpanelRestrictionMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('user')
+
+
+class UpdateUser(AdminpanelRestrictionMixin, BasicUpdateUser):
+    required_section = 'apartments_owner'
+
 
 
 class DeleteUser(AdminpanelRestrictionMixin, DeleteView):

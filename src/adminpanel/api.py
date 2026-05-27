@@ -93,8 +93,35 @@ def get_payment_account(request, apartment_id: int):
     return result
 
 
+class BankBookOutPoint(Schema):
+    full_name: str
+    phone_number: str
+
+
+@api.get("/bank_book/", response=List[BankBookOutPoint])
+def get_book_info(request, apartment_id: int):
+    user = Apartment.objects.filter(id=apartment_id).first()
+    user_info = user.owner
+
+    full_name = ""
+    phone = ""
+    result = []
+
+    if user_info:
+        full_name = f"{user_info.first_name} {user_info.middle_name} {user_info.last_name}"
+
+        phone = getattr(user_info, 'phone_number', '')
+
+    result.append({
+        "full_name": full_name,
+        "phone_number": phone
+    })
+    return result
+
+
 class MeasurementOut(Schema):
     unit: str
+
 
 @api.get("/get-measurement/", response=MeasurementOut)
 def get_measurement(request, service_id: int):
@@ -181,6 +208,15 @@ def get_invoice_counter(request, apartment_id: int, service_ids: List[int] = Que
     return result
 
 
+@api.get("cabinet/master_request", response=List[GenericOutPoint])
+def apartment_for_master(request):
+
+    if request.user.is_authenticated:
+        user = request.user.id
+        print(f'Юзер - {request.user.first_name} {request.user.last_name}')
+
+        apartments = Apartment.objects.filter(owner=user).annotate(text=F('apartment_number'))
+    return apartments
 
 # class MasterRequestOut(Schema):
 #     id: int

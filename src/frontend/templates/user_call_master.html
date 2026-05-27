@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Новая заявка</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/cabinet/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/cabinet/master-request/index">Вызов мастера</a></li>
+            <li class="active">Новая заявка</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="box">
+            <div class="box-body">
+                <form id="w0" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group field-masterrequestform-type">
+                            <label class="control-label" for="masterrequestform-type">Тип мастера</label>
+                            {{ form.role }}
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group field-masterrequestform-flat_id required">
+                            <label class="control-label" for="masterrequestform-flat_id">Квартира</label>
+                            {{ form.apartment }}
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group field-masterrequestform-date_request required">
+                                    <label class="control-label" for="masterrequestform-date_request">Дата работ</label>
+                                    <div id="masterrequest-date_request-kvdate" class="input-group  date">
+                                        {{form.data_create}}
+                                        <span class="input-group-addon kv-date-calendar" title="Выбрать дату"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                    <div class="help-block"></div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group field-masterrequestform-time_request has-success">
+                                    <label class="control-label" for="masterrequestform-time_request">Время работ</label>
+                                    <div class="input-group bootstrap-timepicker">
+                                        <div class="bootstrap-timepicker-widget dropdown-menu">
+                                            <table>
+                                                <tbody>
+                                                <tr>
+                                                    <td><a href="#" data-action="incrementHour"><i class="glyphicon glyphicon-chevron-up"></i></a></td>
+                                                    <td class="separator">&nbsp;</td>
+                                                    <td><a href="#" data-action="incrementMinute"><i class="glyphicon glyphicon-chevron-up"></i></a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><span class="bootstrap-timepicker-hour">17</span></td>
+                                                    <td class="separator">:</td><td><span class="bootstrap-timepicker-minute">35</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><a href="#" data-action="decrementHour"><i class="glyphicon glyphicon-chevron-down"></i></a></td>
+                                                    <td class="separator"></td><td><a href="#" data-action="decrementMinute"><i class="glyphicon glyphicon-chevron-down"></i></a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {{ form.сonvenient_time }}
+                                        <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
+                                    </div>
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group field-masterrequestform-description required">
+                            <label class="control-label" for="masterrequestform-description">Описание</label>
+                            {{ form.description }}
+                            <div class="help-block"></div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Отправить заявку</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+
+    <script>
+        $(document).ready(function() {
+            $('#masterrequest-time_request').timepicker({
+                showInputs: false, // щоб не друкувати руками, а тільки стрілками
+                showMeridian: false, // 24-годинний формат (якщо true — буде AM/PM)
+                minuteStep: 5, // крок хвилин
+                defaultTime: 'current' // встановити поточний час при завантаженні
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // 1. Ініціалізація календаря для твого поля
+            $('#masterrequest-date_request').datepicker({
+                format: 'yyyy-mm-dd', // Формат для Django (Year-Month-Day)
+                autoclose: true,
+                language: 'ru',
+                todayHighlight: true,
+                orientation: "bottom auto"
+            });
+
+            // 2. Зробимо так, щоб при натисканні на іконку календаря він теж відкривався
+            $('#masterrequest-date_request-kvdate .kv-date-calendar').on('click', function() {
+                $('#userform-birthdate').datepicker('show');
+            });
+        });
+    </script>
+
+    <script>
+        $('#masterrequest-flat_id-container').select2({
+
+            placeholder: 'Выберите квартиру',
+            ajax: {
+                url: '/api/cabinet/master_request',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
+        });
+    </script>
+
+{% endblock %}

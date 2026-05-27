@@ -250,43 +250,4 @@
         });
     </script>
 
-
-<!--    <script>-->
-<!--    document.addEventListener('DOMContentLoaded', function() {-->
-<!--        const firstSelect = document.querySelector('#masterrequest-type');-->
-<!--        // Зберігаємо посилання на jQuery об'єкт другого селекта, бо Select2 працює через jQuery-->
-<!--        const $secondSelect = $('#masterrequest-user_admin_id');-->
-
-<!--        if (firstSelect) {-->
-<!--            firstSelect.addEventListener('change', function() {-->
-<!--                const selectedId = this.value;-->
-
-<!--                if (!selectedId) {-->
-<!--                    // Очищуємо і оновлюємо Select2-->
-<!--                    $secondSelect.empty().append('<option value="">-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>').trigger('change');-->
-<!--                    return;-->
-<!--                }-->
-
-<!--                fetch(`/api/master-lazy-out?role_type=${selectedId}`)-->
-<!--                    .then(response => response.json())-->
-<!--                    .then(data => {-->
-<!--                        $secondSelect.empty(); // Очищуємо старі дані-->
-
-<!--                        // Додаємо дефолтну опцію-->
-<!--                        $secondSelect.append(new Option('Оберіть майстра', '', true, true));-->
-
-<!--                        data.forEach(item => {-->
-<!--                            // Створюємо нові опції через jQuery-->
-<!--                            let newOption = new Option(item.full_name, item.id, false, false);-->
-<!--                            $secondSelect.append(newOption);-->
-<!--                        });-->
-
-<!--                        // НАЙГОЛОВНІШЕ: кажемо Select2 оновити інтерфейс-->
-<!--                        $secondSelect.trigger('change');-->
-<!--                    })-->
-<!--                    .catch(err => console.error('Помилка:', err));-->
-<!--            });-->
-<!--        }-->
-<!--    });-->
-<!--    </script>-->
 {% endblock %}

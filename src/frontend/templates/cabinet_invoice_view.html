@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>
+            Просмотр квитанции: #{{ object.invoice_unique_id }}        </h1>
+
+        <ul class="breadcrumb"><li><a href="/cabinet/"><i class="fa fa-home"></i> Главная</a></li>
+<li><a href="/cabinet/invoice/index">Квитанции</a></li>
+<li class="active">Просмотр квитанции: #{{ object.invoice_unique_id }}</li>
+</ul>    </section>
+
+    <section class="content">
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+                <div class="box-tools">
+                    <button onclick="printPage('invoice_table')" class="btn btn-info btn-sm">
+                        <i class="fa fa-print" aria-hidden="true"></i> <span class="hidden-xs">Распечатать</span>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body" id="invoice_table">
+                <div class="table-responsive no-padding margin-top-15">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px; min-width: 40px;">#</th>
+                                <th>Услуга</th>
+                                <th>Количество потребления (расход)</th>
+                                <th style="width: 80px; min-width: 80px;">Ед. изм.</th>
+                                <th>Цена за ед., грн</th>
+                                <th>Стоимость, грн</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in services %}
+                            <tr>
+                                <td>{{ item.service.id }}</td>
+                                <td>{{ item.service.service }}</td>
+                                <td>{{ item.indicator }}</td>
+                                <td>{{ item.measurement.unit_of_measurement }}</td>
+                                <td>{{ item.measurement_price }}</td>
+                                <td>{{ item.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td colspan="2"><b>Итого: {{ object.total_amount }}</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="pull-right">
+                    <a href="/cabinet/invoice/download/1535" class="btn btn-sm btn-warning" download=""><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Скачать в PDF</a>
+                    <a href="/cabinet/invoice/pay/1535" class="btn btn-sm btn-success"><i class="fa fa-credit-card" aria-hidden="true"></i> Оплатить</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    function printPage(divId) {
+        var printContents = document.getElementById(divId).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+
+{% endblock %}

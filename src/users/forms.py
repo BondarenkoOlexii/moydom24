@@ -15,7 +15,7 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control pass-value', 'id': 'userform-password'}),
         label="Пароль",
-        required=False  # Якщо це UpdateView, пароль не обов'язковий
+        required=False
     )
     password_confirm = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control pass-value', 'id': 'userform-password2'}),
@@ -43,6 +43,15 @@ class UserForm(forms.ModelForm):
             'user_status': forms.Select(attrs={'id': 'userform-status', 'class': 'form-control', 'aria-invalid': 'false'}),
             'user_id': forms.TextInput(attrs={'id': 'userform-uid', 'class': 'form-control'})
         }
+
+        def __init__(self, *args, **kwargs):
+            user = kwargs.pop("user", None)
+
+            super().__init__(*args, **kwargs)
+
+            if user and not user.is_superuser and not user.is_staff:
+                self.fields['user_id'].widget.attrs["readonly"] = True
+
 
 
 class MessageForm(forms.Form):
