@@ -16,17 +16,26 @@ class House(models.Model):
     image_4 = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='house_image_4')
     image_5 = models.OneToOneField(Image, on_delete=models.CASCADE, related_name='house_image_5')
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Section(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=220)
     section_number = models.CharField(max_length=10, null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Storey(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     name = models.CharField(max_length=220)
     section_number = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Worker(models.Model):

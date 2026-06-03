@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     // 1. Ініціалізуємо звичайний Select2 для країни
     $('#flatform-house_id').select2({
         placeholder: "Выберите дом",
@@ -68,7 +69,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#flatform-flat_id').select2({
+    $('#flatform-apartment_id').select2({
 
         placeholder: 'Выберите квартиру',
         ajax: {
@@ -116,7 +117,7 @@ $(document).ready(function() {
 
 
 
-    $('#flatform-flat_id').on('change', function(){
+    $('#flatform-apartment_id').on('change', function(){
         var apartmentId = $(this).val();
         var $paymentInput = $('#account_uid');
         var $fullnameSpan = $('#user-fullname');
@@ -147,6 +148,26 @@ $(document).ready(function() {
 
         }
 
+    });
+
+    $('#accounttransaction-payment_account').select2({
+         ajax: {
+            url: '/api/bank_book_ids/',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                        owner_id: $('#w1').val()
+                    };
+            },
+
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
     });
 
 
@@ -190,7 +211,7 @@ $(document).ready(function() {
         var house_id = $(this).val();
         var $sectionSelect = $('#flatform-section_id');
         var $storeySelect = $('#flatform-floor_id');
-        var $apartmentSelect = $('#flatform-flat_id');
+        var $apartmentSelect = $('#flatform-apartment_id');
 
         // Очищаємо попередньо вибране місто
         $sectionSelect.empty().trigger("change");
@@ -201,7 +222,10 @@ $(document).ready(function() {
         if (house_id) {
             $sectionSelect.prop('disabled', false);
             $storeySelect.prop('disabled', false);
-            $apartmentSelect.prop('disabled', false);
+
+            if ($sectionSelect) {
+                $apartmentSelect.prop('disabled', false);
+            }
 
         } else {
             // Якщо країну скинуто - блокуємо поле міста
@@ -218,7 +242,21 @@ $(document).ready(function() {
         if (!$('#flatform-house_id').val()) {
             $('#flatform-section_id').prop('disabled', true);
             $('#flatform-floor_id').prop('disabled', true);
-            $('#flatform-flat_id').prop('disabled', true);
+            $('#flatform-apartment_id').prop('disabled', true);
+        }
+
+    });
+
+    $('#w1').on('change', function() {
+        var owner_id = $(this).val();
+        var $paymentaccountSelect = $('#accounttransaction-payment_account');
+
+        $paymentaccountSelect.empty().trigger("change");
+
+        if (owner_id) {
+            $paymentaccountSelect.prop('disabled', false);
+        } else {
+            $paymentaccountSelect.append(new Option("Сначала выберите пользователя", "", true, true));
         }
 
     });

@@ -215,6 +215,30 @@
                 storeySelect.empty().append('<option value="">Выберите дом</option>').prop('disabled', true);
             }
         });
+
+
+
+        $('#apartment_ajax_datatable_permissions').on('click', 'tbody tr', function(e){
+            if ($(e.target).closest('a, button, input').length) {
+                return
+            }
+
+            let table = $('#apartment_ajax_datatable_permissions').DataTable();
+
+            console.log('Я ПРАЦЮЮЮЮЮЮ')
+
+            let data = table.row(this).data();
+
+            console.log(data.pk);
+
+            if (data && data.pk) {
+                let baseUrl = "{% url 'detail_apartment' 123456 %}"
+
+                let targetUrl = baseUrl.replace('123456', data.pk);
+
+                window.location.href = targetUrl;
+            }
+        })
     });
 </script>
 

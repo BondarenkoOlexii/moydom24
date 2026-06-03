@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, FormView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseRedirect
 from ajax_datatable.views import AjaxDatatableView
+from django.db import transaction as db_transaction
 # Create your views here.
 
 from src.site_control.models import Main_Page, About_Page, Contact_Page, Additional_Block, Additional_File
@@ -12,7 +13,7 @@ from src.users.models import User, Message
 from src.users.forms import UserForm
 from src.houses.models import Apartment, Call_Master
 from src.common.models import Image
-from src.finance.models import Payment_Account, Tariff, Invoice, ThoughInvoiceService
+from src.finance.models import Payment_Account, Tariff, Invoice, ThoughInvoiceService, Transaction, Cash_Register
 from src.users.views import BasicUpdateUser
 from .forms import CabinetCallMaster, CustomLoginForm, PaymentMethodChoise
 
@@ -49,6 +50,7 @@ class CustomUserLogout(LogoutView):
 
     def get_success_url(self):
         return reverse_lazy('main')
+
 
 class CustomAdminLogin(LoginView):
     template_name = 'login.html'
@@ -113,6 +115,8 @@ class ServiceView(ListView):
         ctx['objects'] = Additional_Block.objects.filter(main_page=None, about_page=None)
 
         return ctx
+
+
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
@@ -122,6 +126,7 @@ class ContactView(TemplateView):
         ctx['object'] = Contact_Page.objects.first()
 
         return ctx
+
 
 ########################################################################################################################
 
@@ -223,14 +228,21 @@ class CabinetInvoiceDatatableView(AjaxDatatableView):
     ]
 
     def get_initial_queryset(self, request=None):
+
         apartment_id = self.request.GET.get("apartment")
-        print(f"!!! APARTMENT ID В АЯКСІ: {apartment_id} !!!")
-        return Invoice.objects.filter(payment_account__apartment=self.request.GET.get("apartment"))
+
+        return Invoice.objects.filter(payment_account__apartment=apartment_id,
+                                      payment_account__apartment__owner=request.user)
 
     def customize_row(self, row, obj):
+        apartment_id = self.request.GET.get('apartment')
+
+        base_url = reverse('cabinet_invoice_view', kwargs={'pk': obj.pk})
+
         row['DT_RowAttr'] = {
-            'data-url': reverse('cabinet_invoice_view', kwargs={'pk': obj.pk})
+            'data-url': f"{base_url}?apartment={ apartment_id }"
         }
+
 
 class CabinetInvoiceView(DetailView):
     model = Invoice
@@ -247,5 +259,32 @@ class CabinetInvoiceView(DetailView):
         return ctx
 
 
-class CabinetInvoicePaymentMethod(TemplateView):
+class CabinetInvoicePaymentMethod(FormView):
     template_name = 'payment_method.html'
+    form_class = PaymentMethodChoise
+
+    def form_valid(self, form):
+        amount = form.cleaned_data.get('amount')
+
+        apartment = self.request.GET.get("apartment")
+
+        with db_transaction.atomic():
+
+            cash_register = Cash_Register.objects.create(
+                account=get_object_or_404(Payment_Account, apartment=apartment),
+                type='arrival',
+                sum=amount
+            )
+
+            transaction_model = Transaction.objects.create(
+                cash_register=cash_register,
+                status='conducted',
+                amount=amount
+            )
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return f"{reverse('list_user_invoice')}?apartment={self.request.GET.get('apartment')}"
+
+

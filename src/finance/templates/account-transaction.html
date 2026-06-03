@@ -5,105 +5,196 @@
 
 <div class="content-wrapper" style="min-height: 1026.88px;">
     <section class="content-header">
-        <h1>
-            Касса        </h1>
+        <h1>Касса</h1>
 
-        <ul class="breadcrumb"><li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
-<li class="active">Касса</li>
-</ul>    </section>
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li class="active">Касса</li>
+        </ul>
+    </section>
 
     <section class="content">
-
-<div class="row">
-    <div class="col-xs-12 col-lg-9">
         <div class="row">
-            <div class="col-xs-12 col-md-4">
-                <div class="small-box bg-green overflow-hidden">
-                    <div class="inner">
-                        <h3>107 900.00 грн</h3>
-                        <p>Состояние кассы</p>
+            <div class="col-xs-12 col-lg-9">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="small-box bg-green overflow-hidden">
+                            <div class="inner">
+                                <h3>107 900.00 грн</h3>
+                                <p>Состояние кассы</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <i class="fa fa-dollar"></i>
+
+                    <div class="col-xs-12 col-md-4">
+                        <div class="small-box bg-blue overflow-hidden">
+                            <div class="inner">
+                                <h3>90 000.00 грн</h3>
+                                <p>Баланс по счетам</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="small-box bg-red overflow-hidden">
+                            <div class="inner">
+                                <h3>0.00 грн</h3>
+                                <p>Задолженность по счетам</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-xs-12 col-md-4">
-                <div class="small-box bg-blue overflow-hidden">
-                    <div class="inner">
-                        <h3>90 000.00 грн</h3>
-                        <p>Баланс по счетам</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-dollar"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-                <div class="small-box bg-red overflow-hidden">
-                    <div class="inner">
-                        <h3>0.00 грн</h3>
-                        <p>Задолженность по счетам</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-dollar"></i>
-                    </div>
+            <div class="col-xs-12 col-lg-3">
+                <div class="btn-group pull-right margin-bottom">
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Выберите действие <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'account-transaction_create' %}?type=in">Создать приход</a></li>
+                        <li><a href="{% url 'account-transaction_create' %}?type=out">Создать расход</a></li>
+                        <li><a href="/admin/account-transaction/export">Выгрузить в Excel</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-xs-12 col-lg-3">
-        <div class="btn-group pull-right margin-bottom">
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Выберите действие <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="/admin/account-transaction/create?type=in">Создать приход</a></li>
-                <li><a href="/admin/account-transaction/create?type=out">Создать расход</a></li>
-                <li><a href="/admin/account-transaction/export">Выгрузить в Excel</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools">
+                            <a href="/admin/account-transaction/index" class="btn btn-default btn-sm">
+                                <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="w0" class="grid-view">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-bordered table-hover table-striped linkedRow" id="account-transaction_datatable_permissions">
+<!--                                <thead>-->
+<!--                                    <tr><th style="width: 125px; min-width: 125px">№</th><th style="width: 125px; min-width: 125px"><a href="/admin/account-transaction/index?sort=searchUidDate" data-sort="searchUidDate">Дата</a></th><th style="width: 120px; min-width: 120px">Статус</th><th>Тип платежа</th><th style="min-width: 200px">Владелец</th><th style="min-width: 160px">Лицевой счет</th><th>Приход/расход</th><th style="width: 110px; min-width: 110px">Сумма (грн)</th><th style="width: 80px; min-width: 80px">&nbsp;</th></tr><tr id="w0-filters" class="filters"><td><input type="text" class="form-control" name="AccountTransactionSearch[uid]"></td><td><input type="text" id="accounttransactionsearch-searchuiddaterange" class="form-control" name="AccountTransactionSearch[searchUidDateRange]" data-krajee-daterangepicker="daterangepicker_c8dff207"></td><td><select id="accounttransactionsearch-status" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>-->
+<!--                                      <span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-status-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-status-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accounttransactionsearch-transaction_purpose_id" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[transaction_purpose_id]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>-->
+<!--                                      <span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-transaction_purpose_id-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-transaction_purpose_id-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accounttransactionsearch-searchuserid" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[searchUserId]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_ea5d4d6f" style="display:none" tabindex="-1" aria-hidden="true"></select>-->
+<!--                                      <span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-searchuserid-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-searchuserid-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><input type="text" class="form-control" name="AccountTransactionSearch[searchAccountUid]"></td><td><select id="accounttransactionsearch-type" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[type]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>-->
+<!--                                      <span class="select2 select2-container select2-container&#45;&#45;default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection&#45;&#45;single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-type-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-type-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td>&nbsp;</td><td>&nbsp;</td></tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                </tbody>-->
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix"></div>
+                    </div>
+                    <div class="box-footer">
+                        <div>Проведен приход: <span class="text-bold">108 300.00 грн</span></div>
+                        <div>Проведен расход: <span class="text-bold">15 700.00 грн</span></div>
+                    </div>
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title"></h3>
-                <div class="box-tools">
-                    <a href="/admin/account-transaction/index" class="btn btn-default btn-sm">
-                        <span class="hidden-xs">Очистить</span><i class="fa fa-eraser visible-xs" aria-hidden="true"></i>
-                    </a>
                 </div>
             </div>
-            <div id="w0" class="grid-view">
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-bordered table-hover table-striped linkedRow">
-                        <thead>
-                            <tr><th style="width: 125px; min-width: 125px">№</th><th style="width: 125px; min-width: 125px"><a href="/admin/account-transaction/index?sort=searchUidDate" data-sort="searchUidDate">Дата</a></th><th style="width: 120px; min-width: 120px">Статус</th><th>Тип платежа</th><th style="min-width: 200px">Владелец</th><th style="min-width: 160px">Лицевой счет</th><th>Приход/расход</th><th style="width: 110px; min-width: 110px">Сумма (грн)</th><th style="width: 80px; min-width: 80px">&nbsp;</th></tr><tr id="w0-filters" class="filters"><td><input type="text" class="form-control" name="AccountTransactionSearch[uid]"></td><td><input type="text" id="accounttransactionsearch-searchuiddaterange" class="form-control" name="AccountTransactionSearch[searchUidDateRange]" data-krajee-daterangepicker="daterangepicker_c8dff207"></td><td><select id="accounttransactionsearch-status" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[status]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
-                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-status-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-status-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accounttransactionsearch-transaction_purpose_id" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[transaction_purpose_id]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
-                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-transaction_purpose_id-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-transaction_purpose_id-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><select id="accounttransactionsearch-searchuserid" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[searchUserId]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_ea5d4d6f" style="display:none" tabindex="-1" aria-hidden="true"></select>
-                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-searchuserid-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-searchuserid-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td><input type="text" class="form-control" name="AccountTransactionSearch[searchAccountUid]"></td><td><select id="accounttransactionsearch-type" class="form-control select2-hidden-accessible" name="AccountTransactionSearch[type]" data-s2-options="s2options_7ebc6538" data-krajee-select2="select2_0d896465" style="display:none" tabindex="-1" aria-hidden="true"></select>
-                              <span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-accounttransactionsearch-type-container"><span class="select2-selection__rendered" id="select2-accounttransactionsearch-type-container"><span class="select2-selection__placeholder"></span></span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="box-footer clearfix"></div>
-            </div>
-            <div class="box-footer">
-                <div>Проведен приход: <span class="text-bold">108 300.00 грн</span></div>
-                <div>Проведен расход: <span class="text-bold">15 700.00 грн</span></div>
-            </div>
-
         </div>
-    </div>
-</div>
     </section>
 </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+
+    <script language="javascript">
+        $(document).ready(function() {
+            AjaxDatatableViewUtils.initialize_table(
+                $('#account-transaction_datatable_permissions'),
+                "{% url 'account-transaction_datatable' %}",
+                {
+
+                    // extra_options (example)
+                    processing: false,
+                    autoWidth: false,
+                    scrollX: false,
+
+                    dom:
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'box-footer clearfix'p>",
+
+                    columnDefs: [
+                        { width: "80px", targets: -1, className: "text-center" }
+                    ],
+
+                    pagingType: "simple_numbers",
+                    language: {
+                        paginate: {
+                            previous: "«",
+                            next: "»"
+                        },
+                        lengthMenu: "Показувати _MENU_ записів",
+                        info: "Показано від _START_ до _END_ із _TOTAL_ записів",
+                        infoEmpty: "Немає записів",
+                        zeroRecords: "Нічого не знайдено"
+                    },
+
+                    drawCallback: function(settings) {
+                        var wrapper = $(settings.nTableWrapper);
+
+                        // Знаходимо ul список пагінації
+                        var ul = wrapper.find('.dataTables_paginate ul');
+
+                        // Очищаємо можливе сміття від DataTables і ставимо рівно те, що треба
+                        ul.removeClass().addClass('pagination pagination-sm no-margin pull-right');
+
+                        // Прибираємо стандартні відступи DataTables, щоб список приліг впритул до краю
+                        wrapper.find('.dataTables_paginate').css({
+                            'float': 'none',
+                            'text-align': 'right',
+                            'margin': '0'
+                        });
+                    },
+
+                    initComplete: function(settings, json) {
+                        $('.datatable-column-filter-row input').addClass('form-control input-sm');
+                        $('.datatable-column-filter-row select').addClass('form-control input-sm');
+                    }
+                },
+            );
+
+            $('#account-transaction_datatable_permissions').on('click', 'tbody tr', function(e){
+                if ($(e.target).closest('a, button, input').length) {
+                    return
+                }
+
+                let table = $('#account-transaction_datatable_permissions').DataTable();
+
+                console.log('Я ПРАЦЮЮЮЮЮЮ')
+
+                let data = table.row(this).data();
+
+                console.log(data.pk);
+
+                if (data && data.pk) {
+                    let baseUrl = "{% url 'account-transaction_detail' 123456 %}"
+
+                    let targetUrl = baseUrl.replace('123456', data.pk);
+
+                    window.location.href = targetUrl;
+                }
+            })
+        });
+
+    </script>
 
 {% endblock %}

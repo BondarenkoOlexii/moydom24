@@ -22,12 +22,15 @@ def get_house(request, q: str = None):
     house = House.objects.all().annotate(text=F('name'))
 
     if q:
-        house = house.House.objects.filter(name__icontains=q)
+        house = house.filter(name__icontains=q)
     return house
 
 @api.get("/section/", response=list[GenericOutPoint])
-def get_section(request, house_id: int):
+def get_section(request, house_id: Optional[int] = None):
     print('Хаус Айди прилетів', house_id)
+
+    if not house_id:
+        return []
 
     section = Section.objects.filter(house_id=house_id).annotate(text=F('name'))
     return section
@@ -38,7 +41,7 @@ def get_storey(request, house_id: int):
     return storey
 
 @api.get("/apartment/", response=list[GenericOutPoint])
-def get_apartment(request, house_id: int, section_id: Optional[str] = None, storey_id: Optional[str] = None):
+def get_apartment(request, house_id: int, section_id: Optional[int] = None, storey_id: Optional[int] = None):
     apartment = Apartment.objects.filter(house_id=house_id).annotate(text=F('apartment_number'))
     if section_id:
         apartment = apartment.filter(section_id=section_id)
@@ -53,7 +56,13 @@ def get_tariff(request):
     return tariff
 
 
+@api.get('/bank_book_ids/', response=List[GenericOutPoint])
+def get_list_bank_book(request, owner_id: int):
+    apartments = Apartment.objects.filter(owner=owner_id)
 
+    payment_account = Payment_Account.objects.filter(apartment__in=apartments).annotate(text=F('bank_book'))
+
+    return payment_account
 
 
 

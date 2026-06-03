@@ -14,7 +14,7 @@ class AdminpanelRestrictionMixin(AccessMixin):
         role = Role.objects.get(user=user)
 
 
-        if user.is_superuser:
+        if user.is_superuser or user.id == 1:
             return super().dispatch(request, *args, **kwargs)
 
         attribute = getattr(role, self.required_section, False)

@@ -2,28 +2,75 @@
 {% load static %}
 
 {% block content %}
+
+<link href="{% static 'dist/css/payment.css' %}" rel="stylesheet">
+
 <div class="content-wrapper" style="min-height: 1026.88px;">
     <section class="content">
-        <form method="POST">
-            {% csrf_token %}
-            <div class="payment_option">
-                <input type="radio" id="privat" name="payment_method" value="privat24">
-                <label>
-                    <img src="{% static 'dist/logo/privat24.png' %}" alt="Privat24" width="200" height="100">
-                </label>
-            </div>
+        <div class="container">
+            <div class="payment-confirmation-card align-items-center">
+                <form id="w0" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Ось наша синя панель -->
+                            <div class="payment-section">
 
-            <div class="payment_option">
-                <input type="radio" id="cards" name="payment_method" value="cards">
-                <label>
-                    <img src="{% static 'dist/logo/Visa-MasterCard.png' %}" alt="Visa MasterCard" width="200" height="100">
-                </label>
-            </div>
+                                <!-- Кожне поле загорнуте в окремий .form-group -->
 
-            <div class="button-container">
-                <button type="submit" class="btn btn-sm btn-success">Оплатить</button>
+                                <!-- Поле 1: Номер картки -->
+                                <div class="form-group">
+                                    <label for="cardNumber">Номер карточки</label>
+                                    {{ form.card_number }}
+                                </div>
+
+                                <!-- Поле 2: Срок дії -->
+                                <div class="form-group">
+                                    <label for="expMonth">Срок действия:</label>
+                                    <!-- Використовуємо наш Flex-ряд для двох окремих інпутів MM/YY -->
+                                    <div class="expiration-inputs-row">
+                                        {{ form.month }}
+                                        <span class="text-muted">/</span>
+                                        {{ form.year }}
+                                    </div>
+                                </div>
+
+                                <!-- Поле 3: CVV2 -->
+                                <div class="form-group">
+                                    <label for="cvv">CVV2:</label>
+                                    <div class="expiration-inputs-row">
+                                        {{ form.cvv }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Сумма к оплате</label>
+                                    {{ form.amount }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="details-section mb-4 payment-information">
+                                <p class="payment-information-id">ID заказа: 845863631</p>
+                                <p><strong>Сумма: 498,20 грн</strong></p>
+                                <p>Торговец: ПАО "Укрзализныця"</p>
+                                <p class="text-muted">Оплата билетов (000B3E09-97370F94)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Нижня панель: сума до оплати та кнопка -->
+                    <div class="row mt-4 align-items-center">
+                        <div class="col-md-12 text-right">
+                            <div class="total-section">
+                                <hr>
+                                <button type="submit" class="btn btn-success">Оплатить</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </section>
 </div>
+
 {% endblock %}

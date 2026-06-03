@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Приходная ведомость</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/account-transaction/index">Платежи</a></li>
+            <li class="active">Приходная ведомость №04042602743</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12 col-md-7 col-lg-6">
+                <div class="page-header-spec">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                №
+                            </div>
+                            <div class="form-control pull-right">{{ object.unique_id }}</div>
+                        </div>
+                    </div>
+                    <span class="label-mid">от</span>
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </div>
+                            <div class="form-control pull-right">{{ object.create_time }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Приходная ведомость</h3>
+                <div class="box-tools">
+                    <a href="{% url 'account-transaction_create' %}?account_transaction_id={{ object.id }}" class="btn btn-default btn-sm">
+                        <span class="hidden-xs">Копировать</span><i class="fa fa-print visible-xs" aria-hidden="true"></i>
+                    </a>
+                            <a href="{% url 'account-transaction_delete' object.id %}" class="btn btn-default btn-sm" data-method="post" data-confirm="Вы уверены, что хотите удалить этот элемент?">
+                            <span class="hidden-xs">Удалить</span><i class="fa fa-envelope-o visible-xs" aria-hidden="true"></i>
+                        </a>
+                                <a href="{% url 'account-transaction_update' object.id %}" class="btn btn-primary btn-sm">
+                        <span class="hidden-xs">Редактировать ведомость</span><i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+                    </a>
+                    <a href="/admin/account-transaction/export-one/2743?export=xls" class="btn btn-default btn-sm">
+                        <span class="hidden-xs">Выгрузить в Excel</span><i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-striped table-view">
+                    <tbody>
+                        <tr>
+                            <td>Владелец квартиры</td>
+                            <td>
+                                <a href="/admin/user/2">
+                                    {{ object.account.apartment.owner.first_name }} {{ object.account.apartment.owner.last_name }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Лицевой счет</td>
+                            <td>
+                                <a href="/admin/account/726">{{ object.account.bank_book }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Статья</td>
+                            <td>{{ object.article }}</td>
+                        </tr>
+                        <tr>
+                            <td>Квитанция</td>
+                            <td>не указано</td>
+                        </tr>
+                        <tr>
+                            <td>Услуга</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Менеджер</td>
+                            <td>
+                                <a href="/admin/user-admin/1">{{ object.manager }}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Сумма</td>
+                            <td>
+                                <span class="text-green">{{ object.sum }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Комментарий</td>
+                            <td>{{ object.comment }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

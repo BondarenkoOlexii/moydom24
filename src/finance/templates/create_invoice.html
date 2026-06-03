@@ -77,9 +77,9 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="form-group field-flatform-flat_id required">
-                                                    <label class="control-label" for="flatform-flat_id">Квартира</label>
-                                                    <select id="flatform-flat_id" class="form-control" aria-required="true">
+                                                <div class="form-group field-flatform-apartment_id required">
+                                                    <label class="control-label" for="flatform-apartment_id">Квартира</label>
+                                                    <select id="flatform-apartment_id" class="form-control" aria-required="true">
                                                         {% if apartment %}
                                                             <option value="{{ apartment.id }}">{{ apartment.apartment_number }}</option>
                                                         {% else %}
@@ -318,7 +318,7 @@ $(document).ready(function() {
     $('.add-counters').click(async function(e) {
         e.preventDefault();
 
-        let apartmentId = $('#flatform-flat_id').val();
+        let apartmentId = $('#flatform-apartment_id').val();
         if (!apartmentId) {
             alert('Будь ласка, спочатку виберіть квартиру!');
             return;

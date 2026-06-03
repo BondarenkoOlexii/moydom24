@@ -171,30 +171,32 @@
                 // ...
             },
         );
+
+        $('#master_ajax_datatable_permissions').on('click', 'tbody tr', function(e){
+            if ($(e.target).closest('a, button, input').length) {
+                return
+            }
+
+            let table = $('#master_ajax_datatable_permissions').DataTable();
+
+            console.log('Я ПРАЦЮЮЮЮЮЮ')
+
+            let data = table.row(this).data();
+
+            console.log(data.pk);
+
+            if (data && data.pk) {
+                let baseUrl = "{% url 'detail_apartment' 123456 %}"
+
+                let targetUrl = baseUrl.replace('123456', data.pk);
+
+                window.location.href = targetUrl;
+            }
+        })
     });
 
 </script>
 
 
-<script>
-    $(document).ready(function(){
-
-        $('#datatable tbody').off('click', 'tr');
-
-        $('#datatable tbody').on('click', 'tr', function(e){
-
-            if ($(e.target).closest('a', 'button').length > 0) {
-                return;
-            }
-
-            var table = $('#datatable').DataTable();
-            var data = table.row(this).data();
-
-            if (data && data.detail_url) {
-                window.location.href = data.detail_url;
-            }
-        });
-    });
-</script>
 
 {% endblock %}

@@ -386,6 +386,11 @@ class MasterDatatableView(AjaxDatatableView):
 
 
 
+class ShowMaster(DetailView):
+    model = User
+    template_name = 'show_master.html'
+
+
 class CreateMaster(AdminpanelRestrictionMixin, CreateView):
     required_section = 'users'
 
@@ -482,3 +487,5 @@ class DeleteMaster(AdminpanelRestrictionMixin, DeleteView):
 
     model = User
     success_url = reverse_lazy('master-list')
+
+

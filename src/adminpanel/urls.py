@@ -17,7 +17,9 @@ from src.settings.views import PaymentInfoCreate, TransactionProposeList, Transa
 from src.site_control.views import CreateMainPageView, CreateAboutPageView, CreateContactPageView, CreateServicePageView
 
 from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteAccount, AccountDetail, ListInvoice, \
-    CreateInvoice, InvoiceDatatableView, UpdateInvoice, DeleteInvoice, DetailInvoice
+    CreateInvoice, InvoiceDatatableView, UpdateInvoice, DeleteInvoice, DetailInvoice, ListAccountTransaction,\
+    AccountTransactionDatatableView, CreateAccountTransaction, UpdateAccountTransaction, DeleteAccountTransaction, \
+    DetailAccountTransaction
 
 from src.frontend.views import CustomAdminLogin, CustomUserLogout
 
@@ -31,6 +33,7 @@ urlpatterns = [
     path('api/datatable/user', UserDatatableView.as_view(), name='user_datatable'),
     path('api/datatable/master', MasterDatatableView.as_view(), name='master_datatable'),
     path('api/datatable/invoice', InvoiceDatatableView.as_view(), name='invoice_datatable'),
+    path('api/datatable/account-transaction', AccountTransactionDatatableView.as_view(), name='account-transaction_datatable'),
 
     path('house', ListHouse.as_view(template_name="house.html"), name='house'),
     path('house/<int:pk>', DetailHouse.as_view(), name='detail_house'),
@@ -101,7 +104,12 @@ urlpatterns = [
     path('invoice/<int:pk>', DetailInvoice.as_view(), name='invoice_detail'),
     path('invoice/create', CreateInvoice.as_view(), name='invoice_create'),
     path('invoice/update/<int:pk>', UpdateInvoice.as_view(), name='invoice_update'),
-    path('invoice/delete/<int:pk>', DeleteInvoice.as_view(), name='invoice_delete')
+    path('invoice/delete/<int:pk>', DeleteInvoice.as_view(), name='invoice_delete'),
 
+    path('account-transaction', ListAccountTransaction.as_view(), name='account-transaction'),
+    path('account-transaction/<int:pk>', DetailAccountTransaction.as_view(), name='account-transaction_detail'),
+    path('account-transaction/create', CreateAccountTransaction.as_view(), name='account-transaction_create'),
+    path('account-transaction/update/<int:pk>', UpdateAccountTransaction.as_view(), name='account-transaction_update'),
+    path('account-transaction/delete/<int:pk>', DeleteAccountTransaction.as_view(), name='account-transaction_delete')
 
 ]

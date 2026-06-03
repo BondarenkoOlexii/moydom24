@@ -1,10 +1,11 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.core.exceptions import ValidationError
+from django_select2 import forms as s2forms
 
-from src.finance.models import Payment_Account, Invoice, ThoughInvoiceService
+from src.finance.models import Payment_Account, Invoice, ThoughInvoiceService, Cash_Register
 from src.settings.models import Service, Tariff
-
+from src.users.models import User
 class PaymentAccountForm(forms.ModelForm):
     class Meta:
         model = Payment_Account
@@ -69,3 +70,24 @@ class InvoiceServiceForm(forms.ModelForm):
 
 
 InvoiceServiceFormSet = inlineformset_factory(Invoice, ThoughInvoiceService, InvoiceServiceForm, extra=0, can_delete=True)
+
+
+class CashRegisterForm(forms.ModelForm):
+
+    apartment = forms.ModelChoiceField(queryset=User.objects.all(),
+                                       widget=s2forms.Select2Widget(attrs={'id': 'w1', 'class': 'form-control'}),
+                                       required=False)
+
+    class Meta:
+        model = Cash_Register
+        fields = ['unique_id', 'create_time', 'status', 'sum', 'comment', 'article', 'account', 'manager']
+
+        widgets = {
+            'unique_id': forms.TextInput(attrs={'id': 'accounttransaction-uid', 'class': 'form-control'}),
+            'create_time': forms.DateInput(attrs={'id': 'accounttransaction-uid_date', 'class': 'form-control krajee-datepicker'}),
+            'status': forms.CheckboxInput(attrs={'id': 'is_complete'}),
+            'sum': forms.TextInput(attrs={'id': 'accounttransaction-amount', 'class': 'form-control'}),
+            'article': forms.TextInput(attrs={'id': 'accounttransaction-transaction_purpose_id', 'class': 'form-control'}),
+            'manager': forms.Select(attrs={'id': 'accounttransaction-user_admin_id', 'class': 'form-control'}),
+            'account': forms.Select(attrs={'id': 'accounttransaction-payment_account', 'class': 'form-control'}),
+        }

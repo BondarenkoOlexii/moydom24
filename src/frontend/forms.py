@@ -30,6 +30,10 @@ class CustomLoginForm(AuthenticationForm):
             self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email или ID'})
 
 
-
 class PaymentMethodChoise(forms.Form):
-    rad_choise = forms.ChoiceField(widget=forms.RadioSelect)
+    card_number = forms.CharField(label='Номер карти', widget=forms.TextInput(attrs={'id': 'cardNumber', 'class': 'form-control form-shadow-sm', 'placeholder': 'XXXX XXXX XXXX XXXX', 'maxlength': '16'}))
+    month = forms.CharField(label='Місяць', widget=forms.TextInput(attrs={'id': 'expMonth', 'class': 'form-control form-shadow-sm', 'placeholder': '05', 'maxlength': '2'}))
+    year = forms.CharField(label='Рік', widget=forms.TextInput(attrs={'id': 'expYear', 'class': 'form-control form-shadow-sm', 'placeholder': '22', 'maxlength': '2'}))
+    cvv = forms.CharField(label='CVV', widget=forms.TextInput(attrs={'class': 'form-control form-shadow-sm w-25', 'placeholder': '123', 'id': 'cvv', 'maxlength': '3'}))
+
+    amount = forms.CharField(label='amount', widget=forms.TextInput(attrs={'class': 'form-control form-shadow-sm w-25', 'placeholder': '123.4'}))
