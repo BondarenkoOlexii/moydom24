@@ -62,7 +62,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{% url 'account-transaction_create' %}?type=in">Создать приход</a></li>
                         <li><a href="{% url 'account-transaction_create' %}?type=out">Создать расход</a></li>
-                        <li><a href="/admin/account-transaction/export">Выгрузить в Excel</a></li>
+                        <li><a href="{% url 'download_excel' 1 %}">Выгрузить в Excel</a></li>
                     </ul>
                 </div>
             </div>

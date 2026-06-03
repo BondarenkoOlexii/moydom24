@@ -2,13 +2,13 @@ from django.urls import path
 from django.views.generic import TemplateView
 from src.adminpanel.api import api
 
-from .views import dashboard
+from .views import dashboard, genetate_receipt_view
 
 from src.houses.views import ListHouse, HouseDatatableView, DetailHouse, CreateHouse, DeleteHouse, UpdateHouse, ApartmentList, ApartmentDatatableView, CreateApartment,\
     UpdateApartment, DeleteApartmnent, DetailApartment, ListMasterRequest, NewMasterRequest, DeleteMasterRequest, UpdateMasterRequest
 
 from src.users.views import ListUser, UserDatatableView, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage,\
-    SpecificMessage, DeleteMessage, MasterList, MasterDatatableView, CreateMaster, UpdateMaster, DeleteMaster
+    SpecificMessage, DeleteMessage, MasterList, MasterDatatableView, CreateMaster, UpdateMaster, DeleteMaster, ShowMaster
 
 from src.settings.views import PaymentInfoCreate, TransactionProposeList, TransactionProposeCreate, TransactionProposeUpdate,\
     TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView, ListCounter, \
@@ -27,6 +27,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
     path('login', CustomAdminLogin.as_view(), name='admin_login'),
     path('logout', CustomUserLogout.as_view(), name='logout'),
+    path('excel/download/<int:pk>', genetate_receipt_view, name='download_excel'),
 
     path('api/datatable/house', HouseDatatableView.as_view(), name='house_datatable'),
     path('api/datatable/apartment', ApartmentDatatableView.as_view(), name='apartment_datatable'),
@@ -65,6 +66,7 @@ urlpatterns = [
 
 
     path('master-list', MasterList.as_view(), name='master-list'),
+    path('master-list/<int:pk>', ShowMaster.as_view(), name='master-list-detail'),
     path('master-list/create', CreateMaster.as_view(), name='master-list-create'),
     path('master-list/update/<int:pk>', UpdateMaster.as_view(), name='master-list-update'),
     path('master-list/delete/<int:pk>', DeleteMaster.as_view(), name='master-list-delete'),

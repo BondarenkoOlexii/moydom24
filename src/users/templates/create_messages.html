@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 416.883px;">
+    <section class="content-header">
+        <h1>Новое сообщение</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/message/index">Сообщения</a></li>
+            <li class="active">Новое сообщение</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+        <div class="box">
+            <form id="w0" method="post">
+            {% csrf_token %}
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                </div>
+                <div class="box-body">
+                    <input type="hidden" id="message-user_admin_from_id" name="Message[user_admin_from_id]" value="1">
+                    <input type="hidden" id="message-status" name="Message[status]" value="5">
+                    <input type="hidden" id="message-type" name="Message[type]" value="default">
+                    <div class="form-group field-message-name required">
+                        <input type="text" id="message-name" class="form-control" name="Message[name]" maxlength="255" placeholder="Тема сообщения:" aria-required="true">
+                        <div class="help-block"></div>
+
+                    </div>
+
+                    <div class="form-group field-message-description required has-error">
+                        <ul class="wysihtml5-toolbar" style=""><li class="dropdown">
+                            <a class="btn btn-default dropdown-toggle btn-none" data-toggle="dropdown">
+
+                                <span class="fa fa-font"></span>
+
+                                <span class="current-font">Обычный текст</span>
+                                <b class="caret"></b>
+                            </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p" tabindex="-1" href="javascript:;" unselectable="on">Обычный текст</a></li>
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 1</a></li>
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 2</a></li>
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h3" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 3</a></li>
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h4" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 4</a></li>
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h5" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 5</a></li>
+                            <li><a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h6" tabindex="-1" href="javascript:;" unselectable="on">Заголовок 6</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="btn-group">
+                            <a class="btn btn-none btn-default" data-wysihtml5-command="bold" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Полужирный</a>
+                            <a class="btn btn-none btn-default" data-wysihtml5-command="italic" title="CTRL+I" tabindex="-1" href="javascript:;" unselectable="on">Курсив</a>
+                            <a class="btn btn-none btn-default" data-wysihtml5-command="underline" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Подчёркнутый</a>
+                        </div>
+                    </li>
+            <li>
+              <div class="btn-group">
+                <a class="btn btn-none btn-default" data-wysihtml5-command="insertUnorderedList" title="Маркированный список" tabindex="-1" href="javascript:;" unselectable="on">
+
+                  <span class="fa fa-list-ul"></span>
+
+                </a>
+                <a class="btn btn-none btn-default" data-wysihtml5-command="insertOrderedList" title="Нумерованный список" tabindex="-1" href="javascript:;" unselectable="on">
+
+                  <span class="fa fa-list-ol"></span>
+
+                </a>
+                <a class="btn btn-none btn-default" data-wysihtml5-command="Outdent" title="Уменьшить отступ" tabindex="-1" href="javascript:;" unselectable="on">
+
+                  <span class="fa fa-outdent"></span>
+
+                </a>
+                <a class="btn btn-none btn-default" data-wysihtml5-command="Indent" title="Увеличить отступ" tabindex="-1" href="javascript:;" unselectable="on">
+
+                  <span class="fa fa-indent"></span>
+
+                </a>
+              </div>
+            </li>
+            </ul><textarea id="message-description" class="compose-textarea form-control" name="Message[description]" rows="6" aria-required="true" style="display: none;" placeholder="Текст сообщения:" aria-invalid="true"></textarea><input type="hidden" name="_wysihtml5_mode" value="1"><iframe class="wysihtml5-sandbox" security="restricted" allowtransparency="true" frameborder="0" width="0" height="0" marginwidth="0" marginheight="0" style="display: block; background-color: rgb(255, 255, 255); border-collapse: separate; border-color: rgb(210, 214, 222); border-style: solid; border-width: 1.11667px; clear: none; float: none; margin: 0px; outline: rgb(85, 85, 85) 3px; outline-offset: 0px; padding: 6px 12px; position: static; inset: auto; z-index: auto; vertical-align: text-bottom; text-align: start; box-sizing: border-box; box-shadow: none; border-radius: 0px; width: 1864px; height: 134.233px;"></iframe>
+            </div>
+                    <div class="row">
+
+                        <div class="col-xs-12 col-md-6">
+                            <h4>Кому отправить:</h4>
+
+
+                                <div class="form-group field-messageaddress-user_has_debt">
+
+            <input type="hidden" name="MessageAddress[user_has_debt]" value="0"><label><input type="checkbox" id="messageaddress-user_has_debt" class="" name="MessageAddress[user_has_debt]" value="1"> Владельцам с задолженностями</label>
+
+            <div class="help-block"></div>
+            </div>
+                                <div class="form-group field-messageaddress-house_id">
+            <label class="control-label" for="messageaddress-house_id">ЖК</label>
+            <select id="messageaddress-house_id" class="form-control" name="MessageAddress[house_id]">
+
+            </select>
+
+            <div class="help-block"></div>
+            </div>
+                                <div class="form-group field-messageaddress-section_id">
+            <label class="control-label" for="messageaddress-section_id">Секция</label>
+            <select id="messageaddress-section_id" class="form-control" name="MessageAddress[section_id]" onchange="
+                                            $.get(&quot;/admin/flat/get-lists-by-house?section_id=&quot;+$(this).val()+&quot;&amp;house_id=&quot;+$(&quot;select#messageaddress-house_id&quot;).val()+&quot;&amp;floor_id=&quot;+$(&quot;select#messageaddress-floor_id&quot;).val()+&quot;&amp;riser_id=&quot;+$(&quot;select#messageaddress-riser_id&quot;).val(), function( data ) {
+                                                $(&quot;select#messageaddress-flat_id&quot;).html(data.flats);
+                                            });
+                                        ">
+            <option value="">Всем...</option>
+            </select>
+
+            <div class="help-block"></div>
+            </div>
+                                                    <div class="form-group field-messageaddress-floor_id">
+            <label class="control-label" for="messageaddress-floor_id">Этаж</label>
+            <select id="messageaddress-floor_id" class="form-control" name="MessageAddress[floor_id]" onchange="
+                                            $.get(&quot;/admin/flat/get-lists-by-house?floor_id=&quot;+$(this).val()+&quot;&amp;house_id=&quot;+$(&quot;select#messageaddress-house_id&quot;).val()+&quot;&amp;section_id=&quot;+$(&quot;select#messageaddress-section_id&quot;).val()+&quot;&amp;riser_id=&quot;+$(&quot;select#messageaddress-riser_id&quot;).val(), function( data ) {
+                                                $(&quot;select#messageaddress-flat_id&quot;).html(data.flats);
+                                            });
+                                        ">
+            <option value="">Всем...</option>
+            </select>
+
+            <div class="help-block"></div>
+            </div>
+                                <div class="form-group field-messageaddress-flat_id">
+            <label class="control-label" for="messageaddress-flat_id">Квартира</label>
+            <select id="messageaddress-flat_id" class="form-control" name="MessageAddress[flat_id]">
+            <option value="">Всем...</option>
+            </select>
+
+            <div class="help-block"></div>
+            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-envelope-o"></i> Отправить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

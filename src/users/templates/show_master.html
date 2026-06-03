@@ -32,23 +32,23 @@
                             <tbody>
                                 <tr>
                                     <td>Пользователь</td>
-                                    <td>Александр Пушкин</td>
+                                    <td>{{ object.first_name }} {{ object.last_name }}</td>
                                 </tr>
                                 <tr>
                                     <td>Роль</td>
-                                    <td>Сантехник</td>
+                                    <td>{{ object.role.role }}</td>
                                 </tr>
                                 <tr>
                                     <td>Телефон</td>
-                                    <td>+380930000001</td>
+                                    <td>{{ object.phone_number }}</td>
                                 </tr>
                                 <tr>
                                     <td>Email(логин)</td>
-                                    <td>e@admin.com</td>
+                                    <td>{{ object.email }}</td>
                                 </tr>
                                 <tr>
                                     <td>Статус</td>
-                                    <td><small class="label label-danger">Отключен</small></td>
+                                    <td><small class="label {{ object.get_color_status }}">{{ object.status }}</small></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -276,6 +276,11 @@ class SpecificMessage(AdminpanelRestrictionMixin, DetailView):
     template_name = 'current_message.html'
     context_object_name = 'view'
 
+
+class CreateMessages(CreateView):
+    model = Message
+    template_name = 'new_messages.html'
+
 class DeleteMessage(AdminpanelRestrictionMixin, DeleteView):
     required_section = 'messages'
 
