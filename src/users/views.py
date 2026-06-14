@@ -5,7 +5,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, F
 from ajax_datatable.views import AjaxDatatableView
 
 from .models import User, Image, Message, Role
-from .forms import UserForm, MessageForm, InviteMessage, CreateMasterForm
+from .forms import UserForm, MessageForm, InviteMessage, CreateMasterForm, AllMessageForm
 from src.houses.models import Apartment, House
 from src.adminpanel.models.UserChoise import UserStatus
 from config_celery.celery_email_worker import send_invite_email, app
@@ -103,6 +103,17 @@ class UserDatatableView(AjaxDatatableView):
         return qs
 
 
+class DetailUser(DetailView):
+    model = User
+    template_name = 'show_user.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        ctx['apartments'] = Apartment.objects.filter(owner=self.object.id)
+
+
+        return ctx
 
 
 class CreateUser(AdminpanelRestrictionMixin, CreateView):
@@ -169,7 +180,6 @@ class UpdateUser(AdminpanelRestrictionMixin, BasicUpdateUser):
     required_section = 'apartments_owner'
 
 
-
 class DeleteUser(AdminpanelRestrictionMixin, DeleteView):
     required_section = 'apartments_owner'
 
@@ -188,7 +198,6 @@ class CreateMessage(AdminpanelRestrictionMixin, CreateView):
         print("ФОРМА ВАЛІДНА")
 
         data = form.cleaned_data
-
 
         print(data)
 
@@ -395,6 +404,12 @@ class ShowMaster(DetailView):
     model = User
     template_name = 'show_master.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        ctx['role'] = self.object.roles.first()
+
+        return ctx
 
 class CreateMaster(AdminpanelRestrictionMixin, CreateView):
     required_section = 'users'
@@ -494,3 +509,49 @@ class DeleteMaster(AdminpanelRestrictionMixin, DeleteView):
     success_url = reverse_lazy('master-list')
 
 
+
+class ListAllMessages(ListView):
+    model = Message
+    template_name = 'all_messages.html'
+    context_object_name = 'objects'
+
+
+class NewAllMessages(CreateView):
+    model = Message
+    template_name = 'create_message.html'
+    form_class = AllMessageForm
+    success_url = ''
+
+    def form_valid(self, form):
+
+        house_id = self.request.POST.get('house')
+        section_id = self.request.POST.get('section')
+        storey_id = self.request.POST.get('storey')
+        apartment_id = self.request.POST.get('apartment')
+
+        filters = {}
+
+        if house_id:
+            filters['house'] = house_id
+        if section_id:
+            filters['section'] = section_id
+        if storey_id:
+            filters['storey'] = storey_id
+        if apartment_id:
+            filters['id'] = apartment_id
+
+        apartments = Apartment.objects.filter(**filters)
+
+        messages = []
+        for item in apartments:
+            msg = Message(theme=form.cleaned_data['theme'], text=form.cleaned_data['text'], user=item.owner)
+            messages.append(msg)
+
+        Message.objects.bulk_create(messages)
+
+
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('all_messages')

@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 
 
 from src.houses.models import House, Section, Storey, Apartment
-from src.settings.models import Service, Tariff, Tarrif_Service_Price, Counters
+from src.settings.models import Service, Tariff, Tarrif_Service_Price, Counters, TransactionPurpose
 from src.users.models import User, Role
 from src.finance.models import Payment_Account
 
@@ -64,7 +64,10 @@ def get_list_bank_book(request, owner_id: int):
 
     return payment_account
 
-
+@api.get("/article/", response=List[GenericOutPoint])
+def get_article(request):
+    articles = TransactionPurpose.objects.all().annotate(text=F('name'))
+    return articles
 
 # Окрема схема яка працює трошечки по іншому через іншу схему
 
@@ -128,6 +131,8 @@ def get_book_info(request, apartment_id: int):
     return result
 
 
+
+
 class MeasurementOut(Schema):
     unit: str
 
@@ -145,8 +150,6 @@ def get_measurement(request, service_id: int):
     except Exception as e:
         print(e)
         return {'unit': '-----'}
-
-
 
 
 

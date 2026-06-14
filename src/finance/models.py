@@ -6,10 +6,12 @@ from src.settings.models import Service, Tariff, Measurement
 from src.adminpanel.models.FinanceChoise import TransactionChoise
 from src.adminpanel.models.FinanceChoise import InvoiceChoise
 from src.users.models import User
+from src.settings.models import TransactionPurpose
+
 # Create your models here.
 
 class Payment_Account(models.Model):
-    apartment = models.OneToOneField(Apartment, on_delete=models.CASCADE)
+    apartment = models.OneToOneField(Apartment, on_delete=models.CASCADE, related_name='payment_account')
     bank_book = models.CharField(max_length=220, unique=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     create_time = models.DateTimeField(auto_now=True)
@@ -19,16 +21,16 @@ class Payment_Account(models.Model):
         return f"{self.bank_book}"
 
 
-class Cash_Register(models.Model):
+class CashRegister(models.Model):
     unique_id = models.CharField(unique=True)
     account = models.ForeignKey(Payment_Account, on_delete=models.CASCADE)
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True})
+    manager = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'is_admin': True}, null=True, blank=True)
     create_time = models.DateField()
     type = models.CharField(choices=CashRegisterChoise.choices)
     status = models.BooleanField()
     sum = models.DecimalField(max_digits=10, decimal_places=2)
     comment = models.TextField(null=True, blank=True)
-    article = models.CharField()
+    article = models.OneToOneField(TransactionPurpose, on_delete=models.CASCADE, null=True, blank=True)
 
 
 class Invoice(models.Model):
@@ -44,12 +46,12 @@ class Invoice(models.Model):
     period_end = models.DateField()
 
 
-class Transaction(models.Model):
-    cash_register = models.ForeignKey(Cash_Register, on_delete=models.CASCADE, null=True, blank=True)
-    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, null=True, blank=True)
-    status = models.CharField(TransactionChoise.choices, default=TransactionChoise.choices[0][0])
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    create_time = models.DateTimeField(auto_now=True)
+# class Transaction(models.Model):
+#     cash_register = models.ForeignKey(Cash_Register, on_delete=models.CASCADE, null=True, blank=True)
+#     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, null=True, blank=True)
+#     status = models.CharField(TransactionChoise.choices, default=TransactionChoise.choices[0][0])
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     create_time = models.DateTimeField(auto_now=True)
     # service = models.ManyToManyField(Service)
 
 

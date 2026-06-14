@@ -186,7 +186,7 @@
             console.log(data.pk);
 
             if (data && data.pk) {
-                let baseUrl = "{% url 'detail_apartment' 123456 %}"
+                let baseUrl = "{% url 'master-list-detail' 123456 %}"
 
                 let targetUrl = baseUrl.replace('123456', data.pk);
 

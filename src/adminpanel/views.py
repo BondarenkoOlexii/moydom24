@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from src.users.models import User
+from django.views.generic import TemplateView
+from django.db.models import Count, Q
+from django.core.cache import cache
 
 import io
 import os
@@ -8,12 +11,47 @@ from django.conf import settings
 from django.http import HttpResponse
 from openpyxl import load_workbook
 
+
+from src.houses.models import Apartment, House, Call_Master
+from src.finance.models import Payment_Account, CashRegister
+from src.users.models import User
 # Create your views here.
 
-def dashboard(request):
-    return render(request, 'dashboard.html')
 
+class ListDashboard(TemplateView):
+    template_name = 'dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = cache.get('dashboard_stats')
+
+        if not ctx:
+            ctx = {
+                'apartment': Apartment.objects.count(),
+                'house': House.objects.count(),
+                'payment_accounts': Payment_Account.objects.filter(status='active').count(),
+                'all_users': User.objects.exclude(user_status='inactive').count()
+            }
+
+        call_status = Call_Master.objects.aggregate(
+            new=Count('id', filter=Q(status='new')),
+            work=Count('id', filter=Q(status='in_progress'))
+        )
+
+        ctx['new_call_master'] = call_status['new']
+
+        ctx['work_call_master'] = call_status['work']
+
+        amounts = CashRegister.objects.values_list('sum', flat=True)
+
+        account_balance = Payment_Account.objects.filter(status='active').values_list('balance', flat=True)
+
+        ctx['all_money'] = sum(amounts) or "0.00"
+
+        ctx['account_balance'] = sum(account_balance) or "0.00"
+
+        cache.set('dashboard_stats', ctx, 300)
+
+        return ctx
 
 def genetate_receipt_view(request, pk):
 

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper" style="min-height: 1026.88px;">
+    <section class="content-header">
+        <h1>Новое сообщение</h1>
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
+            <li><a href="/admin/message/index">Сообщения</a></li>
+            <li class="active">Новое сообщение</li>
+        </ul>
+    </section>
+
+    <section class="content">
+
+    <div class="box">
+
+        <form id="w0" method="post">
+        {% csrf_token %}
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+            </div>
+
+            <div class="box-body">
+                <input type="hidden" id="message-user_admin_from_id" name="Message[user_admin_from_id]" value="1">
+                <input type="hidden" id="message-status" name="Message[status]" value="5">
+                <input type="hidden" id="message-type" name="Message[type]" value="default">
+                <div class="form-group field-message-name required has-success">
+                    {{ form.theme }}
+                    <div class="help-block"></div>
+                </div>
+
+                <div class="form-group field-message-description required has-error">
+                    {{ form.text }}
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <h4>Кому отправить:</h4>
+                            <div class="form-group field-messageaddress-user_has_debt">
+                                <input type="hidden" name="MessageAddress[user_has_debt]" value="0"><label><input type="checkbox" id="messageaddress-user_has_debt" class="" name="MessageAddress[user_has_debt]" value="1"> Владельцам с задолженностями</label>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group field-flatform-house_id required">
+                                <label class="control-label" for="flatform-house_id">Дом</label>
+                                <select id="flatform-house_id" class="form-control" name="house">
+                                    {% for item in all_data %}
+                                        <option value="{{ item.id }}">{{ item.name }} {{ item.id }}</option>
+                                    {% endfor %}
+                                    <option value="">Выберите...</option>
+                                </select>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group field-flatform-section_id">
+                                <label class="control-label" for="flatform-section_id">Секция</label>
+                                <select id="flatform-section_id" class="form-control" name="house"></select>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group field-flatform-floor_id">
+                                <label class="control-label" for="flatform-floor_id">Секция</label>
+                                <select id="flatform-floor_id" class="form-control" name="house"></select>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group field-flatform-apartment_id">
+                                <label class="control-label" for="flatform-apartment_id">Секция</label>
+                                <select id="flatform-apartment_id" class="form-control" name="house"></select>
+                                <div class="help-block"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-envelope-o"></i> Отправить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'dist/js/selects2.js' %}"> </script>
+
+<script>
+    $(document).ready(function() {
+        $('#message-description').wysihtml5({
+            toolbar: {
+                "custom": "#custom-toolbar",
+            },
+            "stylesheets": ["{% static 'dist/css/bootstrap3-wysihtml5.min.css' %}"],
+            "events": {
+                "load": function() {
+                    console.log("Редактор завантажений!");
+                }
+            }
+        });
+        $('.wysihtml5-sandbox').css({
+            'width': '100%',
+            'height': '250px',
+            'display': 'block'
+        });
+    });
+</script>
+
+{% endblock %}

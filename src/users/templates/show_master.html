@@ -20,7 +20,7 @@
                 <div class="box-header with-border">
                 <h3 class="box-title"></h3>
                 <div class="box-tools">
-                    <a href="/admin/user-admin/update/3" class="btn btn-primary btn-sm">
+                    <a href="{% url 'master-list-update' object.id %}" class="btn btn-primary btn-sm">
                         <span class="hidden-xs">Редактировать пользователя</span><i class="fa fa-pencil visible-xs" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -36,7 +36,7 @@
                                 </tr>
                                 <tr>
                                     <td>Роль</td>
-                                    <td>{{ object.role.role }}</td>
+                                    <td>{{ role.get_role_display }}</td>
                                 </tr>
                                 <tr>
                                     <td>Телефон</td>
@@ -48,7 +48,7 @@
                                 </tr>
                                 <tr>
                                     <td>Статус</td>
-                                    <td><small class="label {{ object.get_color_status }}">{{ object.status }}</small></td>
+                                    <td><small class="label {{ object.get_color_status }}">{{ object.get_user_status_display }}</small></td>
                                 </tr>
                             </tbody>
                         </table>

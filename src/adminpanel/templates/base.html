@@ -536,14 +536,14 @@
     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 1028px;"><section class="sidebar" style="overflow: hidden; width: auto; height: 1028px;">
         {% if user.is_staff or user.is_superuser %}
             <ul class="sidebar-menu tree" data-widget="tree">
-                <li class="active"><a href="/admin/"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
+                <li class="active"><a href="{% url 'dashboard' %}"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
                 <li><a href="{% url 'account-transaction' %}"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
                 <li><a href="{% url 'invoice' %}"><i class="fa fa-files-o"></i>  <span>Квитанции на оплату</span></a></li>
                 <li><a href="{% url 'account' %}"><i class="fa fa-credit-card"></i>  <span>Лицевые счета</span></a></li>
                 <li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
                 <li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
                 <li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
-                <li><a href="{% url 'messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
+                <li><a href="{% url 'all_messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
                 <li><a href="{% url 'request-master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
                 <li><a href="{% url 'counter' %}"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
                 <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
@@ -625,7 +625,7 @@
 <script src="{% static 'dist/js/jquery.slimscroll.min.js' %}"></script>
 {% block scripts %}
 {% endblock %}
-<script src="{% static 'dist/js/Chart.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <script src="{% static 'dist/js/main.js' %}"></script>
 <script src="{% static 'dist/js/custom.js' %}"></script>
 <script src="{% static 'dist/js/datepicker-kv-min.js' %}" ></script>

@@ -21,7 +21,6 @@ from django.urls import include
 from config import settings
 from src.adminpanel.api import api
 
-from src.frontend.views import MainView, AboutView, ServiceView, ContactView
 from django.contrib.sitemaps.views import sitemap
 
 from .views import page_not_found_view, server_not_work

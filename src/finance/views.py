@@ -1,18 +1,21 @@
+import random
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, TemplateView
 from ajax_datatable.views import AjaxDatatableView
 from datetime import date
+from django.db import transaction as db_transaction
 
 from src.adminpanel.mixin import AdminpanelRestrictionMixin
 
-from .models import Payment_Account, Invoice, ThoughInvoiceService, Cash_Register
+from .models import Payment_Account, Invoice, ThoughInvoiceService, CashRegister
 from .forms import PaymentAccountForm, InvoiceForm, InvoiceServiceFormSet, CashRegisterForm
 
 from src.houses.models import House
 from src.adminpanel.models.FinanceChoise import InvoiceChoise
 from src.users.models import User
+
 # Create your views here.
 
 class AccountList(ListView):
@@ -76,10 +79,7 @@ class DeleteAccount(DeleteView):
 
 
 class ListInvoice(TemplateView):
-    #model = Invoice
     template_name = 'invoice.html'
-    #context_object_name = 'invoices'
-
 
 class InvoiceDatatableView(AjaxDatatableView):
     model = Invoice
@@ -202,10 +202,26 @@ class CreateInvoice(CreateView):
 
 
     def form_valid(self, form, formset):
-        self.object = form.save()
+        with db_transaction.atomic():
+            self.object = form.save()
 
-        formset.instance = self.object
-        formset.save()
+            payment_account = Payment_Account.objects.get(bank_book=form.cleaned_data.get('payment_account'))
+
+            unique_id = "".join(random.choices('1234567890', k=14))
+
+            total_amount = form.cleaned_data.get('total_amount') or 0
+
+            CashRegister.objects.create(
+                unique_id=unique_id,
+                account=payment_account.apartment.owner,
+                create_time=form.cleaned_data.get('create_time'),
+                type='expense',
+                status=True,
+                sum=(total_amount * -1),
+            )
+
+            formset.instance = self.object
+            formset.save()
 
         return HttpResponseRedirect(self.get_success_url())
 
@@ -269,20 +285,37 @@ class UpdateInvoice(UpdateView):
 
         total_price = 0
 
-        for i in formset:
-            indicator = i.cleaned_data.get('indicator')
-            measurement_price = i.cleaned_data.get('measurement_price')
-            iprice = int(indicator) * int(measurement_price)
+        with db_transaction.atomic():
+            self.object = form.save()
 
-            i.instance.price = iprice
-            total_price += iprice
-        self.object.total_amount = total_price
+            payment_account = Payment_Account.objects.get(bank_book=form.cleaned_data.get('payment_account'))
 
-        form.save()
+            unique_id = "".join(random.choices('1234567890', k=14))
 
-        formset.instance = self.object
-        print(formset)
-        formset.save()
+            total_amount = form.cleaned_data.get('total_amount') or 0
+
+            CashRegister.objects.create(
+                unique_id=unique_id,
+                account=payment_account.apartment.owner,
+                create_time=form.cleaned_data.get('create_time'),
+                type='expense',
+                status=True,
+                sum=(total_amount * -1),
+            )
+
+            for i in formset:
+                indicator = i.cleaned_data.get('indicator')
+                measurement_price = i.cleaned_data.get('measurement_price')
+                iprice = int(indicator) * int(measurement_price)
+
+                i.instance.price = iprice
+                total_price += iprice
+            self.object.total_amount = total_price
+
+            form.save()
+
+            formset.instance = self.object
+            formset.save()
 
         return HttpResponseRedirect(self.get_success_url())
 
@@ -305,9 +338,20 @@ class DeleteInvoice(DeleteView):
 class ListAccountTransaction(TemplateView):
     template_name = 'account-transaction.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        amounts = CashRegister.objects.values_list('sum', flat=True)
+
+        account_balance = Payment_Account.objects.filter(status='active').values_list('balance', flat=True)
+
+        ctx['all_money'] = sum(amounts) or "0.00"
+
+        ctx['account_balance'] = sum(account_balance) or "0.00"
+        return ctx
 
 class AccountTransactionDatatableView(AjaxDatatableView):
-    model = Cash_Register
+    model = CashRegister
     title = 'Касса'
     initial_order = [['unique_id', 'desc']]
 
@@ -367,11 +411,11 @@ class AccountTransactionDatatableView(AjaxDatatableView):
                 '''
 
 class DetailAccountTransaction(DetailView):
-    model = Cash_Register
+    model = CashRegister
     template_name = 'show_account-transaction.html'
 
 class CreateAccountTransaction(CreateView):
-    model = Cash_Register
+    model = CashRegister
     template_name = 'create_account-transaction.html'
     form_class = CashRegisterForm
 
@@ -401,7 +445,7 @@ class CreateAccountTransaction(CreateView):
 
 
 class UpdateAccountTransaction(UpdateView):
-    model = Cash_Register
+    model = CashRegister
     template_name = 'create_account-transaction.html'
     form_class = CashRegisterForm
 
@@ -426,5 +470,5 @@ class UpdateAccountTransaction(UpdateView):
 
 
 class DeleteAccountTransaction(DeleteView):
-    model = Cash_Register
+    model = CashRegister
     success_url = reverse_lazy('account-transaction')

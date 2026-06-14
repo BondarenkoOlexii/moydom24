@@ -27,16 +27,16 @@ class User(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
     def get_color_status(self):
-        if self.user_status == 'active':
+        if self.user_status == 'Активен':
             return 'label-success'
-        elif self.user_status == UserStatus.new:
+        elif self.user_status == 'Новий':
             return 'label-warning'
         return 'label-danger'
 
 
 class Role(models.Model):
     user = models.ManyToManyField(User, limit_choices_to={'is_admin': True}, related_name='roles')
-    role = models.CharField(max_length=40, choices=Roles.choices, default=Language.choices[1][1])
+    role = models.CharField(max_length=40, choices=Roles.choices)
     statistics = models.BooleanField(default=False) # Статистика
     transaction = models.BooleanField(default=False) # Касса
     receipts = models.BooleanField(default=False) # Квитанции

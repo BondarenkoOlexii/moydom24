@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseRedirect
 from ajax_datatable.views import AjaxDatatableView
 from django.db import transaction as db_transaction
+import random
 # Create your views here.
 
 from src.site_control.models import Main_Page, About_Page, Contact_Page, Additional_Block, Additional_File
@@ -13,7 +14,7 @@ from src.users.models import User, Message
 from src.users.forms import UserForm
 from src.houses.models import Apartment, Call_Master
 from src.common.models import Image
-from src.finance.models import Payment_Account, Tariff, Invoice, ThoughInvoiceService, Transaction, Cash_Register
+from src.finance.models import Payment_Account, Tariff, Invoice, ThoughInvoiceService, CashRegister
 from src.users.views import BasicUpdateUser
 from .forms import CabinetCallMaster, CustomLoginForm, PaymentMethodChoise
 
@@ -264,22 +265,23 @@ class CabinetInvoicePaymentMethod(FormView):
     form_class = PaymentMethodChoise
 
     def form_valid(self, form):
-        amount = form.cleaned_data.get('amount')
+        amount = form.cleaned_data.get('amount') or 0
 
         apartment = self.request.GET.get("apartment")
 
+        user = Apartment.objects.filter(owner=apartment.owner)
+
+        unique_id = "".join(random.choices('1234567890', k=14))
+
         with db_transaction.atomic():
 
-            cash_register = Cash_Register.objects.create(
-                account=get_object_or_404(Payment_Account, apartment=apartment),
+            cash_register = CashRegister.objects.create(
+                unique_id=unique_id,
+                account=user,
+                create_time=form.cleaned_data.get('create_time'),
                 type='arrival',
+                status=True,
                 sum=amount
-            )
-
-            transaction_model = Transaction.objects.create(
-                cash_register=cash_register,
-                status='conducted',
-                amount=amount
             )
 
         return HttpResponseRedirect(self.get_success_url())

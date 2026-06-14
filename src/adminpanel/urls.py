@@ -2,13 +2,14 @@ from django.urls import path
 from django.views.generic import TemplateView
 from src.adminpanel.api import api
 
-from .views import dashboard, genetate_receipt_view
+from .views import ListDashboard, genetate_receipt_view
 
 from src.houses.views import ListHouse, HouseDatatableView, DetailHouse, CreateHouse, DeleteHouse, UpdateHouse, ApartmentList, ApartmentDatatableView, CreateApartment,\
     UpdateApartment, DeleteApartmnent, DetailApartment, ListMasterRequest, NewMasterRequest, DeleteMasterRequest, UpdateMasterRequest
 
-from src.users.views import ListUser, UserDatatableView, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage,\
-    SpecificMessage, DeleteMessage, MasterList, MasterDatatableView, CreateMaster, UpdateMaster, DeleteMaster, ShowMaster
+from src.users.views import ListUser, UserDatatableView, DetailUser, CreateUser, DeleteUser, UpdateUser, CreateMessage, EmailInvite, ListMessage,\
+    SpecificMessage, DeleteMessage, MasterList, MasterDatatableView, CreateMaster, UpdateMaster, DeleteMaster, \
+    ShowMaster, ListAllMessages, NewAllMessages
 
 from src.settings.views import PaymentInfoCreate, TransactionProposeList, TransactionProposeCreate, TransactionProposeUpdate,\
     TransactionProposeDelete, ServiceView, TariffList, CreateTariff, UpdateTariff, DeleteTariff, RoleView, ListCounter, \
@@ -24,7 +25,7 @@ from src.finance.views import AccountList, CreateAccount, UpdateAccount, DeleteA
 from src.frontend.views import CustomAdminLogin, CustomUserLogout
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="dashboard.html"), name='dashboard'),
+    path('', ListDashboard.as_view(), name='dashboard'),
     path('login', CustomAdminLogin.as_view(), name='admin_login'),
     path('logout', CustomUserLogout.as_view(), name='logout'),
     path('excel/download/<int:pk>', genetate_receipt_view, name='download_excel'),
@@ -43,6 +44,7 @@ urlpatterns = [
     path('house/delete/<int:pk>', DeleteHouse.as_view(), name='delete_house'),
 
     path('user', ListUser.as_view(template_name="user.html"), name='user'),
+    path('user/<int:pk>', DetailUser.as_view(), name='detail_user'),
     path('user/create', CreateUser.as_view(template_name="create_user.html"), name='create_user'),
     path('user/update/<int:pk>', UpdateUser.as_view(template_name="create_user.html"), name='update_user'),
     path('user/delete/<int:pk>', DeleteUser.as_view, name='delete_user'),
@@ -55,7 +57,7 @@ urlpatterns = [
     path('apartment/update/<int:pk>', UpdateApartment.as_view(), name='update_apartment'),
     path('apartment/delete/<int:pk>', DeleteApartmnent.as_view(), name='delete_apartment'),
 
-    path('messages', ListMessage.as_view(), name='messages'),
+    path('message', ListMessage.as_view(), name='messages'),
     path('message/<int:pk>', SpecificMessage.as_view(), name='specific_message'),
     path('message/delete/<int:pk>', DeleteMessage.as_view(), name='delete_message'),
 
@@ -112,6 +114,9 @@ urlpatterns = [
     path('account-transaction/<int:pk>', DetailAccountTransaction.as_view(), name='account-transaction_detail'),
     path('account-transaction/create', CreateAccountTransaction.as_view(), name='account-transaction_create'),
     path('account-transaction/update/<int:pk>', UpdateAccountTransaction.as_view(), name='account-transaction_update'),
-    path('account-transaction/delete/<int:pk>', DeleteAccountTransaction.as_view(), name='account-transaction_delete')
+    path('account-transaction/delete/<int:pk>', DeleteAccountTransaction.as_view(), name='account-transaction_delete'),
+
+    path('messages', ListAllMessages.as_view(), name='all_messages'),
+    path('messages/create', NewAllMessages.as_view(), name='all_messages_create')
 
 ]

@@ -141,37 +141,14 @@ class CreateMasterForm(forms.ModelForm):
         }
 
 
-# 'id': 'userform-birthdate', 'class': 'form-control krajee-datepicker', 'name': 'UserForm[birthdate]', 'data-datepicker-source': 'userform-birthdate-kvdate', 'data-datepicker-type': '3', 'data-krajee-kvdatepicker': 'kvDatepicker_1643d6f1'
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #
-    #     self.fields['role_select'].label_from_instance = lambda obj: f"{obj.role}"
+class AllMessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['theme', 'text']
 
+        widgets = {
+            'theme': forms.TextInput(attrs={'id': 'message-name', 'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'id': 'message-description', 'class': 'compose-textarea form-control',
+                                          'rows': '6', 'placeholder': 'Текст сообщения'})
+        }
 
-
-
-
-
-
-# password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control pass-value'}))
-# password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control pass-value'}))
-
-# class CustomChangePassword(SetPasswordForm):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#
-#         self.fields['password1'].required = False
-#         self.fields['password2'].required = False
-#
-#
-#         place_holders = {
-#             'password1': 'Пароль',
-#             'password2': 'Повторить пароль'
-#         }
-#
-#         for field_name, text in place_holders.items():
-#             if field_name in self.fields:
-#                 self.fields[field_name].widget.attrs.update({
-#                     'class': 'form-control',
-#                     'placeholder': text
-#                 })

@@ -203,6 +203,30 @@ $(document).ready(function() {
 
     });
 
+    $('#accounttransaction-transaction_purpose_id').select2({
+        placeholder: 'Выберите статью',
+        ajax: {
+            url: '/api/article/',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term
+                };
+            },
+
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+
+
+
+
 
 
 
