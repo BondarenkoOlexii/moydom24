@@ -204,12 +204,15 @@ class UpdateHouse(AdminpanelRestrictionMixin, UpdateView):
     def get_success_url(self):
         return reverse('house')
 
+
 class DeleteHouse(AdminpanelRestrictionMixin, DeleteView):
     required_section = 'house'
 
     model = House
     success_url = reverse_lazy('house')
 
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 
 class ApartmentList(AdminpanelRestrictionMixin, TemplateView):
@@ -325,6 +328,8 @@ class DeleteApartmnent(AdminpanelRestrictionMixin, DeleteView):
     model = Apartment
     success_url = reverse_lazy('apartment')
 
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 
 class ListMasterRequest(AdminpanelRestrictionMixin, ListView):

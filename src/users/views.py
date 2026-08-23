@@ -134,6 +134,7 @@ class CreateUser(AdminpanelRestrictionMixin, CreateView):
             upload_img = Image.objects.create(photo=img_obj)
             self.object.main_image = upload_img
 
+        print(form.cleaned_data.get('password'))
         self.object.set_password(form.cleaned_data.get('password'))
         self.object.username = f"{form.cleaned_data.get('first_name')} {form.cleaned_data.get('middle_name')} {form.cleaned_data.get('last_name')}"
 
@@ -162,6 +163,9 @@ class BasicUpdateUser(UpdateView):
         if img_obj:
             upload_img = Image.objects.create(photo=img_obj)
             self.object.main_image = upload_img
+
+        self.object.set_password(form.cleaned_data.get('password'))
+        self.object.username = f"{form.cleaned_data.get('first_name')} {form.cleaned_data.get('middle_name')} {form.cleaned_data.get('last_name')}"
 
         self.object.save()
 

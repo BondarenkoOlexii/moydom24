@@ -4,7 +4,7 @@
 {% block content %}
 <div class="content-wrapper" style="min-height: 1026.88px;">
     <section class="content-header">
-        <h1>Редактирование услуг</h1>
+        <h1>Редагування послуг</h1>
     </section>
 
     <section class="content">
@@ -16,8 +16,8 @@
                         <div class="col-xs-12 col-lg-7">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_service" data-toggle="tab" aria-expanded="true" class="btn-tab-switch">Услуги</a></li>
-                                    <li class=""><a href="#tab_measurement" data-toggle="tab" aria-expanded="false" class="btn-tab-switch">Единицы измерения</a></li>
+                                    <li class="active"><a href="#tab_service" data-toggle="tab" aria-expanded="true" class="btn-tab-switch">Послуги</a></li>
+                                    <li class=""><a href="#tab_measurement" data-toggle="tab" aria-expanded="false" class="btn-tab-switch">Одиниця виміру</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane clearfix active" id="tab_service">
@@ -31,14 +31,14 @@
                                                         <div class="col-xs-12 col-sm-7">
 <!--                                                            <input type="hidden" id="service-0-id" name="Service[0][id]" value="5">-->
                                                             <div class="form-group">
-                                                                <label for="service-0-name">Услуга</label>
+                                                                <label for="service-0-name">Послуга</label>
                                                                 {{ form.service }}
                                                             </div>
                                                         </div>
 
                                                     <div class="col-xs-12 col-sm-5">
                                                         <div class="form-group">
-                                                            <label>Ед. изм.</label>
+                                                            <label>Од. вим.</label>
                                                             <div class="input-group">
                                                                 {{ form.measurement }}
                                                                 <span class="input-group-btn">
@@ -75,7 +75,7 @@
 
                                                     <div class="col-xs-12 col-sm-5">
                                                         <div class="form-group">
-                                                            <label>Ед. изм.</label>
+                                                            <label>Од. вим.</label>
                                                             <div class="input-group">
                                                                 {{ formset.empty_form.measurement }}
                                                                 <span class="input-group-btn">
@@ -90,13 +90,13 @@
 
                                                     <div class="col-xs-12">
                                                         <label style="font-weight: normal;">
-                                                            {{ formset.empty_form.show }} Показывать в счетчиках
+                                                            {{ formset.empty_form.show }} Показувати в лічильнику
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-success pull-right form-row-add-service-btn" type="button" data-prefix="service">Добавить</button>
+                                        <button class="btn btn-success pull-right form-row-add-service-btn" type="button" data-prefix="service">Добавити</button>
                                     </div>
                                 </div> </div>
 
@@ -111,7 +111,7 @@
                                                     {% endfor %}
                                                         <div class="col-xs-12 col-sm-7">
                                                             <div class="form-group">
-                                                                <label>Услуга</label>
+                                                                <label>Полсуги</label>
                                                                 <div class="input-group">
                                                                     {{ form.unit_of_measurement }}
                                                                     <span class="input-group-btn">
@@ -136,7 +136,7 @@
                                                                 {{ hidden }}
                                                             {% endfor %}
 
-                                                            <label>Ед. изм.</label>
+                                                            <label>Од. вим.</label>
                                                             <div class="input-group">
                                                                 {{ formset_measurement.empty_form.unit_of_measurement }}
                                                                 <span class="input-group-btn">
@@ -151,7 +151,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-success pull-right form-row-add-measurement-btn" type="button" data-prefix="measurement">Добавить</button>
+                                        <button class="btn btn-success pull-right form-row-add-measurement-btn" type="button" data-prefix="measurement">Добавити</button>
                                     </div>
                                 </div>
 
@@ -162,8 +162,8 @@
                     <div class="row">
                         <div class="col-xs-12 text-center">
                             <div class="form-group">
-                                <a href="{% url 'service' %}" class="btn btn-default">Отменить</a>
-                                <button type="submit" class="btn btn-success">Сохранить</button>
+                                <a href="{% url 'service' %}" class="btn btn-default">Відміна</a>
+                                <button type="submit" class="btn btn-success">Зберегти</button>
                             </div>
                         </div>
                     </div>

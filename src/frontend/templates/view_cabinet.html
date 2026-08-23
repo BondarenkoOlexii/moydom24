@@ -49,8 +49,6 @@
                                         <span class="pull-right">{{ object.email }}</span>
                                     </li>
                                 </ul>
-
-                                <a href="{% url 'update_user_cabinet' pk=object.id %}" class="btn btn-primary btn-block">Изменить</a>
                             </div>
                         </div>
                     </div>
@@ -75,19 +73,19 @@
                         <p>{{ apartment.house.name }} {{ apartment.house.adress }} кв.{{ apartment.apartment_number }}</p>
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
-                                <img src="{% if apartment.image_1 %}{{ apartment.image_1 }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive largeImg margin-bottom-30" alt="">
+                                <img src="{% if apartment.house.image_1 %}{{ apartment.house.image_1.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive largeImg margin-bottom-30" alt="">
                             </div>
                             <div class="col-xs-6 col-md-3">
-                                <img src="{% if apartment.image_2 %}{{ apartment.image_2 }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
+                                <img src="{% if apartment.house.image_5 %}{{ apartment.house.image_2.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
                             </div>
                             <div class="col-xs-6 col-md-3">
-                                <img src="{% if apartment.image_3 %}{{ apartment.image_3 }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
+                                <img src="{% if apartment.house.image_5 %}{{ apartment.house.image_3.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
                             </div>
                             <div class="col-xs-6 col-md-3">
-                                <img src="{% if apartment.image_4 %}{{ apartment.image_4 }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
+                                <img src="{% if apartment.house.image_5 %}{{ apartment.house.image_4.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
                             </div>
                             <div class="col-xs-6 col-md-3">
-                                <img src="{% if apartment.image_5 %}{{ apartment.image_5 }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
+                                <img src="{% if apartment.house.image_5 %}{{ apartment.house.image_5.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="img-responsive smallImg margin-bottom-30" alt="">
                             </div>
                         </div>
                         <div class="table-responsive">

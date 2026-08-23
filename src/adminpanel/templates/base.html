@@ -51,7 +51,7 @@
             <span class="sr-only">Toggle navigation</span>
         </a>
         <!-- Header title -->
-        <div class="header-title">Панель администратора</div>
+        <div class="header-title">Панель адміністратора</div>
         <!-- Navbar Right Menu -->
         {% if request.user.is_authenticated %}
             <div class="navbar-custom-menu">
@@ -64,7 +64,7 @@
                                                         </a>
                             <ul class="dropdown-menu">
 
-                                <li class="header">Новых пользователей: 84</li>
+                                <li class="header">Нові користувачі: 84</li>
                                     <li>
                                         <!-- inner menu: contains the actual data -->
                                         <ul class="menu">
@@ -490,14 +490,14 @@
                                                 </li>
                                                                                 </ul>
                                     </li>
-                                <li class="footer"><a href="/admin/user/index">Перейти в раздел пользователей</a></li>
+                                <li class="footer"><a href="/admin/user/index">Перейти до розділу користувачів</a></li>
 
                             </ul>
                         </li>
                                                     <!-- User Account -->
                     <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="{% if request.user.main_image %}{{ request.user.main_image.photo.url }} {% else %} https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" class="user-image">
+                                <img src="https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop " class="user-image">
                                 <span class="hidden-xs">{{ request.user.first_name }} {{ request.user.last_name }} </span>
                             </a>
                             <ul class="dropdown-menu">
@@ -510,11 +510,11 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a class="btn btn-default btn-flat" href="{% url 'update_user_cabinet' request.user.id %}">Профиль</a>                                </div>
+                                        <a class="btn btn-default btn-flat" href="{% url 'update_user_cabinet' request.user.id %}">Профіль</a>                                </div>
                                     <div class="pull-right">
                                         <form method="POST" action="{% url 'logout' %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-default btn-flat">Выход</button>
+                                            <button type="submit" class="btn btn-default btn-flat">Вихід</button>
     <!--                                        <a class="btn btn-default btn-flat" href="{% url 'logout' %}" data-method="post">Выход</a>-->
                                         </form>
                                     </div>
@@ -538,37 +538,37 @@
             <ul class="sidebar-menu tree" data-widget="tree">
                 <li class="active"><a href="{% url 'dashboard' %}"><i class="fa fa-line-chart"></i>  <span>Статистика</span></a></li>
                 <li><a href="{% url 'account-transaction' %}"><i class="fa fa-dollar"></i>  <span>Касса</span></a></li>
-                <li><a href="{% url 'invoice' %}"><i class="fa fa-files-o"></i>  <span>Квитанции на оплату</span></a></li>
-                <li><a href="{% url 'account' %}"><i class="fa fa-credit-card"></i>  <span>Лицевые счета</span></a></li>
-                <li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартиры</span></a></li>
-                <li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Владельцы квартир</span></a></li>
+                <li><a href="{% url 'invoice' %}"><i class="fa fa-files-o"></i>  <span>Квитанції на оплату</span></a></li>
+                <li><a href="{% url 'account' %}"><i class="fa fa-credit-card"></i>  <span>Особові рахунки</span></a></li>
+                <li><a href="{% url 'apartment' %}"><i class="fa fa-key"></i>  <span>Квартири</span></a></li>
+                <li><a href="{% url 'user' %}"><i class="fa fa-users"></i>  <span>Власники квартир</span></a></li>
                 <li><a href="{% url 'house' %}"><i class="fa fa-building"></i>  <span>Дома</span></a></li>
-                <li><a href="{% url 'all_messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
-                <li><a href="{% url 'request-master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки вызова мастера</span></a></li>
-                <li><a href="{% url 'counter' %}"><i class="fa fa-dashboard"></i>  <span>Показания счетчиков</span></a></li>
-                <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управление сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li><a href="{% url 'all_messages' %}"><i class="fa fa-envelope-o"></i>  <span>Повідомлення</span></a></li>
+                <li><a href="{% url 'request-master-list' %}"><i class="fa fa-wrench"></i>  <span>Заявки на виклик майстра</span></a></li>
+                <li><a href="{% url 'counter' %}"><i class="fa fa-dashboard"></i>  <span>Показаники лічильника</span></a></li>
+                <li class="treeview"><a href="#!"><i class="fa fa-desktop"></i>  <span>Управління сайтом</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li><a href="{% url 'website-main' %}"><i class="fa fa-circle-o"></i>  <span>Главная страница</span></a></li>
-                        <li><a href="{% url 'website-about' %}"><i class="fa fa-circle-o"></i>  <span>О нас</span></a></li>
-                        <li><a href="{% url 'website-service' %}"><i class="fa fa-circle-o"></i>  <span>Услуги</span></a></li>
-                        <li><a href="{% url 'website-contact' %}"><i class="fa fa-circle-o"></i>  <span>Контакты</span></a></li>
+                        <li><a href="{% url 'website-main' %}"><i class="fa fa-circle-o"></i>  <span>Головна сторінка</span></a></li>
+                        <li><a href="{% url 'website-about' %}"><i class="fa fa-circle-o"></i>  <span>Про нас</span></a></li>
+                        <li><a href="{% url 'website-service' %}"><i class="fa fa-circle-o"></i>  <span>Послуги</span></a></li>
+                        <li><a href="{% url 'website-contact' %}"><i class="fa fa-circle-o"></i>  <span>Контакти</span></a></li>
                     </ul>
                 </li>
-                <li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Настройки системы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="treeview"><a href="#!"><i class="fa fa-cogs"></i>  <span>Налаштування системи</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li><a href="{% url 'service' %}"><i class="fa fa-briefcase"></i>  <span>Услуги</span></a></li>
-                        <li><a href="{% url 'tariff' %}"><i class="fa fa-money"></i>  <span>Тарифы</span></a></li>
-                        <li><a href="{% url 'role' %}"><i class="fa fa-user"></i>  <span>Роли</span></a></li>
-                        <li><a href="{% url 'master-list' %}"><i class="fa fa-user-plus"></i>  <span>Пользователи</span></a></li>
-                        <li><a href="{% url 'pay-company' %}"><i class="fa fa-credit-card"></i>  <span>Платежные реквизиты</span></a></li>
-                        <li><a href="{% url 'transaction-purpose' %}"><i class="fa fa-list-ol"></i>  <span>Статьи платежей</span></a></li>
+                        <li><a href="{% url 'service' %}"><i class="fa fa-briefcase"></i>  <span>Послуги</span></a></li>
+                        <li><a href="{% url 'tariff' %}"><i class="fa fa-money"></i>  <span>Таріфи</span></a></li>
+                        <li><a href="{% url 'role' %}"><i class="fa fa-user"></i>  <span>Ролі</span></a></li>
+                        <li><a href="{% url 'master-list' %}"><i class="fa fa-user-plus"></i>  <span>Користувачі</span></a></li>
+                        <li><a href="{% url 'pay-company' %}"><i class="fa fa-credit-card"></i>  <span>Платіжні реквізити</span></a></li>
+                        <li><a href="{% url 'transaction-purpose' %}"><i class="fa fa-list-ol"></i>  <span>Статті платежів</span></a></li>
                     </ul>
                 </li>
             </ul>
 
             {% elif user.is_authenticated and not user.is_staff and not user.is_superuser %}
             <ul class="sidebar-menu tree active" data-widget="tree">
-                <li class="treeview"><a href="#"><i class="fa fa-line-chart"></i>  <span>Сводки</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="treeview"><a href="#"><i class="fa fa-line-chart"></i>  <span>Зведення</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         {% for apartment in apartments %}
                             <li><a href="#"><i class="fa fa-building"></i>  <span>{{ apartment.house.name }}{{ apartment.apartment_number }}</span></a></li>
@@ -576,7 +576,7 @@
                     </ul>
                 </li>
 
-                <li class="treeview"><a href="#"><i class="fa fa-files-o"></i>  <span>Квитанции</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="treeview"><a href="#"><i class="fa fa-files-o"></i>  <span>Квитанції</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         {% for apartment in apartments %}
                             <li><a href="{% url 'list_user_invoice' %}?apartment={{ apartment.id }}"><i class="fa fa-file-text-o"></i>  <span>{{ apartment.house.name }}{{ apartment.apartment_number }}</span></a></li>
@@ -584,16 +584,16 @@
                     </ul>
                 </li>
 
-                <li class="treeview"><a href="#"><i class="fa fa-money"></i>  <span>Тарифы</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <li class="treeview"><a href="#"><i class="fa fa-money"></i>  <span>Таріфи</span> <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         {% for apartment in apartments %}
                             <li><a href="{% url 'list_user_tariff' %}?apartment={{ apartment.id }}"><i class="fa fa-file-text-o"></i>  <span>{{ apartment.house.name }}{{ apartment.apartment_number }}</span></a></li>
                         {% endfor %}
                     </ul>
                 </li>
-                <li><a href="{% url 'list_cabinet_messages' %}"><i class="fa fa-envelope-o"></i>  <span>Сообщения</span></a></li>
-                <li><a href="{% url 'list_user_master_request' %}"><i class="fa fa-wrench"></i>  <span>Вызов мастера</span></a></li>
-                <li><a href="{% url 'view_user_cabinet' %}"><i class="fa fa-user"></i><span>Профиль</span></a></li>
+                <li><a href="{% url 'list_cabinet_messages' %}"><i class="fa fa-envelope-o"></i>  <span>Повідомлення</span></a></li>
+                <li><a href="{% url 'list_user_master_request' %}"><i class="fa fa-wrench"></i>  <span>Виклик майстра</span></a></li>
+                <li><a href="{% url 'view_user_cabinet' %}"><i class="fa fa-user"></i><span>Профіль</span></a></li>
             </ul>
         {% endif %}
     </section><div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 1028px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
@@ -604,8 +604,7 @@
 
 
 <footer class="main-footer">
-    Разработано <a href="https://avada-media.ua/">AVADA-MEDIA</a>. На базе системы управления <a href="https://avada-media.ua/moydom24/">"МойДом24"</a>.
-    Документация API доступна <a href="/doc">по ссылке</a>.
+    Розроблено <a href="https://github.com/BondarenkoOlexii">Бондаренком Олексієм</a>. На базі системи управління <a href="https://avada-media.ua/moydom24/">"МойДом24"</a>.
 </footer>
 
     </div>

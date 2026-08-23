@@ -31,16 +31,16 @@
             </div>
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="{% if 'cabinet' in request.path  %}active{% endif %}"><a href="{% url 'login_user_cabinet' %}">Для жильца</a></li>   <!-- data-toggle="tab" aria-expanded="true" -->
-                    <li class="{% if 'adminpanel' in request.path  %}active{% endif %}"><a href="{% url 'admin_login' %}">Для администрации</a></li>
+                    <li class="{% if 'cabinet' in request.path  %}active{% endif %}"><a href="{% url 'login_user_cabinet' %}">Для мешканця</a></li>   <!-- data-toggle="tab" aria-expanded="true" -->
+                    <li class="{% if 'adminpanel' in request.path  %}active{% endif %}"><a href="{% url 'admin_login' %}">Для адміністрації</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1">
                         <div class="login-box-body">
                             {% if "adminpanel" in request.path  %}
-                                <p class="login-box-msg">Вход в панель управления</p>
+                                <p class="login-box-msg">Вхід до панелі керування</p>
                             {% else %}
-                                <p class="login-box-msg">Вход в личный кабинет</p>
+                                <p class="login-box-msg">Вхід у особистий кабінет</p>
                             {% endif %}
 
                             <form id="login-form" method="post">
@@ -59,12 +59,12 @@
                                                 <div class="icheckbox_flat-blue checked" style="position: relative;" aria-checked="false" aria-disabled="false">
                                                     {{ form.remember_me }}<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
                                                 </div>
-                                                Запомнить меня
+                                                Запам'ятати мене
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-xs-12">
-                                        <button type="submit" class="btn btn-primary btn-block" name="login-button">Вход</button>
+                                        <button type="submit" class="btn btn-primary btn-block" name="login-button">Вхід</button>
                                     </div>
                                 </div>
                             </form>

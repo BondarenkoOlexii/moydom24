@@ -5,11 +5,11 @@
 
 <div class="content-wrapper" style="min-height: 1026.88px;">
     <section class="content-header">
-        <h1>Редактирование страницы</h1>
+        <h1>Редагування сторінки</h1>
 
         <ul class="breadcrumb">
-            <li><a href="/admin/"><i class="fa fa-home"></i> Главная</a></li>
-            <li class="active">Редактирование страницы</li>
+            <li><a href="/admin/"><i class="fa fa-home"></i> Головна</a></li>
+            <li class="active">Редагування сторінки</li>
         </ul>
     </section>
 
@@ -18,12 +18,12 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Редактирование страницы "О нас"</h3>
+                        <h3 class="box-title">Редагування сторінки "Про нас"</h3>
                     </div>
                     <div class="box-body">
                         <form id="w0" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <h3 class="page-header">Информация</h3>
+                            <h3 class="page-header">Інформація</h3>
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group field-websiteaboutform-abouttitle">
@@ -32,7 +32,7 @@
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group field-websiteaboutform-aboutdescription">
-                                        <label class="control-label" for="websiteaboutform-aboutdescription">Краткий текст</label>
+                                        <label class="control-label" for="websiteaboutform-aboutdescription">Короткий текст</label>
                                         {{ form.description }}
                                         <div class="help-block"></div>
                                     </div>
@@ -41,7 +41,7 @@
                                     <h4>Фото директора</h4>
                                     <img src="{% if object.manager_photo %}{{ object.manager_photo.photo.url }}{% else %}https://myhouse24.demodev.cc/site/glide?path=%2Fupload%2Fplaceholder.jpg&amp;w=248&amp;h=160&amp;fit=crop{% endif %}" alt="">
                                     <div class="form-group field-websiteaboutform-imagefile">
-                                        <label class="control-label" for="websiteaboutform-imagefile">Рекомендуемый размер: (250x310)</label>
+                                        <label class="control-label" for="websiteaboutform-imagefile">Рекомендований розмір: (250x310)</label>
                                         {{form.manager_photo }}
                                         <div class="help-block"></div>
                                     </div>
@@ -67,7 +67,7 @@
                                 {% endfor %}
                                 <div class="col-xs-12">
                                     <div class="form-group field-websiteaboutform-aboutimagemainfiles">
-                                        <label class="control-label" for="websiteaboutform-aboutimagemainfiles">Рекомендуемый размер: (1200x1200)</label>
+                                        <label class="control-label" for="websiteaboutform-aboutimagemainfiles">Рекомендований розмір: (1200x1200)</label>
                                         {{ form.image }}
                                         <div class="help-block"></div>
                                     </div>
@@ -75,7 +75,7 @@
                             </div>
 
 
-                            <h3 class="page-header">Дополнительная информация</h3>
+                            <h3 class="page-header">Додаткова інформація</h3>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group field-websiteaboutform-abouttitle2">
@@ -84,7 +84,7 @@
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group field-websiteaboutform-aboutdescription2">
-                                        <label class="control-label">Краткий текст</label>
+                                        <label class="control-label">Короткий текст</label>
                                         {{ additional_form.additional_description }}
                                         <div class="help-block"></div>
                                     </div>
@@ -93,11 +93,11 @@
 
                             <div class="row site-about-gallery">
                                 <div class="col-xs-12">
-                                    <h3 class="page-header">Дополнительная фотогалерея</h3>
+                                    <h3 class="page-header">Додаткова фотогалерея</h3>
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="form-group field-websiteaboutform-aboutimageaddfiles">
-                                        <label class="control-label" for="websiteaboutform-aboutimageaddfiles">Рекомендуемый размер: (1200x1200)</label>
+                                        <label class="control-label" for="websiteaboutform-aboutimageaddfiles">Рекомендований розмір: (1200x1200)</label>
                                         <input type="hidden" name="WebsiteAboutForm[aboutImageAddFiles][]" value="">
                                         {{ additional_form.additional_image }}
 
@@ -108,7 +108,7 @@
 
                             <div class="row site-about-documents">
                                 <div class="col-xs-12">
-                                    <h3 class="page-header">Документы</h3>
+                                    <h3 class="page-header">Документи</h3>
                                 </div>
 
                                 <div class="col-xs-12 col-md-6">
@@ -130,7 +130,7 @@
                                                         <button type="button" class="btn btn-default form-row-remove-btn text-red" title="Удалить"><i class="fa fa-trash"></i></button>
                                                     </div>
 
-                                                    <label>PDF, JPG (макс. размер 20 Mb)</label>
+                                                    <label>PDF, JPG (макс. розмір 20 Mb)</label>
 
                                                     {% if form.instance.additional_file %}
                                                         <div style="margin-bottom: 10px;">
@@ -144,7 +144,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Название документа</label>
+                                                    <label>Назва документа</label>
                                                     {{ form.file_name }}
                                                 </div>
                                                 <hr>
@@ -171,7 +171,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Название документа</label>
+                                                    <label>Назва документа</label>
                                                     {{ formset.empty_form.file_name }}
                                                 </div>
                                                 <hr>
@@ -180,7 +180,7 @@
 
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-success margin-bottom-15 form-row-add-websitedocument-btn" data-prefix="file_formset">
-                                                Добавить документ
+                                                Добавити документ
                                             </button>
                                         </div>
                                     </div> </div>
@@ -188,7 +188,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h3 class="page-header">Настройки SEO</h3>
+                                    <h3 class="page-header">Налаштування SEO</h3>
                                     <div class="form-group field-websiteaboutform-aboutmetatitle">
                                         <label class="control-label" for="websiteaboutform-aboutmetatitle">Title</label>
                                         {{ seoform.title }}
@@ -210,8 +210,8 @@
                             <div class="row">
                                 <div class="col-xs-12 text-center">
                                     <div class="form-group">
-                                        <a href="/admin/website/about" class="btn btn-default">Отменить</a>
-                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                        <a href="/admin/website/about" class="btn btn-default">Відмінити</a>
+                                        <button type="submit" class="btn btn-success">Зберегти</button>
                                     </div>
                                 </div>
                             </div>

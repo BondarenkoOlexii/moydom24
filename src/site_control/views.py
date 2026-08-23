@@ -73,7 +73,9 @@ class CreateMainPageView(AdminpanelRestrictionMixin, UpdateView):
                 upload_img = Image.objects.create(photo=img_obj)
                 setattr(self.object, field_name, upload_img)
 
-        form.save()
+        self.object = form.save()
+
+        formset.instance = self.object
 
         formset_instance = formset.save(commit=False)
 
